@@ -6,7 +6,8 @@
 
 	</head>
 
-	<body>
+	<body onload="getData()">
+
 		<h1> Oregon Trail</h1>
 
 		<div id="divContain">
@@ -14,6 +15,7 @@
 				<table>
 					<tr>
 						<td>
+							<!-- MAIN MENU -->
 							<div id="oregonTrail">
 								<BUTTON onclick="openNextMenu('travelTrail')">Travel the Trail</BUTTON>
 								<BUTTON onclick="openNextMenu('learnMore')">Learn about the trail</BUTTON>
@@ -21,34 +23,48 @@
 								<BUTTON onclick="openNextMenu('managementOptions')">Choose Management Options</BUTTON>
 							</div>
 
+
+							<!-- Travel First Menu -->
 							<div id="travelTrail">
 								Travel The Trail
 								<br>
 								<BUTTON onclick="backToOregonTrail('travelTrail')"> Back To Main Menu</BUTTON>
 							</div>
 
+
+							<!-- Learn more about the oregon trail -->
 							<div id="learnMore">
 								Learn More
 								<br>
 								<BUTTON onclick="backToOregonTrail('learnMore')"> Back To Main Menu</BUTTON>
 							</div>
 
+
+							<!-- List of Top Scores -->
 							<div id="seeTopTen">
 								High Scores
 								<br>
+								<table id="highScores">
+									<tr>
+										<td id="scores">
+											Name:
+										</td>
+										<td id="scores">
+											High Score:
+										</td>
+									</tr>
+								</table>
 								<BUTTON onclick="backToOregonTrail('seeTopTen')"> Back To Main Menu</BUTTON>
 							</div>
-							
+
+
+							<!-- List of management options -->
 							<div id="managementOptions">
 								Management Options
 								<br>
 								<BUTTON onclick="backToOregonTrail('managementOptions')"> Back To Main Menu</BUTTON>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							
+
 						</td>
 					</tr>
 				</table>

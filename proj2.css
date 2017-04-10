@@ -19,12 +19,16 @@ table, tr, td{
 	color:white;
 	width: 100%;
 	font-size: 20px;
+	text-align: center;
 }
 div{
 	width: 100%;
 	text-align: center;
 }
 
+td #scores{
+	width: 50%;
+}
 
 #mainDiv{
 	width: 90%;
