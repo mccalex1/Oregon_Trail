@@ -13,9 +13,16 @@ button{
 	outline: none;
 	background-color: white;
 	color: black;
+	font-family: monospace;
 }
-td{
+table, tr, td{
 	color:white;
+	width: 100%;
+	font-size: 20px;
+}
+div{
+	width: 100%;
+	text-align: center;
 }
 
 

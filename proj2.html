@@ -15,26 +15,34 @@
 					<tr>
 						<td>
 							<div id="oregonTrail">
-								<BUTTON onclick="travelTrail()">Travel the Trail</BUTTON>
-								<BUTTON onclick="learnMore()">Learn about the trail</BUTTON>
-								<BUTTON onclick="seeTopTen()">See the Oregon Top Ten</BUTTON>
-								<BUTTON onclick="managementOptions()">Choose Management Options</BUTTON>
+								<BUTTON onclick="openNextMenu('travelTrail')">Travel the Trail</BUTTON>
+								<BUTTON onclick="openNextMenu('learnMore')">Learn about the trail</BUTTON>
+								<BUTTON onclick="openNextMenu('seeTopTen')">See the Oregon Top Ten</BUTTON>
+								<BUTTON onclick="openNextMenu('managementOptions')">Choose Management Options</BUTTON>
 							</div>
 
 							<div id="travelTrail">
-								travel Trail
+								Travel The Trail
+								<br>
+								<BUTTON onclick="backToOregonTrail('travelTrail')"> Back To Main Menu</BUTTON>
 							</div>
 
 							<div id="learnMore">
-								learn more
+								Learn More
+								<br>
+								<BUTTON onclick="backToOregonTrail('learnMore')"> Back To Main Menu</BUTTON>
 							</div>
 
 							<div id="seeTopTen">
-								see high score
+								High Scores
+								<br>
+								<BUTTON onclick="backToOregonTrail('seeTopTen')"> Back To Main Menu</BUTTON>
 							</div>
 							
 							<div id="managementOptions">
-								management Options
+								Management Options
+								<br>
+								<BUTTON onclick="backToOregonTrail('managementOptions')"> Back To Main Menu</BUTTON>
 							</div>
 						</td>
 					</tr>
