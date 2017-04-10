@@ -29,7 +29,9 @@ div{
 td #scores{
 	width: 50%;
 }
-
+p{
+	color: white;
+}
 #mainDiv{
 	width: 90%;
 	height: 500;
