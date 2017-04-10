@@ -12,6 +12,10 @@ button{
 	border-radius: 10px;
 	outline: none;
 	background-color: white;
+	color: black;
+}
+td{
+	color:white;
 }
 
 
@@ -29,22 +33,22 @@ button{
 }
 
 
-#OregonTrail{
+#oregonTrail{
 
 }
 
-#OregonTrailCanvas{
 
-}
-
-#display2{
+#travelTrail{
 	display: none;
 }
 
-#display3{
+#learnMore{
 	display: none;
 }
 
-#display4{
+#seeTopTen{
+	display: none;
+}
+#managementOptions{
 	display: none;
 }
