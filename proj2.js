@@ -60,3 +60,28 @@ function setUpHighScores(){
     	xmlhttp.send();
 
 }
+
+function addHighScore(){
+	
+	//TODO update how name and score are retrieved
+	var name = document.getElementById("nameInput").value;
+	var score = getCurrentScore();
+	var url = "http://localhost/proj2/addHighscore.php";
+
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+        	xmlhttp = new XMLHttpRequest();
+	} else {
+        	// code for IE6, IE5
+        	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    	}
+    	xmlhttp.onreadystatechange = function() {
+        	if (this.readyState == 4 && this.status == 200) {
+			var response = this.responseText;
+        	}
+    	};
+	var query = "?q=" + name + "," + score;
+    	xmlhttp.open("GET", url + query ,true);
+    	xmlhttp.send();
+
+}
