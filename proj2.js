@@ -33,11 +33,9 @@ function getData(){
 
 function setUpHighScores(){
 
-	
-
-	scoreID = document.getElementById("highScores");
-
-
+	var scores = [];
+	var scoreID = document.getElementById("highScores");
+	var url = "http://localhost/proj2/getHighscores.php"; 
 	
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -48,10 +46,17 @@ function setUpHighScores(){
     	}
     	xmlhttp.onreadystatechange = function() {
         	if (this.readyState == 4 && this.status == 200) {
-            		scoreID.innerHTML = this.responseText;
+            		scores = JSON.parse(this.responseText);
+
+			//TODO alex do wut u want with scores. Access data using scores[i].name and scores[i].score
+			//Example:
+			for(var i=0; i<scores.length; i++){
+				scoreID.innerHTML += "Name: " + scores[i].name + " Score: " + scores[i].score + "<br>";
+			}
+
         	}
     	};
-    	xmlhttp.open("GET","http://localhost/???/getHighscores.php",true);
+    	xmlhttp.open("GET", url ,true);
     	xmlhttp.send();
 
 }
