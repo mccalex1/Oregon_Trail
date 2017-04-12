@@ -50,18 +50,6 @@ p{
 
 }
 
-
-#travelTrail{
-	display: none;
-}
-
-#learnMore{
-	display: none;
-}
-
-#seeTopTen{
-	display: none;
-}
-#managementOptions{
+#travelTrail, #differences, #learnMore, #seeTopTen, #managementOptions{
 	display: none;
 }

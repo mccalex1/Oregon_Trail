@@ -1,20 +1,10 @@
 //javacsript file
 
-function openNextMenu(currentDivId){
+function openNextMenu(currentDiv, nextDivId){
 
-	document.getElementById("oregonTrail").style.display = "none";
+	document.getElementById(currentDiv).style.display = "none";
 
-	document.getElementById(currentDivId).style.display = "block";
-
-}
-
-
-
-function backToOregonTrail(currentDivId){
-
-	document.getElementById(currentDivId).style.display = "none";
-
-	document.getElementById("oregonTrail").style.display = "block";
+	document.getElementById(nextDivId).style.display = "block";
 
 }
 
@@ -48,10 +38,19 @@ function setUpHighScores(){
         	if (this.readyState == 4 && this.status == 200) {
             		scores = JSON.parse(this.responseText);
 
-			//TODO alex do wut u want with scores. Access data using scores[i].name and scores[i].score
-			//Example:
+            //takes scores json and pulls out the name and score for each perrson
+            //creates a new row with two columns and inserts the data
 			for(var i=0; i<scores.length; i++){
-				scoreID.innerHTML += "Name: " + scores[i].name + " Score: " + scores[i].score + "<br>";
+				
+				var row = table.insertRow(-1);
+				
+				var cell1 = row.insertCell(0);
+				cell1.innerHTML = scores[i].name;
+
+				var cell2 = row.insertCell(1);
+				cell2.innerHTML = scores[i].score;
+				
+				//scoreID.innerHTML += "Name: " + scores[i].name + " Score: " + scores[i].score + "<br>";
 			}
 
         	}

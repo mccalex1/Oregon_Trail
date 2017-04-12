@@ -15,18 +15,60 @@
 				<table>
 					<tr>
 						<td>
+
+
 							<!-- MAIN MENU -->
 							<div id="oregonTrail">
-								<BUTTON onclick="openNextMenu('travelTrail')">Travel the Trail</BUTTON>
-								<BUTTON onclick="openNextMenu('learnMore')">Learn about the trail</BUTTON>
-								<BUTTON onclick="openNextMenu('seeTopTen')">See the Oregon Top Ten</BUTTON>
-								<BUTTON onclick="openNextMenu('managementOptions')">Choose Management Options</BUTTON>
+								<BUTTON onclick="openNextMenu('oregonTrail', 'travelTrail')">Travel the Trail</BUTTON>
+								<BUTTON onclick="openNextMenu('oregonTrail', 'learnMore')">Learn about the trail</BUTTON>
+								<BUTTON onclick="openNextMenu('oregonTrail', 'seeTopTen')">See the Oregon Top Ten</BUTTON>
+								<BUTTON onclick="openNextMenu('oregonTrail', 'managementOptions')">Choose Management Options</BUTTON>
 							</div>
+
+
 
 
 							<!-- Travel First Menu -->
 							<div id="travelTrail">
-								Travel the Trail
+								Many kinds of people made the trip to Oregon.
+								<br>
+								<br>
+								You may:
+								<br>
+								<br>
+								<BUTTON onclick="chooseCareer('banker')">Be a banker from Boston</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="chooseCareer('carpenter')">Be a carpenter from Ohio</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="chooseCareer('farmer')">Be a farmer from Illinois</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="openNextMenu('travelTrail', 'differences')">Find out the differences between these choices</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="openNextMenu('travelTrail', 'oregonTrail')"> Back To Main Menu</BUTTON>
+							</div>
+
+
+
+							<!-- Find out differences between banker carpenter and farmer-->
+							<div id="differences">
+							<p>
+								Traveling to Oregon isn't easy! But if you're a banker, you'll have more money for supplies and services than a carpenter or a farmer.
+								<br>
+								<br>
+								However, the harder you have to try, the more points you deserve! Therefore, the farmer earns the greatest number of points and the banker earns the least.
+							</p>
+							<BUTTON onclick="openNextMenu('differences', 'travelTrail')"> Back To Main Menu</BUTTON>
+							</div>
+
+
+
+							<!-- Learn more about the oregon trail -->
+							<div id="learnMore">
+								Learn About the Trail
 								<br>
 								<p>
 									Try taking a journey by covered wagon across 2000 miles of plains, rivers, and mountains. Try! On the plains, will you slosh your oxen through mud and water-filled ruts or will you plod through dust six inches deep?
@@ -38,19 +80,11 @@
 									At the Dalles, you can try navigating the Columbia River, but if running the rapids with a makeshift raft makes you queasy, better take the Barlow Road.
 
 									If for some reason you don't survive -- your wagon burns, or thieves steal your oxen, or you run out of provisions, or you die of cholera -- don't give up! Try again..and again..until your name is up with the others on The Oregon Top Ten.
-
 								</p>
-								<BUTTON onclick="backToOregonTrail('travelTrail')"> Back To Main Menu</BUTTON>
+								<BUTTON onclick="openNextMenu('learnMore', 'oregonTrail')"> Back To Main Menu</BUTTON>
 							</div>
 
 
-							<!-- Learn more about the oregon trail -->
-							<div id="learnMore">
-								Learn About the Trail
-								<br>
-
-								<BUTTON onclick="backToOregonTrail('learnMore')"> Back To Main Menu</BUTTON>
-							</div>
 
 
 							<!-- List of Top Scores -->
@@ -67,16 +101,30 @@
 										</td>
 									</tr>
 								</table>
-								<BUTTON onclick="backToOregonTrail('seeTopTen')"> Back To Main Menu</BUTTON>
+								<BUTTON onclick="openNextMenu('seeTopTen', 'oregonTrail')"> Back To Main Menu</BUTTON>
 							</div>
+
+
 
 
 							<!-- List of management options -->
 							<div id="managementOptions">
 								Choose Management Options
 								<br>
-								<BUTTON onclick="backToOregonTrail('managementOptions')"> Back To Main Menu</BUTTON>
+								<br>
+								<BUTTON>See the current Top Ten list</BUTTON>
+								<br>
+								<br>
+								<BUTTON>See the original Top Ten list</BUTTON>
+								<br>
+								<br>
+								<BUTTON>Erase the current Top Ten list</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="openNextMenu('managementOptions', 'oregonTrail')"> Return to Main Menu</BUTTON>
 							</div>
+
+
 
 						</td>
 					</tr>
