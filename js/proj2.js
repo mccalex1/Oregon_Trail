@@ -7,7 +7,7 @@ var CAREER3 = "Farmer";
 var careerChosen = "";
 var money = 0;
 var mutilplyer = 0;
-
+/*
 var careers = 	{
 					{'name': CAREER1, 'money': '1600', 'pointMultiplyer': '1'},
 					{'name': CAREER2,	'money': '800', 'pointMultiplyer': '2'},
@@ -64,6 +64,8 @@ var placesMiles = 	[
 						{'name':"Independence Rock", 		'distance' : '102'}
 					];
 					
+*/
+
 
 function openNextMenu(currentDiv, nextDivId){
 
