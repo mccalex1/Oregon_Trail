@@ -7,11 +7,11 @@ var CAREER3 = "Farmer";
 var careerChosen = "";
 var money = 0;
 var mutilplyer = 0;
-/*
+
 var careers = 	{
-					{'name': CAREER1, 'money': '1600', 'pointMultiplyer': '1'},
-					{'name': CAREER2,	'money': '800', 'pointMultiplyer': '2'},
-					{'name': CAREER3, 'money': '400', 'pointMultiplyer': '3'}
+					CAREER1 : {'name': CAREER1, 'money': '1600', 'pointMultiplyer': '1'},
+					CAREER2 : {'name': CAREER2,	'money': '800', 'pointMultiplyer': '2'},
+					CAREER3 : {'name': CAREER3, 'money': '400', 'pointMultiplyer': '3'}
 				};
 
 //POINT CONSTANTS USE THIS WEBSITE
@@ -44,27 +44,27 @@ var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken",
 //prices based on place
 //2 oxen, 1 pound of food
 var prices = { 
-				{ 'place': "Matt's", 			'oxen': '20', 'clothes': '10', 		'parts': '10', 		'food': '.2'},	
-				{ 'place': "Ft. Kearney", 		'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
-				{ 'place': "Ft. Laramie", 		'oxen': '30', 'clothes': '15', 		'parts': '15', 		'food': '.3'},
-				{ 'place': "Ft. Bridger", 		'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35'},	
-				{ 'place': "Ft. Hall", 			'oxen': '40', 'clothes': '20', 		'parts': '20', 		'food': '.4'},	
-				{ 'place': "Ft. Boise", 		'oxen': '45', 'clothes': '22.5', 	'parts': '22.5',	'food': '.45'},	
-				{ 'place': "Ft. Walla Walla", 	'oxen': '50', 'clothes': '25', 		'parts': '25', 		'food': '.5'}	
+				"Matt's" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
+				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
+				"Ft. Laramie" : 	{'oxen': '30', 'clothes': '15', 	'parts': '15', 		'food': '.3'},
+				"Ft. Bridger" : 	{'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35'},	
+				"Ft. Hall" : 		{'oxen': '40', 'clothes': '20', 	'parts': '20', 		'food': '.4'},	
+				"Ft. Boise" : 		{'oxen': '45', 'clothes': '22.5', 	'parts': '22.5',	'food': '.45'},	
+				"Ft. Walla Walla" : {'oxen': '50', 'clothes': '25', 	'parts': '25', 		'food': '.5'}	
 			};
 
 //miles from start
-var placesMiles = 	[
-						{'name':"Independence, MO", 		'distance' : '102'},
-						{'name':"Kansas River Crossing", 	'distance' : '83'},
-						{'name':"Big Blue River Crossing",	'distance' : '119'},
-						{'name':"Ft. Kearney", 				'distance' : '250'},
-						{'name':"Chimney Rock", 			'distance' : '86'},
-						{'name':"Ft. Laramie", 				'distance' : '190'},
-						{'name':"Independence Rock", 		'distance' : '102'}
-					];
+var placesMiles = 	{
+						"Independence, MO" : 		{'distance' : '102'},
+						"Kansas River Crossing" : 	{'distance' : '83'},
+						"Big Blue River Crossing" :	{'distance' : '119'},
+						"Ft. Kearney" :				{'distance' : '250'},
+						"Chimney Rock" : 			{'distance' : '86'},
+						"Ft. Laramie" :				{'distance' : '190'},
+						"Independence Rock" : 		{'distance' : '102'}
+					};
 					
-*/
+
 
 
 function openNextMenu(currentDiv, nextDivId){
@@ -90,7 +90,7 @@ function getData(){
 //what happens when they choose the career
 function chooseCareer(careerType){
 
-	careerChosen = career;
+	careerChosen = careerType;
 	money = 0;
 	mutilplyer = 0;
 
