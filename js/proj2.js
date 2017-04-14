@@ -1,18 +1,18 @@
-
+var careerChosen = "";
+var money = 0;
+var mutilplyer = 0;
+var team = [];
 
 var CAREER1 = "Banker";
 var CAREER2 = "Carpenter";
 var CAREER3 = "Farmer";
-
-var careerChosen = "";
-var money = 0;
-var mutilplyer = 0;
 
 var careers = 	{
 					CAREER1 : {'name': CAREER1, 'money': '1600', 'pointMultiplyer': '1'},
 					CAREER2 : {'name': CAREER2,	'money': '800', 'pointMultiplyer': '2'},
 					CAREER3 : {'name': CAREER3, 'money': '400', 'pointMultiplyer': '3'}
 				};
+
 
 //POINT CONSTANTS USE THIS WEBSITE
 //https://www.gamefaqs.com/pc/577345-the-oregon-trail/faqs/9660
@@ -91,10 +91,24 @@ function getData(){
 function chooseCareer(careerType){
 
 	careerChosen = careerType;
-	money = 0;
-	mutilplyer = 0;
 
+	if(careerType == CAREER1){
+		money = careers.CAREER1["money"];
+		mutilplyer = careers.CAREER1["pointMultiplyer"];
+	}
+	else if(careerType == CAREER2){
+		money = careers.CAREER2["money"];
+		mutilplyer = careers.CAREER2["pointMultiplyer"];
+	}
+	else if(careerType == CAREER3){
+		money = careers.CAREER3["money"];
+		mutilplyer = careers.CAREER3["pointMultiplyer"];
+	}
+
+	openNextMenu("travelTrail", "chooseNames");
 }
+
+
 
 function setUpHighScores(){
 
@@ -134,6 +148,9 @@ function setUpHighScores(){
     	xmlhttp.send();
 
 }
+
+
+
 
 function addHighScore(){
 	
