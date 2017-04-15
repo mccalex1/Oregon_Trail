@@ -108,6 +108,32 @@ function chooseCareer(careerType){
 	openNextMenu("travelTrail", "chooseNames");
 }
 
+function setNames(){
+	
+	var name1 = document.getElementById("name1").value;
+	var name2 = document.getElementById("name2").value;
+	var name3 = document.getElementById("name3").value;
+	var name4 = document.getElementById("name4").value;
+	var name5 = document.getElementById("name5").value;
+
+	//makes sure all the names are not the same and null
+	if((name1 != name2) && (name2 != name3) && (name3 != name4) && (name4 != name5) && (name1 != "")){
+		
+		team.push(name1);
+		team.push(name2);
+		team.push(name3);
+		team.push(name4);
+		team.push(name5);
+
+		openNextMenu("chooseNames", "startMonth");
+
+	}
+
+	else{
+		document.getElementById("nameError").innerHTML = "Names Must not be left empty nor be the same";
+	}
+
+}
 
 
 function setUpHighScores(){
