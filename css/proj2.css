@@ -25,7 +25,11 @@ table, tr, td{
 }
 
 .itemType{
-	width: 50%;
+	width: 100%;
+	text-align: left;
+}
+.itemType td{
+	width: 33%;
 	text-align: left;
 }
 

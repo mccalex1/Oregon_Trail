@@ -9,9 +9,9 @@ var CAREER2 = "Carpenter";
 var CAREER3 = "Farmer";
 
 var careers = 	{
-					CAREER1 : {'name': CAREER1, 'money': '1600', 'pointMultiplyer': '1'},
-					CAREER2 : {'name': CAREER2,	'money': '800', 'pointMultiplyer': '2'},
-					CAREER3 : {'name': CAREER3, 'money': '400', 'pointMultiplyer': '3'}
+					"Banker" : {"money": "1600", "pointMultiplyer": "1"},
+					"Carpenter" : {"money": "800", "pointMultiplyer": "2"},
+					"Farmer" : {"money": "400", "pointMultiplyer": "3"}
 				};
 
 
@@ -89,21 +89,11 @@ function getData(){
 
 //what happens when they choose the career
 function chooseCareer(careerType){
-
+	
 	careerChosen = careerType;
 
-	if(careerType == CAREER1){
-		money = careers.CAREER1["money"];
-		mutilplyer = careers.CAREER1["pointMultiplyer"];
-	}
-	else if(careerType == CAREER2){
-		money = careers.CAREER2["money"];
-		mutilplyer = careers.CAREER2["pointMultiplyer"];
-	}
-	else if(careerType == CAREER3){
-		money = careers.CAREER3["money"];
-		mutilplyer = careers.CAREER3["pointMultiplyer"];
-	}
+	money = careers[careerType].money;
+	mutilplyer = careers[careerType].pointMultiplyer;
 
 	openNextMenu("travelTrail", "chooseNames");
 }
@@ -111,14 +101,16 @@ function chooseCareer(careerType){
 
 function goToStore(storeName){
 
-	/*
-	document.getElementById("oxenPrice") = prices.storeName.oxen + " per oxen";
-	document.getElementById("foodPrice") = prices.storeName.food + " per 25lbs";
-	document.getElementById("clothingPrice") = prices.storeName.clothes + " per pair";
-	document.getElementById("wheelPrice") = prices.storeName.parts + " per wheel";
-	document.getElementById("axelPrice") = prices.storeName.parts + " per axle";
-	document.getElementById("tonguePrice") = prices.storeName.parts + " per tongue";
-	*/
+	document.getElementById("moneyGoesHere").innerHTML = "You have $" + money + " to spend.";
+
+	
+	document.getElementById("oxenPrice").innerHTML = "$" + prices[storeName].oxen + " per oxen";
+	document.getElementById("foodPrice").innerHTML = "$" + prices[storeName].food + " per 25lbs";
+	document.getElementById("clothingPrice").innerHTML = "$" + prices[storeName].clothes + " per pair";
+	document.getElementById("wheelPrice").innerHTML = "$" + prices[storeName].parts + " per wheel";
+	document.getElementById("axelPrice").innerHTML = "$" + prices[storeName].parts + " per axle";
+	document.getElementById("tonguePrice").innerHTML = "$" + prices[storeName].parts + " per tongue";
+	
 	openNextMenu('helloMatt', 'theStore');
 }
 
