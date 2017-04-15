@@ -2,6 +2,7 @@ var careerChosen = "";
 var money = 0;
 var mutilplyer = 0;
 var team = [];
+var month = "";
 
 var CAREER1 = "Banker";
 var CAREER2 = "Carpenter";
@@ -44,7 +45,7 @@ var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken",
 //prices based on place
 //2 oxen, 1 pound of food
 var prices = { 
-				"Matt's" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
+				"Matts" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
 				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
 				"Ft. Laramie" : 	{'oxen': '30', 'clothes': '15', 	'parts': '15', 		'food': '.3'},
 				"Ft. Bridger" : 	{'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35'},	
@@ -79,12 +80,11 @@ function openNextMenu(currentDiv, nextDivId){
 
 
 //onload function should set up and data that needs to be pulled from js file
-
 function getData(){
-
 	setUpHighScores();
-
 }
+
+
 
 
 //what happens when they choose the career
@@ -107,6 +107,22 @@ function chooseCareer(careerType){
 
 	openNextMenu("travelTrail", "chooseNames");
 }
+
+
+function goToStore(storeName){
+
+	/*
+	document.getElementById("oxenPrice") = prices.storeName.oxen + " per oxen";
+	document.getElementById("foodPrice") = prices.storeName.food + " per 25lbs";
+	document.getElementById("clothingPrice") = prices.storeName.clothes + " per pair";
+	document.getElementById("wheelPrice") = prices.storeName.parts + " per wheel";
+	document.getElementById("axelPrice") = prices.storeName.parts + " per axle";
+	document.getElementById("tonguePrice") = prices.storeName.parts + " per tongue";
+	*/
+	openNextMenu('helloMatt', 'theStore');
+}
+
+
 
 function setNames(){
 	
@@ -134,6 +150,16 @@ function setNames(){
 	}
 
 }
+
+
+
+function setMonth(theMonth){
+	month = theMonth;
+	openNextMenu("startMonth", "goToStore");
+}
+
+
+
 
 
 function setUpHighScores(){

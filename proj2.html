@@ -175,10 +175,14 @@
 
 							</div>
 
+
+							<!-- Figures out what month the user wants to travel -->
 							<div id="startMonth">
 								
 								<h2> Which month do you want to travel? </h2>
-
+								<p>
+									It is 1848. Your jumping off place for Oregon is Independence, Missouri. You must decide which month to leave Independence.
+								</p>	
 								<BUTTON onclick="setMonth('March')"> March </BUTTON>
 								<br>
 								<br>
@@ -194,10 +198,171 @@
 								<BUTTON onclick="setMonth('July')"> July </BUTTON>
 								<br>
 								<br>
-
+								<BUTTON onclick="openNextMenu('startMonth', 'monthAdvice')"> Ask for advice </BUTTON>
 
 
 							</div>
+
+
+
+							<!-- Gives the user advice on which month to travel -->
+							<div id="monthAdvice">
+
+								<p>
+									<br>
+									You attend a public meeting held for "folks with a California - Oregon fever." You're told:
+									<br>
+									<br>
+									If you leave too early, there won't be any grass for your oxen to eat. If you leave too late, you may not get to Oregon before winter comes. If you leave at just the right time, there will be green grass and the weather will still be cool.
+								</p>
+
+								<BUTTON onclick="openNextMenu('monthAdvice', 'startMonth')"> Back </BUTTON>
+							</div>
+
+
+
+
+							<!-- screen after getting the month -->
+							<div id="goToStore">
+								<p>
+									Before leaving Independence you should buy equipment and supplies. You have some cash, but you don't have to spend it all now.
+								</p>
+
+								<p>
+									You can buy whatever you need at Matt's General Store.
+								</p>
+
+								<BUTTON onclick="openNextMenu('goToStore', 'helloMatt')"> Next </BUTTON>
+							</div>
+
+
+							<!-- show menu with matt and see what he has to say -->
+							<div id="helloMatt">
+								<p>
+								Hello, I'm Matt. So you're going to Oregon! I can fix you up with what you need:
+								</p>
+
+								<table>
+									<tr>
+										<td>
+											- a team of oxen to pull your wagon
+											<br>
+											<br>
+											- clothing for both summer and winter
+											<br>
+											<br>
+											- plenty of food for the trip
+											<br>
+											<br>
+											- spare parts for your wagon
+										</td>
+									</tr>
+								</table>
+
+								<BUTTON onclick='goToStore("Matts")'> Next </BUTTON>							
+							</div>
+
+
+
+
+
+
+							<!-- Store UI -->
+							<div id="theStore">
+								<h2> Matt's General Store </h2>
+								<h2> Independence, Missouri </h2>
+
+								<p id="dateGoesHere"> </p>
+
+								<table class=itemType>
+									<tr>
+										<td>
+										1. Oxen
+										</td>
+
+										<td id="oxenPrice">
+											OXEN PRICE GOES HERE
+										</td>
+
+										<td>
+											<input id="numOxen" type="number" name="quantity" min="1" max="9" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+									</tr>
+									<tr>
+										<td>
+										2. Food
+										</td>
+
+										<td id="foodPrice">
+											FOOD PRICE GOES HERE
+										</td>
+
+										<td>
+											<input id="numFood" type="number" name="quantity" min="1" max="9999" onkeypress="if(this.value.length==4) return false;">	
+										</td>
+									</tr>
+									<tr>
+										<td>
+										3. Clothing
+										</td>
+
+										<td id="clothingPrice">
+											CLOTHING PRICE GOES HERE
+										</td>
+
+										<td class="itemType">
+											<input id="numClothing" type="number" name="quantity" min="1" max="99" onkeypress="if(this.value.length==2) return false;">	
+										</td>
+									</tr>
+									<tr>
+										<td>
+										4. Wagon Wheel
+										</td>
+
+										<td id="wheelPrice">
+											WHEEL PRICE GOES HERE
+										</td>
+
+										<td class="itemType">
+											<input id="numWheels" type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+									</tr>
+									<tr>
+										<td>
+										5. Wagon Axle
+										</td>
+
+										<td id="axelPrice">
+											AXLE PRICE GOES HERE
+										</td>
+
+										<td class="itemType">
+											<input id="numAxles" type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+									</tr>
+									<tr>
+										<td>
+										6. Wagon Tongue
+										</td>
+
+										<td id="toungePrice">
+											TONGUE PRICE GOES HERE
+										</td>
+
+										<td class="itemType">
+											<input id="numTongues" type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+									</tr>
+								</table>
+
+								<BUTTON> Finish </BUTTON>
+							</div>
+
+
+
+
+
+
 
 						</td>
 					</tr>

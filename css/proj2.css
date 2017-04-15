@@ -23,6 +23,12 @@ table, tr, td{
 	font-size: 20px;
 	text-align: center;
 }
+
+.itemType{
+	width: 50%;
+	text-align: left;
+}
+
 div{
 	width: 100%;
 	text-align: center;
@@ -52,9 +58,12 @@ p{
 
 }
 
-#travelTrail, #differences, #learnMore, #seeTopTen, #managementOptions, #chooseNames, #startMonth{
+#travelTrail, #differences, #learnMore, #seeTopTen, #managementOptions, 
+#chooseNames, #startMonth, #monthAdvice, #goToStore, #helloMatt,
+#theStore{
 	display: none;
 }
+
 
 #nameError{
 	color: red;
