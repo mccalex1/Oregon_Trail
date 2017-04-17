@@ -160,22 +160,22 @@ function setMonth(theMonth){
 function setUpHighScores(){
 
 	var scores = [];
-	var scoreID = document.getElementById("highScores");
-	var url = "http://localhost/proj2/getHighscores.php"; 
+	var table = document.getElementById("highScores");
+	var url = "http://localhost/proj2/php/getHighscores.php"; 
 	
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
-        	xmlhttp = new XMLHttpRequest();
+        xmlhttp = new XMLHttpRequest();
 	} else {
-        	// code for IE6, IE5
-        	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    	}
-    	xmlhttp.onreadystatechange = function() {
-        	if (this.readyState == 4 && this.status == 200) {
-            		scores = JSON.parse(this.responseText);
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        	scores = JSON.parse(this.responseText);
 
-            //takes scores json and pulls out the name and score for each perrson
-            //creates a new row with two columns and inserts the data
+        	//takes scores json and pulls out the name and score for each perrson
+        	//creates a new row with two columns and inserts the data
 			for(var i=0; i<scores.length; i++){
 				
 				var row = table.insertRow(-1);
@@ -185,42 +185,38 @@ function setUpHighScores(){
 
 				var cell2 = row.insertCell(1);
 				cell2.innerHTML = scores[i].score;
-				
-				//scoreID.innerHTML += "Name: " + scores[i].name + " Score: " + scores[i].score + "<br>";
-			}
+			}	
 
-        	}
-    	};
-    	xmlhttp.open("GET", url ,true);
-    	xmlhttp.send();
+        }
+    };
+    xmlhttp.open("GET", url ,true);
+    xmlhttp.send();
 
 }
 
 
 
 
-function addHighScore(){
+function addHighScore(name, score){
 	
-	//TODO update how name and score are retrieved
-	var name = document.getElementById("nameInput").value;
-	var score = getCurrentScore();
-	var url = "http://localhost/proj2/addHighscore.php";
+	var url = "http://localhost/proj2/php/addHighscore.php";
 
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
-        	xmlhttp = new XMLHttpRequest();
+        xmlhttp = new XMLHttpRequest();
 	} else {
-        	// code for IE6, IE5
-        	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    	}
-    	xmlhttp.onreadystatechange = function() {
-        	if (this.readyState == 4 && this.status == 200) {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
 			var response = this.responseText;
-        	}
-    	};
+        }
+    };
+
 	var query = "?q=" + name + "," + score;
-    	xmlhttp.open("GET", url + query ,true);
-    	xmlhttp.send();
+    xmlhttp.open("GET", url + query, true);
+    xmlhttp.send();
 
 }
 
@@ -245,5 +241,72 @@ function updateSubTotal(numDiv, subDiv, item){
 
 }
 
+function getTimestamp(){
 
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = date.getMonth();
+	if(month < 10){month = "0" + month;}
+	var day = date.getDate();
+	if(day < 10){day = "0"+ day;}
+	var hour = date.getHours();
+	if(hour < 10){hour = "0" + hour;}
+	var minute = date.getMinutes();
+	if(minute < 10){minute = "0" + minute;}
+	var second = date.getSeconds();
+	if(second < 10){second = "0" + second;}
+	return(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
 
+}
+
+function getTombtones(lowerBound, upperBound){
+
+	var tombstones = [];
+	var url = "http://localhost/proj2/php/getTombstones.php"; 
+	
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+	} else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            tombstones = JSON.parse(this.responseText);
+
+            //tombstones[i] .timestamp .DOD .name .mile .message
+
+        }
+    };
+    	
+    query = "?q=" + lowerBound + "," + upperBound;
+    xmlhttp.open("GET", url + query, true);
+    xmlhttp.send();
+
+}
+
+function addTombstone(name, dateOfDeath, mile, message){
+
+	//TODO update how name and score are retrieved
+	var timestamp = getTimestamp();
+	var url = "http://localhost/proj2/php/addTombstone.php";
+
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+	} else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+			var response = this.responseText;
+        }
+    };
+
+	var query = "?q=" + timestamp + "," + dateOfDeath + "," + name + "," + mile + "," + message;
+    xmlhttp.open("GET", url + query, true);
+    xmlhttp.send();
+
+}
