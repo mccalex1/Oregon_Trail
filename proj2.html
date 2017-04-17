@@ -149,6 +149,8 @@
 							</div>
 
 
+
+
 							<!-- Choose names for party -->
 							<div id="chooseNames">
 
@@ -174,6 +176,9 @@
 								<p id="nameError"></p>
 
 							</div>
+
+
+
 
 
 							<!-- Figures out what month the user wants to travel -->
@@ -236,6 +241,8 @@
 							</div>
 
 
+
+
 							<!-- show menu with matt and see what he has to say -->
 							<div id="helloMatt">
 								<p>
@@ -272,8 +279,7 @@
 
 							<!-- Store UI -->
 							<div id="theStore">
-								<h2> Matt's General Store </h2>
-								<h2> Independence, Missouri </h2>
+								<h2 id="storeName"> </h2>
 
 								<p id="dateGoesHere"> </p>
 								<p id="moneyGoesHere"> </p>
@@ -351,7 +357,7 @@
 										</td>
 
 										<td>
-											<input onchange="updateSubTotal('numWheels', 'wheelSub', 'parts')" id="numWheels" value='0' type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+											<input onchange="updateSubTotal('numWheels', 'wheelSub', 'parts')" id="numWheels" value='0' type="number" name="quantity" min="1" max="9" onkeypress="if(this.value.length==1) return false;">	
 										</td>
 										<td id="wheelSub">
 											0
@@ -367,7 +373,7 @@
 										</td>
 
 										<td>
-											<input onchange="updateSubTotal('numAxles', 'axelSub', 'parts')" id="numAxles" value='0' type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+											<input onchange="updateSubTotal('numAxles', 'axelSub', 'parts')" id="numAxles" value='0' type="number" name="quantity" min="1" max="9" onkeypress="if(this.value.length==1) return false;">	
 										</td>
 										<td id="axelSub">
 											0
@@ -383,7 +389,7 @@
 										</td>
 
 										<td>
-											<input onchange="updateSubTotal('numTongues', 'tongueSub', 'parts')" id="numTongues" value='0' type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+											<input onchange="updateSubTotal('numTongues', 'tongueSub', 'parts')" id="numTongues" value='0' type="number" name="quantity" min="1" max="9" onkeypress="if(this.value.length==1) return false;">	
 										</td>
 										<td id="tongueSub">
 											0
@@ -406,9 +412,40 @@
 								<br>
 								<br>
 
-								<BUTTON> Finish </BUTTON>
+								<BUTTON onclick="buyStuff()"> Leave Store </BUTTON>
 							</div>
 
+
+
+							<div id="travelMenu">
+
+								<BUTTON> Continue on trail</BUTTON>
+								<br>
+								<br>
+								<BUTTON> Check supplies </BUTTON>
+								<br>
+								<br>
+								<BUTTON> Look at map </BUTTON>
+								<br>
+								<br>
+								<BUTTON> Change pace</BUTTON>
+								<br>
+								<br>
+								<BUTTON> Change food rations</BUTTON>
+								<br>
+								<br>
+								<BUTTON> Stop to rest </BUTTON>
+								<br>
+								<br>
+								<BUTTON> Attempt to trade </BUTTON>
+								<br>
+								<br>
+								<BUTTON>Talk to people </BUTTON>
+								<br>
+								<br>
+								<BUTTON> Buy supplies </BUTTON>
+
+							</div>
 
 
 

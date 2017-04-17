@@ -103,6 +103,7 @@ function chooseCareer(careerType){
 function goToStore(storeName){
 
 	currentStore = storeName;
+	document.getElementById("storeName").innerHTML = storeName + " store";
 
 	document.getElementById("moneyGoesHere").innerHTML = "You have $" + money + " to spend.";
 
@@ -110,9 +111,9 @@ function goToStore(storeName){
 	document.getElementById("oxenPrice").innerHTML = "$" + prices[storeName].oxen + " per oxen (MAX 9)";
 	document.getElementById("foodPrice").innerHTML = "$" + prices[storeName].food + " per 25lbs (MAX 9999)";
 	document.getElementById("clothingPrice").innerHTML = "$" + prices[storeName].clothes + " per pair (MAX 99)";
-	document.getElementById("wheelPrice").innerHTML = "$" + prices[storeName].parts + " per wheel (MAX 3)";
-	document.getElementById("axelPrice").innerHTML = "$" + prices[storeName].parts + " per axle (MAX 3)";
-	document.getElementById("tonguePrice").innerHTML = "$" + prices[storeName].parts + " per tongue (MAX 3)";
+	document.getElementById("wheelPrice").innerHTML = "$" + prices[storeName].parts + " per wheel (MAX 9)";
+	document.getElementById("axelPrice").innerHTML = "$" + prices[storeName].parts + " per axle (MAX 9)";
+	document.getElementById("tonguePrice").innerHTML = "$" + prices[storeName].parts + " per tongue (MAX 9)";
 	
 	openNextMenu('helloMatt', 'theStore');
 }
@@ -309,4 +310,24 @@ function addTombstone(name, dateOfDeath, mile, message){
     xmlhttp.open("GET", url + query, true);
     xmlhttp.send();
 
+}
+
+
+function buyStuff(){
+	var theTotal = parseFloat(document.getElementById("oxenSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("foodSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("clothingSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("tongueSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML)
+	theTotal += parseFloat(document.getElementById("axelSub").innerHTML); 
+
+	//invalid
+	if(theTotal > money){
+		alert("You cannot spend more money than you have!");
+	}
+
+	//valid
+	else{
+		openNextMenu("theStore", "travelMenu");
+	}
 }
