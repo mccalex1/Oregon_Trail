@@ -3,6 +3,7 @@ var money = 0;
 var mutilplyer = 0;
 var team = [];
 var month = "";
+currentStore = "";
 
 var CAREER1 = "Banker";
 var CAREER2 = "Carpenter";
@@ -101,15 +102,17 @@ function chooseCareer(careerType){
 
 function goToStore(storeName){
 
+	currentStore = storeName;
+
 	document.getElementById("moneyGoesHere").innerHTML = "You have $" + money + " to spend.";
 
 	
-	document.getElementById("oxenPrice").innerHTML = "$" + prices[storeName].oxen + " per oxen";
-	document.getElementById("foodPrice").innerHTML = "$" + prices[storeName].food + " per 25lbs";
-	document.getElementById("clothingPrice").innerHTML = "$" + prices[storeName].clothes + " per pair";
-	document.getElementById("wheelPrice").innerHTML = "$" + prices[storeName].parts + " per wheel";
-	document.getElementById("axelPrice").innerHTML = "$" + prices[storeName].parts + " per axle";
-	document.getElementById("tonguePrice").innerHTML = "$" + prices[storeName].parts + " per tongue";
+	document.getElementById("oxenPrice").innerHTML = "$" + prices[storeName].oxen + " per oxen (MAX 9)";
+	document.getElementById("foodPrice").innerHTML = "$" + prices[storeName].food + " per 25lbs (MAX 9999)";
+	document.getElementById("clothingPrice").innerHTML = "$" + prices[storeName].clothes + " per pair (MAX 99)";
+	document.getElementById("wheelPrice").innerHTML = "$" + prices[storeName].parts + " per wheel (MAX 3)";
+	document.getElementById("axelPrice").innerHTML = "$" + prices[storeName].parts + " per axle (MAX 3)";
+	document.getElementById("tonguePrice").innerHTML = "$" + prices[storeName].parts + " per tongue (MAX 3)";
 	
 	openNextMenu('helloMatt', 'theStore');
 }
@@ -220,3 +223,27 @@ function addHighScore(){
     	xmlhttp.send();
 
 }
+
+
+
+function updateSubTotal(numDiv, subDiv, item){
+
+	var number = document.getElementById(numDiv).value;
+	var sub = document.getElementById(subDiv);
+	var total = document.getElementById("total");
+
+	sub.innerHTML = Math.round( (parseInt(number) * prices[currentStore][item]) * 100) / 100;
+
+	var theTotal = parseFloat(document.getElementById("oxenSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("foodSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("clothingSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("tongueSub").innerHTML);
+	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML)
+	theTotal += parseFloat(document.getElementById("axelSub").innerHTML); 
+	
+	total.innerHTML = theTotal;
+
+}
+
+
+

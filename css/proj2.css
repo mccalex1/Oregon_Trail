@@ -29,8 +29,11 @@ table, tr, td{
 	text-align: left;
 }
 .itemType td{
-	width: 33%;
+	width: 25%;
 	text-align: left;
+}
+.itemType input{
+	width: 60px;
 }
 
 div{

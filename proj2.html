@@ -281,6 +281,20 @@
 								<table class='itemType'>
 									<tr>
 										<td>
+											Item
+										</td>
+										<td>
+											Price
+										</td>
+										<td>
+											Quantity
+										</td>
+										<td>
+											Sub-Total
+										</td>
+									</tr>
+									<tr>
+										<td>
 										1. Oxen
 										</td>
 
@@ -289,7 +303,10 @@
 										</td>
 
 										<td>
-											<input id="numOxen" type="number" name="quantity" min="1" max="9" onkeypress="if(this.value.length==1) return false;">	
+											<input  onchange="updateSubTotal('numOxen', 'oxenSub', 'oxen')" id="numOxen" value='0' type="number" name="quantity" min="1" max="9" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+										<td id="oxenSub">
+											0
 										</td>
 									</tr>
 									<tr>
@@ -302,7 +319,10 @@
 										</td>
 
 										<td>
-											<input id="numFood" type="number" name="quantity" min="1" max="9999" onkeypress="if(this.value.length==4) return false;">	
+											<input onchange="updateSubTotal('numFood', 'foodSub', 'food')" id="numFood" value='0' type="number" name="quantity" min="1" max="9999" onkeypress="if(this.value.length==4) return false;">	
+										</td>
+										<td id="foodSub">
+											0
 										</td>
 									</tr>
 									<tr>
@@ -315,7 +335,10 @@
 										</td>
 
 										<td>
-											<input id="numClothing" type="number" name="quantity" min="1" max="99" onkeypress="if(this.value.length==2) return false;">	
+											<input onchange="updateSubTotal('numClothing', 'clothingSub', 'clothes')" id="numClothing" value='0' type="number" name="quantity" min="1" max="99" onkeypress="if(this.value.length==2) return false;">	
+										</td>
+										<td id="clothingSub">
+											0
 										</td>
 									</tr>
 									<tr>
@@ -328,7 +351,10 @@
 										</td>
 
 										<td>
-											<input id="numWheels" type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+											<input onchange="updateSubTotal('numWheels', 'wheelSub', 'parts')" id="numWheels" value='0' type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+										<td id="wheelSub">
+											0
 										</td>
 									</tr>
 									<tr>
@@ -341,7 +367,10 @@
 										</td>
 
 										<td>
-											<input id="numAxles" type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+											<input onchange="updateSubTotal('numAxles', 'axelSub', 'parts')" id="numAxles" value='0' type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+										<td id="axelSub">
+											0
 										</td>
 									</tr>
 									<tr>
@@ -354,9 +383,24 @@
 										</td>
 
 										<td>
-											<input id="numTongues" type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+											<input onchange="updateSubTotal('numTongues', 'tongueSub', 'parts')" id="numTongues" value='0' type="number" name="quantity" min="1" max="3" onkeypress="if(this.value.length==1) return false;">	
+										</td>
+										<td id="tongueSub">
+											0
 										</td>
 									</tr>
+									<tr>
+										<td>
+										</td>
+
+										<td>
+										</td>
+										
+										<td>
+										</td>
+										<td id="total">
+
+										</td>
 								</table>
 
 								<br>
