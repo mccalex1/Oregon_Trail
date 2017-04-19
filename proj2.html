@@ -34,6 +34,7 @@
 								<br><br>
 
 								<BUTTON onclick="openNextMenu('oregonTrail', 'managementOptions')">Choose Management Options</BUTTON>
+								<br>
 							</div>
 
 
@@ -67,6 +68,8 @@
 								<br><br>
 								
 								<BUTTON onclick="openNextMenu('travelTrail', 'oregonTrail')"> Back To Main Menu</BUTTON>
+
+								<br>
 							</div>
 
 
@@ -82,6 +85,9 @@
 								However, the harder you have to try, the more points you deserve! Therefore, the farmer earns the greatest number of points and the banker earns the least.
 							</p>
 							<BUTTON onclick="openNextMenu('differences', 'travelTrail')"> Back To Main Menu</BUTTON>
+
+							<br>
+
 							</div>
 
 
@@ -102,6 +108,9 @@
 									If for some reason you don't survive -- your wagon burns, or thieves steal your oxen, or you run out of provisions, or you die of cholera -- don't give up! Try again..and again..until your name is up with the others on The Oregon Top Ten.
 								</p>
 								<BUTTON onclick="openNextMenu('learnMore', 'oregonTrail')"> Back To Main Menu</BUTTON>
+
+								<br>
+
 							</div>
 
 
@@ -122,6 +131,9 @@
 									</tr>
 								</table>
 								<BUTTON onclick="openNextMenu('seeTopTen', 'oregonTrail')"> Back To Main Menu</BUTTON>
+
+								<br>
+
 							</div>
 
 
@@ -146,6 +158,9 @@
 								<br><br>
 								
 								<BUTTON onclick="openNextMenu('managementOptions', 'oregonTrail')"> Return to Main Menu</BUTTON>
+
+								<br>
+
 							</div>
 
 
@@ -174,6 +189,8 @@
 								<BUTTON onclick="setNames()"> Finish </BUTTON>
 								<br>
 								<p id="nameError"></p>
+
+								<br>
 
 							</div>
 
@@ -205,6 +222,7 @@
 								<br>
 								<BUTTON onclick="openNextMenu('startMonth', 'monthAdvice')"> Ask for advice </BUTTON>
 
+								<br>
 
 							</div>
 
@@ -222,6 +240,9 @@
 								</p>
 
 								<BUTTON onclick="openNextMenu('monthAdvice', 'startMonth')"> Back </BUTTON>
+
+								<br>
+
 							</div>
 
 
@@ -238,6 +259,9 @@
 								</p>
 
 								<BUTTON onclick="openNextMenu('goToStore', 'helloMatt')"> Next </BUTTON>
+
+								<br>
+
 							</div>
 
 
@@ -269,7 +293,10 @@
 								<br>
 								<br>
 
-								<BUTTON onclick='goToStore("Matts")'> Next </BUTTON>							
+								<BUTTON onclick='goToStore("Matts")'> Next </BUTTON>		
+
+								<br>
+
 							</div>
 
 
@@ -413,13 +440,19 @@
 								<br>
 
 								<BUTTON onclick="buyStuff()"> Leave Store </BUTTON>
+
+								<br>
+
 							</div>
 
 
 
-							<div id="travelMenu">
 
-								<BUTTON> Continue on trail</BUTTON>
+
+							<!-- Menu for traveling -->
+							<div id="travelMenu">
+								<br>
+								<BUTTON onclick="openNextMenu('travelMenu', 'theTrail')"> Continue on trail </BUTTON>
 								<br>
 								<br>
 								<BUTTON> Check supplies </BUTTON>
@@ -445,10 +478,60 @@
 								<br>
 								<BUTTON> Buy supplies </BUTTON>
 
+								<br>
+
 							</div>
 
 
 
+
+
+
+							<!-- Game view -->
+							<div id="theTrail">
+								<table>
+									<tr>
+										<td>
+											<BUTTON onclick="continueTrail()"> Continue </BUTTON>
+										</td>
+										<td>
+											<BUTTON> Size up situation </BUTTON>
+										</td>
+									</tr>
+								</table>
+								<table>
+									<tr>
+										<td id="theDateGoesHere">
+											Date:
+										</td>
+									</tr>
+									<tr>
+										<td id="weatherGoesHere">
+											Weather:
+										</td>
+									</tr>
+									<tr>
+										<td id="healthGoesHere">
+											Health:
+										</td>
+									</tr>
+									<tr>
+										<td id="foodGoesHere">
+											Food:
+										</td>
+									</tr>
+									<tr>
+										<td id="nextLandmarkGoesHere">
+											Next landmark:
+										</td>
+									</tr>
+									<tr>
+										<td id="milesTraveledGoesHere">
+											Miles traveled:
+										</td>
+									</tr>
+								</table>
+							</div>
 
 
 

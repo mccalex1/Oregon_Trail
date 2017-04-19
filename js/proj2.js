@@ -2,12 +2,23 @@ var careerChosen = "";
 var money = 0;
 var mutilplyer = 0;
 var team = [];
-var month = "";
+
+//variables based on traveling
+var theDate;
+var theWeather;
+var theHealth = [100, 100, 100, 100, 100];
+var theFood = 0;
+var nextLandmark = "Kansas River Crossing";
+var milesTraveled = 0;
+
 currentStore = "";
 
 var CAREER1 = "Banker";
 var CAREER2 = "Carpenter";
 var CAREER3 = "Farmer";
+
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  					"July", "August", "September", "October", "November", "December"];
 
 var careers = 	{
 					"Banker" : {"money": "1600", "pointMultiplyer": "1"},
@@ -15,6 +26,14 @@ var careers = 	{
 					"Farmer" : {"money": "400", "pointMultiplyer": "3"}
 				};
 
+//health points based on weather
+var weather =   {
+					"Snowy":  {"health": -2},
+					"Cold":   {"health": -1},
+					"Cool":   {"health": 0},
+					"Warm":   {"health": 1},
+					"Hot":    {"health": 2}
+				};
 
 //POINT CONSTANTS USE THIS WEBSITE
 //https://www.gamefaqs.com/pc/577345-the-oregon-trail/faqs/9660
@@ -150,7 +169,38 @@ function setNames(){
 
 
 function setMonth(theMonth){
-	month = theMonth;
+
+	var m;
+
+	switch(theMonth){
+		case "March":
+			theWeather = "Snowy";
+			m = 3;
+			break;
+		
+		case "April":
+			theWeather = "Cold";
+			m = 4;
+			break;
+		
+		case "May":
+			theWeather = "Cool";
+			m = 5;
+			break;
+		
+		case "June":
+			theWeather = "Warm";
+			m = 6;
+			break;
+
+		case "July":
+			theWeather = "Hot";
+			m = 7;
+			break;
+	}
+
+	theDate = new Date(1880, m, 0);
+
 	openNextMenu("startMonth", "goToStore");
 }
 
@@ -313,21 +363,86 @@ function addTombstone(name, dateOfDeath, mile, message){
 }
 
 
+
 function buyStuff(){
-	var theTotal = parseFloat(document.getElementById("oxenSub").innerHTML);
-	theTotal += parseFloat(document.getElementById("foodSub").innerHTML);
-	theTotal += parseFloat(document.getElementById("clothingSub").innerHTML);
-	theTotal += parseFloat(document.getElementById("tongueSub").innerHTML);
-	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML)
-	theTotal += parseFloat(document.getElementById("axelSub").innerHTML); 
+
+	var totalPrice = 0;
+
+	var oxenSub = parseFloat(document.getElementById("oxenSub").innerHTML);
+	var foodSub = parseFloat(document.getElementById("foodSub").innerHTML);
+	var clothingSub = parseFloat(document.getElementById("clothingSub").innerHTML);
+	var tongueSub = parseFloat(document.getElementById("tongueSub").innerHTML);
+	var wheelSub = parseFloat(document.getElementById("wheelSub").innerHTML)
+	var axelSub = parseFloat(document.getElementById("axelSub").innerHTML); 
+
+	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axelSub;
 
 	//invalid
-	if(theTotal > money){
+	if(totalPrice > money){
 		alert("You cannot spend more money than you have!");
 	}
 
 	//valid
 	else{
 		openNextMenu("theStore", "travelMenu");
+		theFood += foodSub;
+	}
+
+	setTravelValues();
+}
+
+
+
+function continueTrail(){
+
+	setTravelValues();
+
+}
+
+function setTravelValues(){
+
+	//there are two places where the date should go
+	//for some reason they cant have the same name
+	document.getElementById("dateGoesHere").innerHTML = "Date: " + monthNames[theDate.getMonth()] + " " + theDate.getDate() + " " + theDate.getFullYear();
+	document.getElementById("theDateGoesHere").innerHTML = "Date: " + monthNames[theDate.getMonth()] + " " + theDate.getDate() + " " + theDate.getFullYear();
+	
+	document.getElementById("weatherGoesHere").innerHTML = "Weather: " + theWeather;
+	document.getElementById("healthGoesHere").innerHTML = "Health: " + getHealth();
+	document.getElementById("foodGoesHere").innerHTML = "Food: " + theFood;
+	document.getElementById("nextLandmarkGoesHere").innerHTML = "Next landmark: " + nextLandmark;
+	document.getElementById("milesTraveledGoesHere").innerHTML = "Miles traveled: " + milesTraveled;
+}
+
+
+
+
+
+//based on current health get what the value should be
+function getHealth(){
+	var totalDead = 0;
+	var totalHealth = 0;
+
+	//gets total health among people
+	for(var i = 0; i < theHealth.length; i++){
+
+		//checks if dead
+		if(theHealth[i] == 0){
+			totalDead += 1;
+		}
+		totalHealth += theHealth[i];
+	}
+
+	var avgHealth = totalHealth / (theHealth.length - totalDead);
+
+
+	//comes up with a health check system
+	if(avgHealth > 75){
+		return "Good";
+	}
+	else if(avgHealth > 50){
+		return "Fair";
+	}
+	else{
+		return "Poor";
 	}
 }
