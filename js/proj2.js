@@ -26,6 +26,13 @@ var careers = 	{
 					"Farmer" : {"money": "400", "pointMultiplyer": "3"}
 				};
 
+var monthWeather = [
+						["Snowy", "Cold", "Cool"],	//march
+						["Snowy", "Cold", "Cool"],	//april
+						["Cold", "Cool", "Warm"],	//may
+						["Cool", "Warm", "Hot"],	//June
+						["Cool", "Warm", "Hot"],	//july
+					];
 //health points based on weather
 var weather =   {
 					"Snowy":  {"health": -2},
@@ -47,14 +54,22 @@ var foodPointPer25 = 1;
 var cashPointPer5 = 1;
 
 //rationing constants
-var fillingPerDay = 3;
-var meagerPerDay = 2;
-var barebonesPerDay = 1;
+var currentRationing = "Filling";
+var rationingChoices = {
+						"Filling" 	: {lbsPer : 3, health: 0},		//per person
+						"Meager" 	: {lbsPer : 2, health: -1},		//per person
+						"Barebones" : {lbsPer : 1, health: -2},		//per person
+						"None" 		: {lbsPer : 0, health: -3},		//per person
+						};
 
 //pace constants
-var gruelingPace = 1;
-var strenuousPace = .75;
-var steadyPace = .5;
+var currentPace = "Steady";
+var paceChoices = 	{
+						"Grueling" 	: {ratio : 1, health: -4},		//per person
+						"Strenuous" : {ratio : .75, health: -2},	//per person
+						"Steady" 	: {ratio : .5, health: 0}		//per person
+//						"Resting" 	: {ratio : 0, health: 1},		//per person
+					};
 
 //random event list
 var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken", 
@@ -89,11 +104,8 @@ var placesMiles = 	{
 
 
 function openNextMenu(currentDiv, nextDivId){
-
 	document.getElementById(currentDiv).style.display = "none";
-
 	document.getElementById(nextDivId).style.display = "block";
-
 }
 
 
@@ -122,11 +134,11 @@ function chooseCareer(careerType){
 function goToStore(storeName){
 
 	currentStore = storeName;
-	document.getElementById("storeName").innerHTML = storeName + " store";
 
+	document.getElementById("storeName").innerHTML = storeName + " store";
 	document.getElementById("moneyGoesHere").innerHTML = "You have $" + money + " to spend.";
 
-	
+	//set up shop with prices of stuff
 	document.getElementById("oxenPrice").innerHTML = "$" + prices[storeName].oxen + " per oxen (MAX 9)";
 	document.getElementById("foodPrice").innerHTML = "$" + prices[storeName].food + " per 25lbs (MAX 9999)";
 	document.getElementById("clothingPrice").innerHTML = "$" + prices[storeName].clothes + " per pair (MAX 99)";
@@ -140,7 +152,7 @@ function goToStore(storeName){
 
 
 function setNames(){
-	
+	//get names in the elements
 	var name1 = document.getElementById("name1").value;
 	var name2 = document.getElementById("name2").value;
 	var name3 = document.getElementById("name3").value;
@@ -172,34 +184,33 @@ function setMonth(theMonth){
 
 	var m;
 
+	//set month of the year
 	switch(theMonth){
 		case "March":
-			theWeather = "Snowy";
-			m = 3;
+			m = 2;
 			break;
 		
 		case "April":
-			theWeather = "Cold";
-			m = 4;
+			m = 3;
 			break;
 		
 		case "May":
-			theWeather = "Cool";
-			m = 5;
+			m = 4;
 			break;
 		
 		case "June":
-			theWeather = "Warm";
-			m = 6;
+			m = 5;
 			break;
 
 		case "July":
-			theWeather = "Hot";
-			m = 7;
+			m = 6;
 			break;
 	}
 
-	theDate = new Date(1880, m, 0);
+	theDate = new Date(1880, m, 1);
+	
+	//updates weather based on month
+	updateWeather();
 
 	openNextMenu("startMonth", "goToStore");
 }
@@ -272,15 +283,18 @@ function addHighScore(name, score){
 }
 
 
-
+//inside shop
+//gets subTotals of stuff
 function updateSubTotal(numDiv, subDiv, item){
 
 	var number = document.getElementById(numDiv).value;
 	var sub = document.getElementById(subDiv);
 	var total = document.getElementById("total");
 
+	//changes sub total of current item
 	sub.innerHTML = Math.round( (parseInt(number) * prices[currentStore][item]) * 100) / 100;
 
+	//adds up totals of all items
 	var theTotal = parseFloat(document.getElementById("oxenSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("foodSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("clothingSub").innerHTML);
@@ -368,6 +382,7 @@ function buyStuff(){
 
 	var totalPrice = 0;
 
+	//gets sub total of all items
 	var oxenSub = parseFloat(document.getElementById("oxenSub").innerHTML);
 	var foodSub = parseFloat(document.getElementById("foodSub").innerHTML);
 	var clothingSub = parseFloat(document.getElementById("clothingSub").innerHTML);
@@ -377,27 +392,46 @@ function buyStuff(){
 
 	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axelSub;
 
-	//invalid
+	//invalid amount of money
 	if(totalPrice > money){
 		alert("You cannot spend more money than you have!");
 	}
 
-	//valid
+	//valid amount of money
 	else{
 		openNextMenu("theStore", "travelMenu");
-		theFood += foodSub;
+		theFood = document.getElementById("numFood").value;
 	}
 
 	setTravelValues();
 }
 
 
-
+//this function is called whenever continue is pressed while user is traveling
 function continueTrail(){
 
+	//increment date before getting weather because weather is based off of month
+	theDate.setDate(theDate.getDate() + 1);
+
+	//function that uses the current month to update the weather based on that month
+	//function should also update the health
+	updateWeather();
+
+	//takes current food and updates it based on how much they are eating
+	//this function should also update the health
+	updateFood();
+
+	//takes current distance and updates it based on ox and speed up to an amount
+	//function should also update the health
+	//updateDistance();
+
+
+	getHealth();
 	setTravelValues();
 
+	console.log("Health Bars: " + theHealth);
 }
+
 
 function setTravelValues(){
 
@@ -414,6 +448,106 @@ function setTravelValues(){
 }
 
 
+
+
+
+
+
+
+//gets random weather based upon the month
+function updateWeather(){
+
+	month = theDate.getMonth();
+
+	var weatherChoices;
+
+
+	//december, jan, feb, march
+	if(month >= 11 || month <= 3){
+		weatherChoices = monthWeather[0];
+	}
+		
+	//april
+	if(month == 4){
+		weatherChoices = monthWeather[1];
+	}
+
+	//may
+	if(month == 5){
+		weatherChoices = monthWeather[2];
+	}
+
+	//june
+	if(month == 6){
+		weatherChoices = monthWeather[3];	
+	}
+		
+	//july, aug, sept, oct
+	if(month >= 7 && month <= 10){
+		weatherChoices = monthWeather[4];
+	}
+
+	theWeather = weatherChoices[Math.floor(Math.random() * weatherChoices.length)];
+
+	updateHealth(weather[theWeather].health);
+}
+
+
+
+
+//updates food
+function updateFood(){
+
+	var tempRation = currentRationing;
+
+	//if they currently have no food they lose a bunch of points
+	if(theFood == 0){
+		tempRation = "None";
+	}
+
+
+
+	//count how many are still alive, and then deduct the total food left based on rationing and num people
+	else if(theFood != 0){
+
+		var numAlive = 0;
+		for(var i =0; i < theHealth.length; i++){
+			if(theHealth[i] > 0){
+				numAlive += 1;
+			}
+		}
+
+		theFood -= numAlive * rationingChoices[currentRationing].lbsPer;
+
+		if(theFood < 0){
+			theFood = 0;
+		}
+	}
+
+
+	//update health based on how well they are being fed
+	updateHealth(rationingChoices[tempRation].health);
+
+}
+
+
+//adds whatever health constant is passed in
+//if someone falls below 0 they die
+function updateHealth(healthChange){
+	for(var i = 0; i < theHealth.length; i++){
+
+		//player cannot be ressurected if already dead
+		if(theHealth[i] != 0){
+			theHealth[i] += healthChange
+		}
+
+		//the player dies
+		if(theHealth[i] < 0){
+			theHealth[i] = 0;
+		}
+
+	}
+}
 
 
 
@@ -442,34 +576,51 @@ function getHealth(){
 	else if(avgHealth > 50){
 		return "Fair";
 	}
-	else{
+	else if(avgHealth > 0){
 		return "Poor";
+	}
+	else{
+		return "Dead";
 	}
 }
 
+
+
+
+//pulls up all supplies?
 function checkSupplies(){
 
 }
 
+//pulls up the map?
 function lookAtMap(){
 
 }
 
-function changePace(){
-
+//changes pace based on button selected
+//PROBABLY SHOULD GO BACK A MENU AFTER
+function changePace(paceChosen){
+	currentPace = paceChosen;
 }
 
-function changeFoodRations(){
-
+//changes rationing based on button selected
+//PROBABLY SHOULD GO BACK A MENU AFTER
+function changeFoodRations(rationsChosen){
+	currentRationing = rationsChosen;
 }
 
+//complex function
+//does more than just advance days
+//similar to continue trail
 function stopToRest(){
 
 }
 
+
 function attemptToTrade(){
 
 }
+
 function talkToPeople(){
 
 }
