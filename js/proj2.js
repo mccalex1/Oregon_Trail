@@ -33,13 +33,14 @@ var monthWeather = [
 						["Cool", "Warm", "Hot"],	//June
 						["Cool", "Warm", "Hot"],	//july
 					];
+
 //health points based on weather
 var weather =   {
 					"Snowy":  {"health": -2},
 					"Cold":   {"health": -1},
 					"Cool":   {"health": 0},
-					"Warm":   {"health": 1},
-					"Hot":    {"health": 2}
+					"Warm":   {"health": -1},
+					"Hot":    {"health": -2}
 				};
 
 //POINT CONSTANTS USE THIS WEBSITE
