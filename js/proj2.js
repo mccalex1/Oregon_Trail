@@ -446,3 +446,30 @@ function getHealth(){
 		return "Poor";
 	}
 }
+
+function checkSupplies(){
+
+}
+
+function lookAtMap(){
+
+}
+
+function changePace(){
+
+}
+
+function changeFoodRations(){
+
+}
+
+function stopToRest(){
+
+}
+
+function attemptToTrade(){
+
+}
+function talkToPeople(){
+
+}
