@@ -8,7 +8,7 @@ var theDate;
 var theWeather;
 var theHealth = [100, 100, 100, 100, 100];
 var theFood = 0;
-var nextLandmark = "Kansas River Crossing";
+var nextLandmark = "";
 var milesTraveled = 0;
 
 currentStore = "";
@@ -80,6 +80,11 @@ var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken",
 
 //prices based on place
 //2 oxen, 1 pound of food
+var theOxen = 0;
+var theClothes = 0;
+var theWheels = 0;
+var theAxels = 0;
+var theTongues = 0;
 var prices = { 
 				"Matts" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
 				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
@@ -90,16 +95,21 @@ var prices = {
 				"Ft. Walla Walla" : {'oxen': '50', 'clothes': '25', 	'parts': '25', 		'food': '.5'}	
 			};
 
+
 //miles from start
-var placesMiles = 	{
-						"Independence, MO" : 		{'distance' : '102'},
-						"Kansas River Crossing" : 	{'distance' : '83'},
-						"Big Blue River Crossing" :	{'distance' : '119'},
-						"Ft. Kearney" :				{'distance' : '250'},
-						"Chimney Rock" : 			{'distance' : '86'},
-						"Ft. Laramie" :				{'distance' : '190'},
-						"Independence Rock" : 		{'distance' : '102'}
-					};
+var currentLandmark = 0;
+var milesWithThisLandmark = 0;
+var placesMiles = 	[
+
+						{"place" : "Independence, MO",				'distance' : 0},	//landmark 0
+						{"place" : "Kansas River Crossing",			'distance' : 102},	//landmark 1
+						{"place" : "Big Blue River Crossing",		'distance' : 83},	//landmark 2
+						{"place" : "Ft. Kearney",					'distance' : 119},	//landmark 3
+						{"place" : "Chimney Rock", 					'distance' : 250},	//landmark 4
+						{"place" : "Ft. Laramie", 					'distance' : 86},	//landmark 5
+						{"place" : "Independence Rock", 			'distance' : 190},	//landmark 6
+						{"place" : "South Pass",					'distance' : 102}	//landmark 7
+					];
 					
 
 
@@ -110,6 +120,21 @@ function openNextMenu(currentDiv, nextDivId){
 }
 
 
+//when the user is in a landmark menu and hits continue on trail
+function continueFromLandmark(){
+
+	//update landmark counter
+	currentLandmark += 1;
+
+	//update with next landmark
+	updateLandmark();
+
+	//updates the travel values with updated stuff
+	setTravelValues();
+
+	openNextMenu('landmarkWithShopMenu', 'theTrail');
+
+}
 
 
 //onload function should set up and data that needs to be pulled from js file
@@ -400,12 +425,19 @@ function buyStuff(){
 
 	//valid amount of money
 	else{
-		openNextMenu("theStore", "travelMenu");
+		openNextMenu("theStore", "landmarkWithShopMenu");
 		theFood = document.getElementById("numFood").value;
+		theOxen = document.getElementById("numOxen").value;
+		theClothes = document.getElementById("numClothing").value;
+		theTongues = document.getElementById("numTongues").value;
+		theAxels = document.getElementById("numAxles").value;
+		theWheels = document.getElementById("numWheels").value;
 	}
 
 	setTravelValues();
 }
+
+
 
 
 //this function is called whenever continue is pressed while user is traveling
@@ -424,7 +456,18 @@ function continueTrail(){
 
 	//takes current distance and updates it based on ox and speed up to an amount
 	//function should also update the health
-	//updateDistance();
+	updateDistance();
+
+
+	//updates next landmark with distance and changes name of landmark if it goes over
+	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
+
+		alert("You made it to " + placesMiles[currentLandmark].place);
+		currentLandmark += 1;
+		milesWithThisLandmark = 0;
+	}
+
+	updateLandmark();
 
 
 	getHealth();
@@ -432,6 +475,8 @@ function continueTrail(){
 
 	console.log("Health Bars: " + theHealth);
 }
+
+
 
 
 function setTravelValues(){
@@ -444,15 +489,66 @@ function setTravelValues(){
 	document.getElementById("weatherGoesHere").innerHTML = "Weather: " + theWeather;
 	document.getElementById("healthGoesHere").innerHTML = "Health: " + getHealth();
 	document.getElementById("foodGoesHere").innerHTML = "Food: " + theFood;
-	document.getElementById("nextLandmarkGoesHere").innerHTML = "Next landmark: " + nextLandmark;
+
+	//update with next landmark
+	var thisJson = placesMiles[currentLandmark];
+	document.getElementById("nextLandmarkGoesHere").innerHTML = nextLandmark;
+
 	document.getElementById("milesTraveledGoesHere").innerHTML = "Miles traveled: " + milesTraveled;
 }
 
 
 
+//changes distance based on number of oxen
+//Subtracts a random number between 0-2 from distance for randomness
+//updates health when done
+function updateDistance(){
+
+	var milesToAdd = 4 * theOxen * paceChoices[currentPace].ratio;
+	var max = 0;
 
 
+	//based on pace there can only be so much change in distance
+	if(currentPace == "Grueling"){
+		max = 50;
+	}
+	
+	else if(currentPace == "Strenuous"){
+		max = 40;
+	}
 
+	else if(currentPace ==	"Steady"){
+		max = 30;
+	}
+
+
+	//can only go a max of so many miles
+	if(milesToAdd > max){
+		milesToAdd = max;
+	}
+
+	milesToAdd -= Math.floor(Math.random() * 3);
+
+	//if overshoot a landmark, go back to the landmark
+	if(milesToAdd + milesWithThisLandmark > placesMiles[currentLandmark].distance){
+		milesToAdd = placesMiles[currentLandmark].distance - milesWithThisLandmark;
+	}
+
+
+	//add total miles
+	milesWithThisLandmark += milesToAdd;
+	milesTraveled += milesToAdd;
+
+
+	//update the health with the current pace they're goin at
+	updateHealth(paceChoices[currentPace].health);
+}
+
+
+function updateLandmark(){
+	var thisJson = placesMiles[currentLandmark];
+	nextLandmark = "Next landmark: " + thisJson.place + "(" + (thisJson.distance - milesWithThisLandmark) + " miles)";
+}
 
 
 //gets random weather based upon the month
@@ -584,8 +680,6 @@ function getHealth(){
 		return "Dead";
 	}
 }
-
-
 
 
 //pulls up all supplies?
