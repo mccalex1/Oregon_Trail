@@ -108,24 +108,24 @@ var placesMiles = 	[
 						{"place" : "Chimney Rock", 					'distance' : 250},	//landmark 4
 						{"place" : "Ft. Laramie", 					'distance' : 86},	//landmark 5
 						{"place" : "Independence Rock", 			'distance' : 190},	//landmark 6
-						{"place" : "South Pass",					'distance' : 102}	//landmark 7
+						{"place" : "South Pass",					'distance' : 102},	//landmark 7
 
 						//road splits here
-						{"place" : "Green River",					'distance' : 57}	//landmark (8) 8.1
-						{"place" : "Fort Bridge",					'distance' : 125}	//landmark (9) 8.2
-						{"place" : "Soda Springs",					'distance' : 144}	//landmark (10) 9.1 distance from green river
-						{"place" : "Soda Springs",					'distance' : 162}	//landmark (11) 9.2 distance from fort bridge
+						{"place" : "Green River",					'distance' : 57},	//landmark (8) 8.1
+						{"place" : "Fort Bridge",					'distance' : 125},	//landmark (9) 8.2
+						{"place" : "Soda Springs",					'distance' : 144},	//landmark (10) 9.1 distance from green river
+						{"place" : "Soda Springs",					'distance' : 162},	//landmark (11) 9.2 distance from fort bridge
 
 						//road comes back together
-						{"place" : "Ft. Hall",						'distance' : 57}	//landmark 12 
-						{"place" : "Snake River",					'distance' : 182}	//landmark 13 
-						{"place" : "Ft. Boise",						'distance' : 114}	//landmark 14 
-						{"place" : "Blue Mountain",					'distance' : 160}	//landmark 15 
+						{"place" : "Ft. Hall",						'distance' : 57},	//landmark 12 
+						{"place" : "Snake River",					'distance' : 182},	//landmark 13 
+						{"place" : "Ft. Boise",						'distance' : 114},	//landmark 14 
+						{"place" : "Blue Mountain",					'distance' : 160},	//landmark 15 
 
 						//road splits here
-						{"place" : "Ft. Walla Walla",				'distance' : 55}	//landmark (16) 16.1
-						{"place" : "The Dalles",					'distance' : 120}	//landmark (17) 17.1 distance from ft walla
-						{"place" : "The Dalles",					'distance' : 125}	//landmark (18) 17.2  distance from blue mountain
+						{"place" : "Ft. Walla Walla",				'distance' : 55},	//landmark (16) 16.1
+						{"place" : "The Dalles",					'distance' : 125},	//landmark (18) 17.1 distance from blue mountain
+						{"place" : "The Dalles",					'distance' : 120},	//landmark (17) 17.2 distance from ft walla
 
 						//road comes back together
 						{"place" : "Barlow Toll Road",				'distance' : 100}	//landmark 19
@@ -482,9 +482,22 @@ function continueTrail(){
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
 
+
+
 		alert("You made it to " + placesMiles[currentLandmark].place);
-		currentLandmark += 1;
+
+		//if green river or fort walla walla we need to increase by 2
+		if(currentLandmark == 8 || currentLandmark == 10 || currentLandmark == 16){
+			currentLandmark += 2;
+		}
+		else{
+			currentLandmark += 1;
+		}
 		milesWithThisLandmark = 0;
+
+		if(currentLandmark == 8 || currentLandmark == 10 || currentLandmark == 16){
+			alert("Taking " + placesMiles[currentLandmark].place + " path by default");
+		}
 	}
 
 	updateLandmark();
