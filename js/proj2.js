@@ -452,6 +452,7 @@ function buyStuff(){
 		theTongues = document.getElementById("numTongues").value;
 		theAxels = document.getElementById("numAxles").value;
 		theWheels = document.getElementById("numWheels").value;
+		money -= totalPrice;
 	}
 
 	setTravelValues();
@@ -724,8 +725,14 @@ function getHealth(){
 
 //pulls up all supplies?
 function checkSupplies(divId){
+	document.getElementById("numberOfOxen").innerHTML = theOxen;
+	document.getElementById("numberOfClothes").innerHTML = theClothes;
+	document.getElementById("numberOfWheels").innerHTML = theWheels;
+	document.getElementById("numberOfAxles").innerHTML = theAxels;
+	document.getElementById("numberOfTongues").innerHTML = theTongues;
+	document.getElementById("numberOfFood").innerHTML = theFood;
+	document.getElementById("numberOfMoney").innerHTML = "$" + money;
 	openNextMenu(divId, "suppliesMenu");
-
 }
 
 //pulls up the map?

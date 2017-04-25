@@ -71,7 +71,10 @@ p{
 
 #travelTrail, #differences, #learnMore, #seeTopTen, #managementOptions, 
 #chooseNames, #startMonth, #monthAdvice, #goToStore, #helloMatt,
-#theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu{
+#theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
+#paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu
+
+{
 	display: none;
 }
 

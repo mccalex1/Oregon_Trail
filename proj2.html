@@ -458,22 +458,22 @@
 								<BUTTON onclick="checkSupplies('landmarkWithShopMenu')"> Check supplies </BUTTON>
 								<br>
 								<br>
-								<BUTTON> Look at map </BUTTON>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu', 'mapMenu')"> Look at map </BUTTON>
 								<br>
 								<br>
-								<BUTTON> Change pace</BUTTON>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','paceMenu')"> Change pace</BUTTON>
 								<br>
 								<br>
-								<BUTTON> Change food rations</BUTTON>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','foodMenu')"> Change food rations</BUTTON>
 								<br>
 								<br>
-								<BUTTON> Stop to rest </BUTTON>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','restMenu')"> Stop to rest </BUTTON>
 								<br>
 								<br>
-								<BUTTON> Attempt to trade </BUTTON>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','tradeMenu')"> Attempt to trade </BUTTON>
 								<br>
 								<br>
-								<BUTTON>Talk to people </BUTTON>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','talkMenu')">Talk to people </BUTTON>
 								<br>
 								<br>
 								<BUTTON> Buy supplies </BUTTON>
@@ -532,6 +532,120 @@
 									</tr>
 								</table>
 							</div>
+
+
+							<!-- menu that shows all the supplies left -->
+							<div id="suppliesMenu">
+								<table>
+									<tr>
+										<td>
+											Oxen
+										</td>
+										<td id="numberOfOxen">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Clothing
+										</td>
+										<td id="numberOfClothes">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Wagon Wheels
+										</td>
+										<td id="numberOfWheels">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Wagon Axles
+										</td>
+										<td id="numberOfAxles">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Wagon Tongues
+										</td>
+										<td id="numberOfTongues">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Pounds of Food
+										</td>
+										<td id="numberOfFood">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Money Left
+										</td>
+										<td id="numberOfMoney">
+
+										</td>
+									</tr>
+								</table>
+								<BUTTON onclick="openNextMenu('suppliesMenu' ,'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+							
+
+							<!-- menu that displays map -->
+							<div id="mapMenu">
+								<img src="images/oregonTrailMap.gif"/>
+								<br>
+								<br>
+								<BUTTON onclick="openNextMenu('mapMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+
+
+							<!-- allows user to change pace -->
+							<div id="paceMenu">
+								pace
+								<br>
+								<BUTTON onclick="openNextMenu('paceMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+
+
+							<!-- allows user to change rationing -->
+							<div id="foodMenu">
+								food
+								<br>
+								<BUTTON onclick="openNextMenu('foodMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+
+
+							<!-- allows user to rest -->
+							<div id="restMenu">
+								rest
+								<br>
+								<BUTTON onclick="openNextMenu('restMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+
+
+							<!-- attempts to trade with people -->
+							<div id="tradeMenu">
+								trade
+								<br>
+								<BUTTON onclick="openNextMenu('tradeMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+
+
+							<!-- talks with people -->
+							<div id="talkMenu">
+								talk
+								<br>
+								<BUTTON onclick="openNextMenu('talkMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+							</div>
+
 
 
 
