@@ -11,7 +11,7 @@ var theFood = 0;
 var nextLandmark = "";
 var milesTraveled = 0;
 
-currentStore = "";
+
 
 var CAREER1 = "Banker";
 var CAREER2 = "Carpenter";
@@ -85,8 +85,15 @@ var theClothes = 0;
 var theWheels = 0;
 var theAxels = 0;
 var theTongues = 0;
+
+
+
+currentStore = "";
+currentStoreNum = 0;
+listOfStores = ["Matts", "Independence", "Ft. Kearney", "Ft. Laramie", "Ft. Bridger", "Ft. Hall", "Ft. Boise", "Ft. Walla Walla"];
 var prices = { 
 				"Matts" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
+				"Independence" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},		
 				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
 				"Ft. Laramie" : 	{'oxen': '30', 'clothes': '15', 	'parts': '15', 		'food': '.3'},
 				"Ft. Bridger" : 	{'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35'},	
@@ -94,6 +101,7 @@ var prices = {
 				"Ft. Boise" : 		{'oxen': '45', 'clothes': '22.5', 	'parts': '22.5',	'food': '.45'},	
 				"Ft. Walla Walla" : {'oxen': '50', 'clothes': '25', 	'parts': '25', 		'food': '.5'}	
 			};
+
 
 
 //miles from start
@@ -140,8 +148,17 @@ function openNextMenu(currentDiv, nextDivId){
 }
 
 
+
+
 //when the user is in a landmark menu and hits continue on trail
 function continueFromLandmark(){
+
+	//so after continue trail is pressed, we should update the currentStore number
+	//only if that landmark was a store
+	//the other place it is updated is goToStore, only for matts store
+	if(listOfStores.indexOf(currentLandmark) != -1){
+		currentStoreNum += 1;
+	}
 
 	//update landmark counter
 	currentLandmark += 1;
@@ -157,10 +174,13 @@ function continueFromLandmark(){
 }
 
 
+
+
 //onload function should set up and data that needs to be pulled from js file
 function getData(){
 	setUpHighScores();
 }
+
 
 
 
@@ -177,27 +197,39 @@ function chooseCareer(careerType){
 }
 
 
-function goToStore(storeName){
 
-	currentStore = storeName;
 
-	document.getElementById("storeName").innerHTML = storeName + " store";
+function goToStore(currentDiv){
+
+
+	currentStore = listOfStores[currentStoreNum];
+
+	//only if it's matts store we increase the number
+	//continueFromLandmark function updates other times
+	//because as soon as we continue on the trail we are done with that landmark
+	if(currentStoreNum == 0){
+		currentStoreNum += 1;
+	}
+
+
+	document.getElementById("storeName").innerHTML = currentStore + " store";
 	document.getElementById("moneyGoesHere").innerHTML = "You have $" + money + " to spend.";
 
 	//set up shop with prices of stuff
-	document.getElementById("oxenPrice").innerHTML = "$" + prices[storeName].oxen + " per oxen (MAX 9)";
-	document.getElementById("foodPrice").innerHTML = "$" + prices[storeName].food + " per 25lbs (MAX 9999)";
-	document.getElementById("clothingPrice").innerHTML = "$" + prices[storeName].clothes + " per pair (MAX 99)";
-	document.getElementById("wheelPrice").innerHTML = "$" + prices[storeName].parts + " per wheel (MAX 9)";
-	document.getElementById("axelPrice").innerHTML = "$" + prices[storeName].parts + " per axle (MAX 9)";
-	document.getElementById("tonguePrice").innerHTML = "$" + prices[storeName].parts + " per tongue (MAX 9)";
+	document.getElementById("oxenPrice").innerHTML = "$" + prices[currentStore].oxen + " per oxen (MAX 9)";
+	document.getElementById("foodPrice").innerHTML = "$" + prices[currentStore].food + " per 25lbs (MAX 9999)";
+	document.getElementById("clothingPrice").innerHTML = "$" + prices[currentStore].clothes + " per pair (MAX 99)";
+	document.getElementById("wheelPrice").innerHTML = "$" + prices[currentStore].parts + " per wheel (MAX 9)";
+	document.getElementById("axelPrice").innerHTML = "$" + prices[currentStore].parts + " per axle (MAX 9)";
+	document.getElementById("tonguePrice").innerHTML = "$" + prices[currentStore].parts + " per tongue (MAX 9)";
 	
-	openNextMenu('helloMatt', 'theStore');
+	openNextMenu(currentDiv, 'theStore');
 }
 
 
 
 function setNames(){
+
 	//get names in the elements
 	var name1 = document.getElementById("name1").value;
 	var name2 = document.getElementById("name2").value;
@@ -352,6 +384,11 @@ function updateSubTotal(numDiv, subDiv, item){
 
 }
 
+
+
+
+
+
 function getTimestamp(){
 
 	var date = new Date();
@@ -424,6 +461,11 @@ function addTombstone(name, dateOfDeath, mile, message){
 
 
 
+
+
+
+
+
 function buyStuff(){
 
 	var totalPrice = 0;
@@ -461,9 +503,13 @@ function buyStuff(){
 
 
 
+
+
 //this function is called whenever continue is pressed while user is traveling
 function continueTrail(){
-
+	console.log("Pace: " + currentPace);
+	console.log("Rationing: " + currentRationing);
+	
 	//increment date before getting weather because weather is based off of month
 	theDate.setDate(theDate.getDate() + 1);
 
@@ -507,6 +553,8 @@ function continueTrail(){
 
 	console.log("Health Bars: " + theHealth);
 }
+
+
 
 
 
@@ -583,11 +631,18 @@ function updateDistance(){
 
 
 
+
+
+
 //finds the next landmark and replaces the nextLandmark with the newest one
 function updateLandmark(){
 	var thisJson = placesMiles[currentLandmark];
 	nextLandmark = "Next landmark: " + thisJson.place + "(" + (thisJson.distance - milesWithThisLandmark) + " miles)";
 }
+
+
+
+
 
 
 
@@ -632,6 +687,10 @@ function updateWeather(){
 
 
 
+
+
+
+
 //updates food based on current rationing
 //also updates the health
 function updateFood(){
@@ -669,6 +728,11 @@ function updateFood(){
 }
 
 
+
+
+
+
+
 //adds whatever health constant is passed in
 //if someone falls below 0 they die
 function updateHealth(healthChange){
@@ -686,6 +750,10 @@ function updateHealth(healthChange){
 
 	}
 }
+
+
+
+
 
 
 
@@ -723,6 +791,10 @@ function getHealth(){
 }
 
 
+
+
+
+
 //pulls up all supplies?
 function checkSupplies(divId){
 	document.getElementById("numberOfOxen").innerHTML = theOxen;
@@ -735,21 +807,21 @@ function checkSupplies(divId){
 	openNextMenu(divId, "suppliesMenu");
 }
 
-//pulls up the map?
-function lookAtMap(){
 
-}
+
 
 //changes pace based on button selected
 //PROBABLY SHOULD GO BACK A MENU AFTER
 function changePace(paceChosen){
 	currentPace = paceChosen;
+	openNextMenu('paceMenu', 'landmarkWithShopMenu');
 }
 
 //changes rationing based on button selected
 //PROBABLY SHOULD GO BACK A MENU AFTER
 function changeFoodRations(rationsChosen){
 	currentRationing = rationsChosen;
+	openNextMenu('foodMenu', 'landmarkWithShopMenu');
 }
 
 //complex function

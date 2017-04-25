@@ -293,7 +293,7 @@
 								<br>
 								<br>
 
-								<BUTTON onclick='goToStore("Matts")'> Next </BUTTON>		
+								<BUTTON onclick='goToStore("helloMatt")'> Next </BUTTON>		
 
 								<br>
 
@@ -476,7 +476,7 @@
 								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','talkMenu')">Talk to people </BUTTON>
 								<br>
 								<br>
-								<BUTTON> Buy supplies </BUTTON>
+								<BUTTON onclick="goToStore('landmarkWithShopMenu')"> Buy supplies </BUTTON>
 
 								<br>
 
@@ -532,6 +532,10 @@
 									</tr>
 								</table>
 							</div>
+
+
+
+
 
 
 							<!-- menu that shows all the supplies left -->
@@ -595,6 +599,7 @@
 									</tr>
 								</table>
 								<BUTTON onclick="openNextMenu('suppliesMenu' ,'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
 							
 
@@ -604,23 +609,50 @@
 								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('mapMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
+
 
 
 							<!-- allows user to change pace -->
 							<div id="paceMenu">
-								pace
+								Select which pace you would like to continue at
+								<br>
+								<br>
+								<BUTTON onclick="changePace('Grueling')">Grueling</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="changePace('Strenuous')"">Strenuous</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="changePace('Steady')"">Steady</BUTTON>
+								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('paceMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
+
+
 
 
 							<!-- allows user to change rationing -->
 							<div id="foodMenu">
-								food
+								Select which pace you would eat food at
+								<br>
+								<br>
+								<BUTTON onclick="changeFoodRations('Filling')">Filling</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="changeFoodRations('Meager')"">Meager</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="changeFoodRations('Barebones')"">Barebones</BUTTON>
+								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('foodMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
+
 
 
 							<!-- allows user to rest -->
@@ -628,6 +660,7 @@
 								rest
 								<br>
 								<BUTTON onclick="openNextMenu('restMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
 
 
@@ -636,6 +669,7 @@
 								trade
 								<br>
 								<BUTTON onclick="openNextMenu('tradeMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
 
 
@@ -644,6 +678,7 @@
 								talk
 								<br>
 								<BUTTON onclick="openNextMenu('talkMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<br>
 							</div>
 
 
