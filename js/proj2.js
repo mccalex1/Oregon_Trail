@@ -482,8 +482,6 @@ function continueTrail(){
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
 
-
-
 		alert("You made it to " + placesMiles[currentLandmark].place);
 
 		//if green river or fort walla walla we need to increase by 2
@@ -512,6 +510,8 @@ function continueTrail(){
 
 
 
+//this function takes the current values and updates them with whatever values are pesent
+//does not take any parameters or give any output
 function setTravelValues(){
 
 	//there are two places where the date should go
@@ -529,6 +529,8 @@ function setTravelValues(){
 
 	document.getElementById("milesTraveledGoesHere").innerHTML = "Miles traveled: " + milesTraveled;
 }
+
+
 
 
 
@@ -578,10 +580,14 @@ function updateDistance(){
 }
 
 
+
+
+//finds the next landmark and replaces the nextLandmark with the newest one
 function updateLandmark(){
 	var thisJson = placesMiles[currentLandmark];
 	nextLandmark = "Next landmark: " + thisJson.place + "(" + (thisJson.distance - milesWithThisLandmark) + " miles)";
 }
+
 
 
 //gets random weather based upon the month
@@ -625,7 +631,8 @@ function updateWeather(){
 
 
 
-//updates food
+//updates food based on current rationing
+//also updates the health
 function updateFood(){
 
 	var tempRation = currentRationing;
@@ -716,7 +723,8 @@ function getHealth(){
 
 
 //pulls up all supplies?
-function checkSupplies(){
+function checkSupplies(divId){
+	openNextMenu(divId, "suppliesMenu");
 
 }
 
