@@ -1,7 +1,7 @@
 <?php
 $servername = "studentdb-maria.gl.umbc.edu";
 $username = "b101";
-$password = "wye32";
+$password = "lupoli433";
 $dbname = "b101";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

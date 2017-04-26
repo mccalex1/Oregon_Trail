@@ -2,7 +2,7 @@
 
 $servername = "studentdb-maria.gl.umbc.edu";
 $username = "b101";
-$password = "";
+$password = "lupoli433";
 $dbname = "b101";
 
 //get values to add
