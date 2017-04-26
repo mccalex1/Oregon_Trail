@@ -156,10 +156,11 @@ function continueFromLandmark(){
 	//so after continue trail is pressed, we should update the currentStore number
 	//only if that landmark was a store
 	//the other place it is updated is goToStore, only for matts store
+	/*
 	if(listOfStores.indexOf(currentLandmark) != -1){
 		currentStoreNum += 1;
 	}
-
+	*/
 	//update landmark counter
 	currentLandmark += 1;
 
@@ -207,9 +208,11 @@ function goToStore(currentDiv){
 	//only if it's matts store we increase the number
 	//continueFromLandmark function updates other times
 	//because as soon as we continue on the trail we are done with that landmark
+	/*
 	if(currentStoreNum == 0){
 		currentStoreNum += 1;
 	}
+	*/
 
 
 	document.getElementById("storeName").innerHTML = currentStore + " store";
@@ -509,7 +512,7 @@ function buyStuff(){
 function continueTrail(){
 	console.log("Pace: " + currentPace);
 	console.log("Rationing: " + currentRationing);
-	
+
 	//increment date before getting weather because weather is based off of month
 	theDate.setDate(theDate.getDate() + 1);
 
@@ -791,7 +794,9 @@ function getHealth(){
 }
 
 
-
+function sizeUp(){
+	openNextMenu('theTrail', 'landmarkWithShopMenu');
+}
 
 
 
