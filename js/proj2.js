@@ -391,6 +391,8 @@ function eraseTopTen(){
 
 			if(response == "Success!"){
 				openNextMenu('managementOptions','oregonTrail');
+			}else{
+				console.log(response);
 			}
         }
     };
@@ -507,6 +509,34 @@ function addTombstone(name, dateOfDeath, mile, message){
 
 
 
+//remove all tombstones from db
+function eraseTombstones(){
+		
+	var url = wampURL + "php/eraseTombstones.php";
+
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+	} else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+			var response = this.responseText;
+
+			if(response == "Success!"){
+				openNextMenu('managementOptions','oregonTrail');
+			}else{
+				console.log(response);
+			}
+        }
+    };
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+}
 
 
 
