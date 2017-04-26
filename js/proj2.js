@@ -17,6 +17,8 @@ var CAREER1 = "Banker";
 var CAREER2 = "Carpenter";
 var CAREER3 = "Farmer";
 
+var wampURL = "http://localhost/Oregon_Trail/"
+
 var monthNames = ["January", "February", "March", "April", "May", "June",
   					"July", "August", "September", "October", "November", "December"];
 
@@ -299,12 +301,12 @@ function setMonth(theMonth){
 
 
 
-
+//gets highscores from server, puts them in div for user to view
 function setUpHighScores(){
 
 	var scores = [];
 	var table = document.getElementById("highScores");
-	var url = "http://localhost/proj2/php/getHighscores.php"; 
+	var url = wampURL + "php/getHighscores.php"; 
 	
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -339,10 +341,10 @@ function setUpHighScores(){
 
 
 
-
+//adds a new highscore to the database
 function addHighScore(name, score){
 	
-	var url = "http://localhost/proj2/php/addHighscore.php";
+	var url = wampURL + "php/addHighscore.php";
 
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -391,7 +393,7 @@ function updateSubTotal(numDiv, subDiv, item){
 
 
 
-
+//creates a timestamp of the current time
 function getTimestamp(){
 
 	var date = new Date();
@@ -410,10 +412,13 @@ function getTimestamp(){
 
 }
 
+
+
+//gets all tombstones from the database in between two given points
 function getTombtones(lowerBound, upperBound){
 
 	var tombstones = [];
-	var url = "http://localhost/proj2/php/getTombstones.php"; 
+	var url = wampURL + "php/getTombstones.php"; 
 	
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -437,11 +442,13 @@ function getTombtones(lowerBound, upperBound){
 
 }
 
+
+
+//adds a new tombstone to the database
 function addTombstone(name, dateOfDeath, mile, message){
 
-	//TODO update how name and score are retrieved
 	var timestamp = getTimestamp();
-	var url = "http://localhost/proj2/php/addTombstone.php";
+	var url = wampURL + "php/addTombstone.php";
 
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
