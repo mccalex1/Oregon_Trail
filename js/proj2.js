@@ -844,3 +844,29 @@ function attemptToTrade(){
 function talkToPeople(){
 
 }
+
+//function that dtermines which menu should be opened (landmark/landmarkShop/travel)
+function whatMenu(){
+	
+	//if we're at the next land mark
+	//and the next landmark exists in the shop list
+	if(milesWithThisLandmark == placesMiles[currentLandmark].distance && 
+		prices.indexOf(placesMiles[currentLandmark].place) != -1){
+
+	}
+
+	//means we are at landmark
+	else if(milesWithThisLandmark == placesMiles[currentLandmark].distance){
+
+	}
+
+	//we are not at a landmark or a shop
+	//open another menu
+	else{
+
+	}
+	
+}
+
+
+
