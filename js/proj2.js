@@ -380,7 +380,7 @@ function updateSubTotal(numDiv, subDiv, item){
 	theTotal += parseFloat(document.getElementById("foodSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("clothingSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("tongueSub").innerHTML);
-	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML)
+	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("axelSub").innerHTML); 
 	
 	total.innerHTML = theTotal;
