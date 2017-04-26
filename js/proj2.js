@@ -29,20 +29,27 @@ var careers = 	{
 				};
 
 var monthWeather = [
-						["Snowy", "Cold", "Cool"],	//march
-						["Snowy", "Cold", "Cool"],	//april
-						["Cold", "Cool", "Warm"],	//may
-						["Cool", "Warm", "Hot"],	//June
-						["Cool", "Warm", "Hot"],	//july
+						["Very Cold", "Cold", "Cool"],			//january
+						["Very Cold", "Cold", "Cool"],    		//february
+						["Very Cold", "Cold", "Cool", "Warm"],	//march
+						["Cold", "Cool", "Warm"],				//april
+						["Cool", "Warm", "Hot"],				//may
+						["Cool", "Warm", "Hot", "Very Hot"],	//June
+						["Warm", "Hot", "Very Hot"],			//july
+						["Cool", "Warm", "Hot", "Very Hot"],    //august
+						["Cool", "Warm", "Hot"], 				//september
+						["Cold", "Cool", "Warm"], 				//november
+						["Very Cold", "Cold", "Cool", "Warm"]	//december
 					];
 
 //health points based on weather
 var weather =   {
-					"Snowy":  {"health": -2},
-					"Cold":   {"health": -1},
-					"Cool":   {"health": 0},
-					"Warm":   {"health": -1},
-					"Hot":    {"health": -2}
+					"Very Cold":{"health": -2},
+					"Cold":     {"health": -1},
+					"Cool":     {"health": 0},
+					"Warm":     {"health": 0},
+					"Hot":      {"health": -1},
+					"Very Hot": {"health": -2}
 				};
 
 //POINT CONSTANTS USE THIS WEBSITE
@@ -564,12 +571,12 @@ function buyStuff(){
 	//valid amount of money
 	else{
 		openNextMenu("theStore", "landmarkWithShopMenu");
-		theFood = document.getElementById("numFood").value;
-		theOxen = document.getElementById("numOxen").value;
-		theClothes = document.getElementById("numClothing").value;
-		theTongues = document.getElementById("numTongues").value;
-		theAxels = document.getElementById("numAxles").value;
-		theWheels = document.getElementById("numWheels").value;
+		theFood += document.getElementById("numFood").value;
+		theOxen += document.getElementById("numOxen").value;
+		theClothes += document.getElementById("numClothing").value;
+		theTongues += document.getElementById("numTongues").value;
+		theAxels += document.getElementById("numAxles").value;
+		theWheels += document.getElementById("numWheels").value;
 		money -= totalPrice;
 	}
 
@@ -727,33 +734,7 @@ function updateWeather(){
 
 	month = theDate.getMonth();
 
-	var weatherChoices;
-
-
-	//december, jan, feb, march
-	if(month >= 11 || month <= 3){
-		weatherChoices = monthWeather[0];
-	}
-		
-	//april
-	if(month == 4){
-		weatherChoices = monthWeather[1];
-	}
-
-	//may
-	if(month == 5){
-		weatherChoices = monthWeather[2];
-	}
-
-	//june
-	if(month == 6){
-		weatherChoices = monthWeather[3];	
-	}
-		
-	//july, aug, sept, oct
-	if(month >= 7 && month <= 10){
-		weatherChoices = monthWeather[4];
-	}
+	var weatherChoices = monthWeather[month];
 
 	theWeather = weatherChoices[Math.floor(Math.random() * weatherChoices.length)];
 
