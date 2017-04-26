@@ -317,6 +317,11 @@ function setUpHighScores(){
 
         	try{
         		scores = JSON.parse(this.responseText);
+        		var row = table.insertRow(-1);
+        		var nameCell = row.insertCell(0);
+        		nameCell.innerHTML = "Name:";
+        		var scoreCell = row.insertCell(1);
+        		scoreCell.innerHTML = "Score:";
         	}catch(e){
         		table.innerHTML = "No Scores Yet!"
         	}
