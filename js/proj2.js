@@ -147,6 +147,9 @@ var placesMiles = 	[
 function openNextMenu(currentDiv, nextDivId){
 	document.getElementById(currentDiv).style.display = "none";
 	document.getElementById(nextDivId).style.display = "block";
+	if(nextDivId == 'seeTopTen'){
+		setUpHighScores();
+	}
 }
 
 
@@ -174,14 +177,6 @@ function continueFromLandmark(){
 
 	openNextMenu('landmarkWithShopMenu', 'theTrail');
 
-}
-
-
-
-
-//onload function should set up and data that needs to be pulled from js file
-function getData(){
-	setUpHighScores();
 }
 
 
@@ -317,7 +312,14 @@ function setUpHighScores(){
     }
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-        	scores = JSON.parse(this.responseText);
+
+        	table.innerHTML = "";
+
+        	try{
+        		scores = JSON.parse(this.responseText);
+        	}catch(e){
+        		table.innerHTML = "No Scores Yet!"
+        	}
 
         	//takes scores json and pulls out the name and score for each perrson
         	//creates a new row with two columns and inserts the data
@@ -364,6 +366,35 @@ function addHighScore(name, score){
     xmlhttp.send();
 
 }
+
+
+
+function eraseTopTen(){
+		
+	var url = wampURL + "php/eraseHighscores.php";
+
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+	} else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+			var response = this.responseText;
+
+			if(response == "Success!"){
+				openNextMenu('managementOptions','oregonTrail');
+			}
+        }
+    };
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+}
+
 
 
 //inside shop
@@ -874,6 +905,3 @@ function whatMenu(){
 	}
 	
 }
-
-
-
