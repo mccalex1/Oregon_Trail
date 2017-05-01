@@ -101,7 +101,8 @@ p{
 
 #wagonImg{
 	width: 300px;
-	height:300px;
+	height:100;
+	background: transparent;
 }
 
 #groundDiv{
