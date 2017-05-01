@@ -81,12 +81,12 @@ function goToStore(currentDiv){
 	document.getElementById("moneyGoesHere").innerHTML = "You have $" + money + " to spend.";
 
 	//set up shop with prices of stuff
-	document.getElementById("oxenPrice").innerHTML = "$" + prices[currentStore].oxen + " per oxen (MAX 9)";
-	document.getElementById("foodPrice").innerHTML = "$" + prices[currentStore].food + " per 25lbs (MAX 9999)";
-	document.getElementById("clothingPrice").innerHTML = "$" + prices[currentStore].clothes + " per pair (MAX 99)";
-	document.getElementById("wheelPrice").innerHTML = "$" + prices[currentStore].parts + " per wheel (MAX 9)";
-	document.getElementById("axelPrice").innerHTML = "$" + prices[currentStore].parts + " per axle (MAX 9)";
-	document.getElementById("tonguePrice").innerHTML = "$" + prices[currentStore].parts + " per tongue (MAX 9)";
+	document.getElementById("oxenPrice").innerHTML = "$" + prices[currentStore].oxen + " per oxen (MAX " + MAXOXEN + ")";
+	document.getElementById("foodPrice").innerHTML = "$" + prices[currentStore].food + " per 25lbs (MAX " + MAXFOOD + ")";
+	document.getElementById("clothingPrice").innerHTML = "$" + prices[currentStore].clothes + " per pair (MAX " + MAXCLOTHES + ")";
+	document.getElementById("wheelPrice").innerHTML = "$" + prices[currentStore].parts + " per wheel (MAX " + MAXPART + ")";
+	document.getElementById("axelPrice").innerHTML = "$" + prices[currentStore].parts + " per axle (MAX " + MAXPART + ")";
+	document.getElementById("tonguePrice").innerHTML = "$" + prices[currentStore].parts + " per tongue (MAX " + MAXPART + ")";
 	
 	openNextMenu(currentDiv, 'theStore');
 }
@@ -427,12 +427,12 @@ function buyStuff(){
 
 	if(canBuyThisStuff == true){
 		openNextMenu("theStore", shopOrNotShopMenu);
-		theFood += document.getElementById("numFood").value;
-		theOxen += document.getElementById("numOxen").value;
-		theClothes += document.getElementById("numClothing").value;
-		theTongues += document.getElementById("numTongues").value;
-		theAxels += document.getElementById("numAxles").value;
-		theWheels += document.getElementById("numWheels").value;
+		theFood += parseInt(document.getElementById("numFood").value);
+		theOxen += parseInt(document.getElementById("numOxen").value);
+		theClothes += parseInt(document.getElementById("numClothing").value);
+		theTongues += parseInt(document.getElementById("numTongues").value);
+		theAxels += parseInt(document.getElementById("numAxles").value);
+		theWheels += parseInt(document.getElementById("numWheels").value);
 		money -= totalPrice;
 		setTravelValues();
 	}
@@ -450,6 +450,50 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice){
 		alert("You cannot spend more money than you have!");
 		can = false;
 	}
+
+	//checks if they have no oxen, are buying no oxen, and they have enough money to purchase 1
+	else if(theOxen == 0 && oxenSub == 0 && money > parseInt(prices[currentStore].oxen)){
+		alert("You need at least one oxen to continue, and you have the money to buy at least 1");
+		can = false;
+	}
+
+	//too many oxen
+	else if(parseInt(document.getElementById("numOxen").value) + theOxen > MAXOXEN){
+		alert("You can only have " + MAXOXEN + " oxen. You currently have " + theOxen);
+		can = false;
+	}
+
+	//too much food
+	else if(parseInt(document.getElementById("numFood").value) + theFood > MAXFOOD){
+		alert("You can only have " + MAXFOOD + " pounds of food. You currently have " + theFood);
+		can = false;
+	}
+
+	//too much clothes
+	else if(parseInt(document.getElementById("numClothing").value) + theClothes > MAXCLOTHES){
+		alert("You can only have " + MAXCLOTHES + " pairs of clothes. You currently have " + theClothes);
+		can = false;
+	}
+
+	//too many tongues
+	else if(parseInt(document.getElementById("numTongues").value) + theTongues > MAXPART){
+		alert("You can only have " + MAXPART + " wagon tongues. You currently have " + theTongues);
+		can = false;
+	}
+
+	//too many axels
+	else if(parseInt(document.getElementById("numAxles").value) + theAxels > MAXPART){
+		alert("You can only have " + MAXPART + " axels. You currently have " + theAxels);
+		can = false;
+	}
+
+	//too many wheels
+	else if(parseInt(document.getElementById("numWheels").value) + theWheels > MAXPART){
+		alert("You can only have " + MAXPART + " wheels. You currently have " + theWheels);
+		can = false;
+	}
+
+
 
 	return can
 }

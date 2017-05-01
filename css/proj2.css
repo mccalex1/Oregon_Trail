@@ -98,3 +98,14 @@ p{
 #nameError{
 	color: red;
 }
+
+#wagonImg{
+	width: 300px;
+	height:300px;
+}
+
+#groundDiv{
+	background-color: green;
+	height: 20px;
+	width: 100%;
+}

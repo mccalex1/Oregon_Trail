@@ -104,6 +104,14 @@ var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken",
 					"Develops Cholera", "Develops Exhaustion", "Breaks Arm", "Breaks Leg",
 					"Contracts Measels", "Gets Typhoid?", "Gets Dysentery?"];
 
+
+//Max number of extra stuff
+var MAXOXEN = 9;
+var MAXFOOD = 2000;
+var MAXCLOTHES = 99;
+var MAXPART = 3;
+
+
 //prices based on place
 //2 oxen, 1 pound of food
 var theOxen = 0;
