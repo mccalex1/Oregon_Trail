@@ -657,9 +657,34 @@ function updateDistance(){
 
 	//update the health with the current pace they're goin at
 	updateHealth(paceChoices[currentPace].health);
+
+	animateLandmark(milesToAdd);
 }
 
 
+
+//moves the landmark image over with each click of continue
+function animateLandmark(milesToAdd){
+	
+	var elem = document.getElementById("animateLandmark");
+	
+	var origPosition = elem.style.left;
+
+	console.log(origPosition);
+
+	var pos = 0;
+
+	var id = setInterval(frame, 10);
+	function frame(){
+		if(parseInt(origPosition) + pos == parseInt(origPosition) + 100){
+			clearInterval(id);
+		}
+		else{
+			pos++;
+			elem.style.left = (parseInt(origPosition + pos)) + 'px';
+		}
+	}
+}
 
 
 

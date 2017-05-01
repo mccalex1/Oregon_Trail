@@ -101,7 +101,7 @@ p{
 
 
 #wagonImg{
-	width: 300px;
+	width: 200px;
 	height:100px;
 	background: transparent;
 }
@@ -126,4 +126,11 @@ p{
 #landmarkMove{
 	width: 85%;
 	text-align: left;
+}
+
+#animateLandmark{
+	position: relative;
+	width: 100px;
+	height: 33px;
+	left: 1px;
 }
