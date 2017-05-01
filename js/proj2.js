@@ -1,155 +1,20 @@
-var careerChosen = "";
-var money = 0;
-var mutilplyer = 0;
-var team = [];
+/*******************************************************************************
+*	File: proj2.js
+*	Date created: 4/1/17
+*	Last Modified: 4/30/17
+*	Authors: Alex McCaslin, Brendan Waters, Eric Gottlieb, Taylor Brzuchalski
+*
+*	Email:
+*			mccalex1@umbc.edu
+*			b101@umbc.edu
+*			eric29@umbc.edu
+*			tbrz1@umbc.edu
+*
+*	Description: This file contains the functions used in the project
+*
+*******************************************************************************/
 
-//variables based on traveling
-var theDate;
-var theWeather;
-var theHealth = [100, 100, 100, 100, 100];
-var theFood = 0;
-var nextLandmark = "";
-var milesTraveled = 0;
-
-
-
-var CAREER1 = "Banker";
-var CAREER2 = "Carpenter";
-var CAREER3 = "Farmer";
-
-var wampURL = "http://localhost/Oregon_Trail/"
-
-var monthNames = ["January", "February", "March", "April", "May", "June",
-  					"July", "August", "September", "October", "November", "December"];
-
-var careers = 	{
-					"Banker" : {"money": "1600", "pointMultiplyer": "1"},
-					"Carpenter" : {"money": "800", "pointMultiplyer": "2"},
-					"Farmer" : {"money": "400", "pointMultiplyer": "3"}
-				};
-
-var monthWeather = [
-						["Very Cold", "Cold", "Cool"],			//january
-						["Very Cold", "Cold", "Cool"],    		//february
-						["Very Cold", "Cold", "Cool", "Warm"],	//march
-						["Cold", "Cool", "Warm"],				//april
-						["Cool", "Warm", "Hot"],				//may
-						["Cool", "Warm", "Hot", "Very Hot"],	//June
-						["Warm", "Hot", "Very Hot"],			//july
-						["Cool", "Warm", "Hot", "Very Hot"],    //august
-						["Cool", "Warm", "Hot"], 				//september
-						["Cold", "Cool", "Warm"], 				//november
-						["Very Cold", "Cold", "Cool", "Warm"]	//december
-					];
-
-//health points based on weather
-var weather =   {
-					"Very Cold":{"health": -2},
-					"Cold":     {"health": -1},
-					"Cool":     {"health": 0},
-					"Warm":     {"health": 0},
-					"Hot":      {"health": -1},
-					"Very Hot": {"health": -2}
-				};
-
-//POINT CONSTANTS USE THIS WEBSITE
-//https://www.gamefaqs.com/pc/577345-the-oregon-trail/faqs/9660
-
-//points at end of the game per X
-var wagonPoints = 50;
-var oxPoints = 4;
-var wagonPart = 2;
-var clothPoint = 2;
-var foodPointPer25 = 1;
-var cashPointPer5 = 1;
-
-//rationing constants
-var currentRationing = "Filling";
-var rationingChoices = {
-						"Filling" 	: {lbsPer : 3, health: 0},		//per person
-						"Meager" 	: {lbsPer : 2, health: -1},		//per person
-						"Barebones" : {lbsPer : 1, health: -2},		//per person
-						"None" 		: {lbsPer : 0, health: -3},		//per person
-						};
-
-//pace constants
-var currentPace = "Steady";
-var paceChoices = 	{
-						"Grueling" 	: {ratio : 1, health: -4},		//per person
-						"Strenuous" : {ratio : .75, health: -2},	//per person
-						"Steady" 	: {ratio : .5, health: 0}		//per person
-//						"Resting" 	: {ratio : 0, health: 1},		//per person
-					};
-
-//random event list
-var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken", 
-					"Rain Washes out Path", "Bad Track", "Thunderstorm",
-					"Develops Cholera", "Develops Exhaustion", "Breaks Arm", "Breaks Leg",
-					"Contracts Measels", "Gets Typhoid?", "Gets Dysentery?"];
-
-//prices based on place
-//2 oxen, 1 pound of food
-var theOxen = 0;
-var theClothes = 0;
-var theWheels = 0;
-var theAxels = 0;
-var theTongues = 0;
-
-
-
-currentStore = "";
-currentStoreNum = 0;
-listOfStores = ["Matts", "Independence", "Ft. Kearney", "Ft. Laramie", "Ft. Bridger", "Ft. Hall", "Ft. Boise", "Ft. Walla Walla"];
-var prices = { 
-				"Matts" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
-				"Independence" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},		
-				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
-				"Ft. Laramie" : 	{'oxen': '30', 'clothes': '15', 	'parts': '15', 		'food': '.3'},
-				"Ft. Bridger" : 	{'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35'},	
-				"Ft. Hall" : 		{'oxen': '40', 'clothes': '20', 	'parts': '20', 		'food': '.4'},	
-				"Ft. Boise" : 		{'oxen': '45', 'clothes': '22.5', 	'parts': '22.5',	'food': '.45'},	
-				"Ft. Walla Walla" : {'oxen': '50', 'clothes': '25', 	'parts': '25', 		'food': '.5'}	
-			};
-
-
-
-//miles from start
-var currentLandmark = 0;
-var milesWithThisLandmark = 0;
-var placesMiles = 	[
-
-						{"place" : "Independence, MO",				'distance' : 0},	//landmark 0
-						{"place" : "Kansas River Crossing",			'distance' : 102},	//landmark 1
-						{"place" : "Big Blue River Crossing",		'distance' : 83},	//landmark 2
-						{"place" : "Ft. Kearney",					'distance' : 119},	//landmark 3
-						{"place" : "Chimney Rock", 					'distance' : 250},	//landmark 4
-						{"place" : "Ft. Laramie", 					'distance' : 86},	//landmark 5
-						{"place" : "Independence Rock", 			'distance' : 190},	//landmark 6
-						{"place" : "South Pass",					'distance' : 102},	//landmark 7
-
-						//road splits here
-						{"place" : "Green River",					'distance' : 57},	//landmark (8) 8.1
-						{"place" : "Fort Bridge",					'distance' : 125},	//landmark (9) 8.2
-						{"place" : "Soda Springs",					'distance' : 144},	//landmark (10) 9.1 distance from green river
-						{"place" : "Soda Springs",					'distance' : 162},	//landmark (11) 9.2 distance from fort bridge
-
-						//road comes back together
-						{"place" : "Ft. Hall",						'distance' : 57},	//landmark 12 
-						{"place" : "Snake River",					'distance' : 182},	//landmark 13 
-						{"place" : "Ft. Boise",						'distance' : 114},	//landmark 14 
-						{"place" : "Blue Mountain",					'distance' : 160},	//landmark 15 
-
-						//road splits here
-						{"place" : "Ft. Walla Walla",				'distance' : 55},	//landmark (16) 16.1
-						{"place" : "The Dalles",					'distance' : 125},	//landmark (18) 17.1 distance from blue mountain
-						{"place" : "The Dalles",					'distance' : 120},	//landmark (17) 17.2 distance from ft walla
-
-						//road comes back together
-						{"place" : "Barlow Toll Road",				'distance' : 100}	//landmark 19
-					];
-					
-
-
+//this file holds the functions used throughout the project		
 
 function openNextMenu(currentDiv, nextDivId){
 	document.getElementById(currentDiv).style.display = "none";
@@ -164,15 +29,6 @@ function openNextMenu(currentDiv, nextDivId){
 
 //when the user is in a landmark menu and hits continue on trail
 function continueFromLandmark(){
-
-	//so after continue trail is pressed, we should update the currentStore number
-	//only if that landmark was a store
-	//the other place it is updated is goToStore, only for matts store
-	/*
-	if(listOfStores.indexOf(currentLandmark) != -1){
-		currentStoreNum += 1;
-	}
-	*/
 	//update landmark counter
 	currentLandmark += 1;
 
@@ -210,13 +66,12 @@ function goToStore(currentDiv){
 	currentStore = listOfStores[currentStoreNum];
 
 	//only if it's matts store we increase the number
-	//continueFromLandmark function updates other times
-	//because as soon as we continue on the trail we are done with that landmark
-	/*
+	//continueTrail function updates other times
+	//because if we reach a landmark that has a store we want to go to that landmarks store
 	if(currentStoreNum == 0){
 		currentStoreNum += 1;
 	}
-	*/
+	
 
 
 	document.getElementById("storeName").innerHTML = currentStore + " store";
@@ -612,9 +467,22 @@ function continueTrail(){
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
 
-		alert("You made it to " + placesMiles[currentLandmark].place);
+
+		//if this landmark is in the list of stores open ask for store menu
+		if(listOfStores.indexOf(placesMiles[currentLandmark].place) != -1){
+			alert("You made it to the " + placesMiles[currentLandmark].place + "and it has a store!!!");
+			currentStoreNum += 1;
+			openNextMenu("theTrail", "landmarkWithShopMenu");
+		}
+		else{
+			alert("You made it to the " + placesMiles[currentLandmark].place);
+		}
+
+
+
 
 		//if green river or fort walla walla we need to increase by 2
+		//THIS IS BY DEFAULT FOR NOW THE USER WILL HAVE CHOICE
 		if(currentLandmark == 8 || currentLandmark == 10 || currentLandmark == 16){
 			currentLandmark += 2;
 		}
@@ -897,27 +765,4 @@ function attemptToTrade(){
 
 function talkToPeople(){
 
-}
-
-//function that dtermines which menu should be opened (landmark/landmarkShop/travel)
-function whatMenu(){
-	
-	//if we're at the next land mark
-	//and the next landmark exists in the shop list
-	if(milesWithThisLandmark == placesMiles[currentLandmark].distance && 
-		prices.indexOf(placesMiles[currentLandmark].place) != -1){
-
-	}
-
-	//means we are at landmark
-	else if(milesWithThisLandmark == placesMiles[currentLandmark].distance){
-
-	}
-
-	//we are not at a landmark or a shop
-	//open another menu
-	else{
-
-	}
-	
 }
