@@ -664,24 +664,24 @@ function updateDistance(){
 
 
 //moves the landmark image over with each click of continue
+//https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_animate_3
 function animateLandmark(milesToAdd){
-	
+
+	var distanceToMove = window.innerWidth * (milesToAdd / placesMiles[currentLandmark].distance);
+
 	var elem = document.getElementById("animateLandmark");
 	
-	var origPosition = elem.style.left;
-
-	console.log(origPosition);
-
 	var pos = 0;
 
 	var id = setInterval(frame, 10);
 	function frame(){
-		if(parseInt(origPosition) + pos == parseInt(origPosition) + 100){
+
+		if(pos == distanceToMove){
 			clearInterval(id);
 		}
 		else{
 			pos++;
-			elem.style.left = (parseInt(origPosition + pos)) + 'px';
+			elem.style.left = parseInt(elem.style.left) + pos + 'px';
 		}
 	}
 }
