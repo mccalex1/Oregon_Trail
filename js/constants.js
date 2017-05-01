@@ -113,7 +113,7 @@ var theAxels = 0;
 var theTongues = 0;
 
 
-
+var shopOrNotShopMenu = "landmarkWithShopMenu";
 currentStore = "";
 currentStoreNum = 0;
 listOfStores = ["Matts", "Independence", "Ft. Kearney", "Ft. Laramie", "Ft. Bridger", "Ft. Hall", "Ft. Boise", "Ft. Walla Walla"];

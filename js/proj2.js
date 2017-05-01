@@ -19,6 +19,8 @@
 function openNextMenu(currentDiv, nextDivId){
 	document.getElementById(currentDiv).style.display = "none";
 	document.getElementById(nextDivId).style.display = "block";
+	console.log("closing ", currentDiv);
+	console.log("opening ", nextDivId);
 	if(nextDivId == 'seeTopTen'){
 		setUpHighScores();
 	}
@@ -38,7 +40,8 @@ function continueFromLandmark(){
 	//updates the travel values with updated stuff
 	setTravelValues();
 
-	openNextMenu('landmarkWithShopMenu', 'theTrail');
+	openNextMenu(shopOrNotShopMenu, 'theTrail');
+	shopOrNotShopMenu = "noShopMenu";
 
 }
 
@@ -418,14 +421,12 @@ function buyStuff(){
 
 	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axelSub;
 
-	//invalid amount of money
-	if(totalPrice > money){
-		alert("You cannot spend more money than you have!");
-	}
 
-	//valid amount of money
-	else{
-		openNextMenu("theStore", "landmarkWithShopMenu");
+
+	var canBuyThisStuff = canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice);
+
+	if(canBuyThisStuff == true){
+		openNextMenu("theStore", shopOrNotShopMenu);
 		theFood += document.getElementById("numFood").value;
 		theOxen += document.getElementById("numOxen").value;
 		theClothes += document.getElementById("numClothing").value;
@@ -433,18 +434,52 @@ function buyStuff(){
 		theAxels += document.getElementById("numAxles").value;
 		theWheels += document.getElementById("numWheels").value;
 		money -= totalPrice;
+		setTravelValues();
 	}
 
-	setTravelValues();
+}
+
+
+
+//function that returns whether or not you can buy this stuff
+function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice){
+	var can = true;
+
+	//invalid amount of money
+	if(totalPrice > money){
+		alert("You cannot spend more money than you have!");
+		can = false;
+	}
+
+	return can
 }
 
 
 
 
+//helper function to continueTrail()
+//can only continue if there are people alive and have oxen
+function continuePressed(){
+
+	console.log("Number of oxen = ", theOxen);
+	console.log("num alive = ", getNumAlive());
+
+	if(getNumAlive() == 0){
+		alert("All your people are dead");
+	}
+	else if(theOxen == 0){
+		alert("You have no oxen, you cannot go anywhere");
+	}
+	else{
+		continueTrail();
+	}
+
+}
 
 
 //this function is called whenever continue is pressed while user is traveling
 function continueTrail(){
+
 	console.log("Pace: " + currentPace);
 	console.log("Rationing: " + currentRationing);
 
@@ -472,7 +507,8 @@ function continueTrail(){
 		if(listOfStores.indexOf(placesMiles[currentLandmark].place) != -1){
 			alert("You made it to the " + placesMiles[currentLandmark].place + "and it has a store!!!");
 			currentStoreNum += 1;
-			openNextMenu("theTrail", "landmarkWithShopMenu");
+			shopOrNotShopMenu = "landmarkWithShopMenu";
+			openNextMenu("theTrail", shopOrNotShopMenu);
 		}
 		else{
 			alert("You made it to the " + placesMiles[currentLandmark].place);
@@ -632,12 +668,7 @@ function updateFood(){
 	//count how many are still alive, and then deduct the total food left based on rationing and num people
 	else if(theFood != 0){
 
-		var numAlive = 0;
-		for(var i =0; i < theHealth.length; i++){
-			if(theHealth[i] > 0){
-				numAlive += 1;
-			}
-		}
+		numAlive = getNumAlive();
 
 		theFood -= numAlive * rationingChoices[currentRationing].lbsPer;
 
@@ -653,6 +684,17 @@ function updateFood(){
 }
 
 
+//checks how many characters are still alive
+function getNumAlive(){
+	var numAlive = 0;
+	for(var i =0; i < theHealth.length; i++){
+		if(theHealth[i] > 0){
+			numAlive += 1;
+		}
+	}
+
+	return numAlive;
+}
 
 
 
@@ -711,13 +753,15 @@ function getHealth(){
 		return "Poor";
 	}
 	else{
+		alert("Everyone is dead");
 		return "Dead";
 	}
 }
 
 
 function sizeUp(){
-	openNextMenu('theTrail', 'landmarkWithShopMenu');
+	shopOrNotShopMenu = 'noShopMenu';
+	openNextMenu('theTrail', shopOrNotShopMenu);
 }
 
 
@@ -741,14 +785,14 @@ function checkSupplies(divId){
 //PROBABLY SHOULD GO BACK A MENU AFTER
 function changePace(paceChosen){
 	currentPace = paceChosen;
-	openNextMenu('paceMenu', 'landmarkWithShopMenu');
+	openNextMenu('paceMenu', shopOrNotShopMenu);
 }
 
 //changes rationing based on button selected
 //PROBABLY SHOULD GO BACK A MENU AFTER
 function changeFoodRations(rationsChosen){
 	currentRationing = rationsChosen;
-	openNextMenu('foodMenu', 'landmarkWithShopMenu');
+	openNextMenu('foodMenu', shopOrNotShopMenu);
 }
 
 //complex function
