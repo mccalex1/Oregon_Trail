@@ -141,6 +141,7 @@ var prices = {
 //miles from start
 var currentLandmark = 0;
 var milesWithThisLandmark = 0;
+var landmarkPixel = 0;
 var placesMiles = 	[
 
 						{"place" : "Independence, MO",				'distance' : 0},	//landmark 0

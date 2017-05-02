@@ -19,8 +19,6 @@
 function openNextMenu(currentDiv, nextDivId){
 	document.getElementById(currentDiv).style.display = "none";
 	document.getElementById(nextDivId).style.display = "block";
-	console.log("closing ", currentDiv);
-	console.log("opening ", nextDivId);
 	if(nextDivId == 'seeTopTen'){
 		setUpHighScores();
 	}
@@ -505,9 +503,6 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice){
 //can only continue if there are people alive and have oxen
 function continuePressed(){
 
-	console.log("Number of oxen = ", theOxen);
-	console.log("num alive = ", getNumAlive());
-
 	if(getNumAlive() == 0){
 		alert("All your people are dead");
 	}
@@ -523,9 +518,6 @@ function continuePressed(){
 
 //this function is called whenever continue is pressed while user is traveling
 function continueTrail(){
-
-	console.log("Pace: " + currentPace);
-	console.log("Rationing: " + currentRationing);
 
 	//increment date before getting weather because weather is based off of month
 	theDate.setDate(theDate.getDate() + 1);
@@ -546,6 +538,7 @@ function continueTrail(){
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
 
+		updateLandmarkPixel();
 
 		//if this landmark is in the list of stores open ask for store menu
 		if(listOfStores.indexOf(placesMiles[currentLandmark].place) != -1){
@@ -575,8 +568,6 @@ function continueTrail(){
 			alert("Taking " + placesMiles[currentLandmark].place + " path by default");
 		}
 	}
-
-	updateLandmark();
 
 
 	getHealth();
@@ -611,6 +602,12 @@ function setTravelValues(){
 }
 
 
+
+//function that updates the landmark back to the left side of the screen
+function updateLandmarkPixel(){
+	landmarkPixel = 0;
+	document.getElementById("animateLandmark").style.left = "1px";
+}
 
 
 
@@ -667,10 +664,15 @@ function updateDistance(){
 //https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_animate_3
 function animateLandmark(milesToAdd){
 
-	var distanceToMove = window.innerWidth * (milesToAdd / placesMiles[currentLandmark].distance);
+	var distanceToMove = parseInt(window.innerWidth * (milesToAdd / placesMiles[currentLandmark].distance) * .75);
+
+	console.log("Distance to move " + distanceToMove);
 
 	var elem = document.getElementById("animateLandmark");
-	
+
+	var start = landmarkPixel;
+	console.log("Start: " + start);
+
 	var pos = 0;
 
 	var id = setInterval(frame, 10);
@@ -678,10 +680,11 @@ function animateLandmark(milesToAdd){
 
 		if(pos == distanceToMove){
 			clearInterval(id);
+			landmarkPixel += distanceToMove;
 		}
 		else{
 			pos++;
-			elem.style.left = parseInt(elem.style.left) + pos + 'px';
+			elem.style.left = pos + start;
 		}
 	}
 }
