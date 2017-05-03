@@ -448,7 +448,7 @@
 								<br>
 								<br>
 
-								<BUTTON onclick="buyStuff()"> Leave Store </BUTTON>
+								<BUTTON onclick="buyStuff()"> Buy </BUTTON>
 
 								<br>
 
@@ -460,7 +460,7 @@
 
 							<!-- Menu for traveling -->
 							<div id="landmarkWithShopMenu">
-								<br>
+								<h1 id="shopMenuLandmarkName"> </h1>
 								<BUTTON onclick="continueFromLandmark()"> Continue on trail </BUTTON>
 								<br>
 								<br>
@@ -494,7 +494,7 @@
 
 							<!-- Menu for traveling -->
 							<div id="noShopMenu">
-								<br>
+								<h1 id="noShopMenuLandmarkName"> </h1>
 								<BUTTON onclick="continueFromLandmark()"> Continue on trail </BUTTON>
 								<br>
 								<br>
@@ -532,7 +532,7 @@
 								<table>
 									<tr>
 										<td>
-											<BUTTON onclick="continuePressed()"> Continue </BUTTON>
+											<BUTTON id="pressToContinue" onclick="continuePressed()"> Continue </BUTTON>
 										</td>
 										<td>
 											<BUTTON onclick="sizeUp()"> Size up situation </BUTTON>
@@ -702,6 +702,15 @@
 								<br>
 								<br>
 								<BUTTON onclick="changeFoodRations('Barebones')"">Barebones</BUTTON>
+								<br>
+							</div>
+
+
+							<!-- shows the landmark image -->
+							<div id="imageMenu">
+								<img id="landmarkPic"/>
+								<br>
+								<BUTTON onclick="openNextMenu('imageMenu', shopOrNotShopMenu)">Continue</BUTTON>
 								<br>
 							</div>
 

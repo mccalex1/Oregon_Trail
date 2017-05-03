@@ -70,7 +70,8 @@ function goToStore(currentDiv){
 	//continueTrail function updates other times
 	//because if we reach a landmark that has a store we want to go to that landmarks store
 	if(currentStoreNum == 0){
-		currentStoreNum += 1;
+		document.getElementById("noShopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
+		document.getElementById("shopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
 	}
 	
 
@@ -424,7 +425,18 @@ function buyStuff(){
 	var canBuyThisStuff = canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice);
 
 	if(canBuyThisStuff == true){
-		openNextMenu("theStore", shopOrNotShopMenu);
+
+		//if matts store open up the independence image instead of the normal menu
+		if(currentStoreNum == 0){
+			currentStoreNum += 1;
+			document.getElementById("landmarkPic").src = placesMiles[currentLandmark].filePath;
+			openNextMenu("theStore", "imageMenu");
+		}
+		else{
+			openNextMenu("theStore", shopOrNotShopMenu);
+		}
+
+
 		theFood += parseInt(document.getElementById("numFood").value);
 		theOxen += parseInt(document.getElementById("numOxen").value);
 		theClothes += parseInt(document.getElementById("numClothing").value);
@@ -433,6 +445,14 @@ function buyStuff(){
 		theWheels += parseInt(document.getElementById("numWheels").value);
 		money -= totalPrice;
 		setTravelValues();
+
+		document.getElementById("numFood").value = 0;
+		document.getElementById("numOxen").value = 0;
+		document.getElementById("numClothing").value = 0;
+		document.getElementById("numTongues").value = 0;
+		document.getElementById("numAxles").value = 0;
+		document.getElementById("numWheels").value = 0;
+
 	}
 
 }
@@ -542,14 +562,21 @@ function continueTrail(){
 
 		//if this landmark is in the list of stores open ask for store menu
 		if(listOfStores.indexOf(placesMiles[currentLandmark].place) != -1){
+			
+			shopOrNotShopMenu = "landmarkWithShopMenu";
+
 			alert("You made it to the " + placesMiles[currentLandmark].place + "and it has a store!!!");
 			currentStoreNum += 1;
-			shopOrNotShopMenu = "landmarkWithShopMenu";
-			openNextMenu("theTrail", shopOrNotShopMenu);
+
 		}
 		else{
 			alert("You made it to the " + placesMiles[currentLandmark].place);
 		}
+	
+		document.getElementById("landmarkPic").src = placesMiles[currentLandmark].filePath;
+		document.getElementById("noShopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
+		document.getElementById("shopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
+		openNextMenu("theTrail","imageMenu");
 
 
 
@@ -666,8 +693,6 @@ function animateLandmark(milesToAdd){
 
 	var distanceToMove = parseInt(window.innerWidth * (milesToAdd / placesMiles[currentLandmark].distance) * .75);
 
-	console.log("Distance to move " + distanceToMove);
-
 	var elem = document.getElementById("animateLandmark");
 
 	var start = landmarkPixel;
@@ -675,11 +700,16 @@ function animateLandmark(milesToAdd){
 
 	var pos = 0;
 
-	var id = setInterval(frame, 10);
+	document.getElementById("pressToContinue").disabled = true;
+	document.getElementById("pressToContinue").className = "disabledButton";
+
+	var id = setInterval(frame, 5);
 	function frame(){
 
 		if(pos == distanceToMove){
 			clearInterval(id);
+			document.getElementById("pressToContinue").disabled = false;
+			document.getElementById("pressToContinue").className = "";
 			landmarkPixel += distanceToMove;
 		}
 		else{
