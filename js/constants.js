@@ -144,9 +144,9 @@ var milesWithThisLandmark = 0;
 var landmarkPixel = 0;
 var placesMiles = 	[
 
-						{"place" : "Independence, MO",				'distance' : 0, 	'filePath' : "images/Independence_background_from_game.jpg"},	//landmark 0
-						{"place" : "Kansas River Crossing",			'distance' : 102, 	'filePath' : "images/kansas_river_background.jpg"},	//landmark 1
-						{"place" : "Big Blue River Crossing",		'distance' : 83, 	'filePath' : "images/big_blue_river_crossing.jpg"},	//landmark 2
+						{"place" : "Independence, MO",				'distance' : 0, 	'filePath' : "images/independence_background_from_game.jpg"},	//landmark 0
+						{"place" : "Kansas River Crossing",			'distance' : 102, 	'filePath' : "images/kansas_river_crossing_background.jpg"},	//landmark 1
+						{"place" : "Big Blue River Crossing",		'distance' : 83, 	'filePath' : "images/big_blue_river_crosssing.jpg"},	//landmark 2
 						{"place" : "Ft. Kearney",					'distance' : 119, 	'filePath' : "images/fort_kearney_background.jpg"},	//landmark 3
 						{"place" : "Chimney Rock", 					'distance' : 250, 	'filePath' : "images/Chimney_rock_background.jpg"},	//landmark 4
 						{"place" : "Ft. Laramie", 					'distance' : 86, 	'filePath' : "images/fort_laramie_background.jpg"},	//landmark 5

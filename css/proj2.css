@@ -34,6 +34,16 @@ button, input{
 	width: 300px;
 }
 
+.disabledButton{
+	font-size: 18px;
+	border-radius: 10px;
+	outline: none;
+	background-color: white;
+	color: red;
+	font-family: monospace;
+	width: 300px;
+}
+
 table, tr{
 	color:white;
 	width: 100%;
@@ -69,7 +79,7 @@ p{
 }
 #mainDiv{
 	width: 90%;
-	height: 500;
+	height: 600;
 	background-color: black;
 	text-align: center;
 	margin: 0 auto;
@@ -88,7 +98,8 @@ p{
 #travelTrail, #differences, #learnMore, #seeTopTen, #managementOptions, 
 #chooseNames, #startMonth, #monthAdvice, #goToStore, #helloMatt,
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
-#paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu
+#paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
+#imageMenu
 
 {
 	display: none;
@@ -117,6 +128,11 @@ p{
 	width: 100%;
 }
 
+
+#landmarkPic{
+	height:500px;
+	width:700px;
+}
 
 
 #imageMove{
