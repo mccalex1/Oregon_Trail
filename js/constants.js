@@ -144,31 +144,31 @@ var milesWithThisLandmark = 0;
 var landmarkPixel = 0;
 var placesMiles = 	[
 
-						{"place" : "Independence, MO",				'distance' : 0, 	'filePath' : "images/"},	//landmark 0
-						{"place" : "Kansas River Crossing",			'distance' : 102, 	'filePath' : "images/"},	//landmark 1
-						{"place" : "Big Blue River Crossing",		'distance' : 83, 	'filePath' : "images/"},	//landmark 2
-						{"place" : "Ft. Kearney",					'distance' : 119, 	'filePath' : "images/"},	//landmark 3
-						{"place" : "Chimney Rock", 					'distance' : 250, 	'filePath' : "images/"},	//landmark 4
-						{"place" : "Ft. Laramie", 					'distance' : 86, 	'filePath' : "images/"},	//landmark 5
-						{"place" : "Independence Rock", 			'distance' : 190, 	'filePath' : "images/"},	//landmark 6
-						{"place" : "South Pass",					'distance' : 102, 	'filePath' : "images/"},	//landmark 7
+						{"place" : "Independence, MO",				'distance' : 0, 	'filePath' : "images/Independence_background_from_game.jpg"},	//landmark 0
+						{"place" : "Kansas River Crossing",			'distance' : 102, 	'filePath' : "images/kansas_river_background.jpg"},	//landmark 1
+						{"place" : "Big Blue River Crossing",		'distance' : 83, 	'filePath' : "images/big_blue_river_crossing.jpg"},	//landmark 2
+						{"place" : "Ft. Kearney",					'distance' : 119, 	'filePath' : "images/fort_kearney_background.jpg"},	//landmark 3
+						{"place" : "Chimney Rock", 					'distance' : 250, 	'filePath' : "images/Chimney_rock_background.jpg"},	//landmark 4
+						{"place" : "Ft. Laramie", 					'distance' : 86, 	'filePath' : "images/fort_laramie_background.jpg"},	//landmark 5
+						{"place" : "Independence Rock", 			'distance' : 190, 	'filePath' : "images/Independence_rock_background.jpg"},	//landmark 6
+						{"place" : "South Pass",					'distance' : 102, 	'filePath' : "images/south_pass_background.jpg"},	//landmark 7
 
 						//road splits here
-						{"place" : "Green River",					'distance' : 57, 	'filePath' : "images/"},	//landmark (8) 8.1
-						{"place" : "Fort Bridge",					'distance' : 125, 	'filePath' : "images/"},	//landmark (9) 8.2
-						{"place" : "Soda Springs",					'distance' : 144, 	'filePath' : "images/"},	//landmark (10) 9.1 distance from green river
-						{"place" : "Soda Springs",					'distance' : 162, 	'filePath' : "images/"},	//landmark (11) 9.2 distance from fort bridge
+						{"place" : "Green River",					'distance' : 57, 	'filePath' : "images/green_river_background_background.jpg"},	//landmark (8) 8.1
+						{"place" : "Fort Bridge",					'distance' : 125, 	'filePath' : "images/fort_bridger.jpg"},	//landmark (9) 8.2
+						{"place" : "Soda Springs",					'distance' : 144, 	'filePath' : "images/soda_springs_background.jpg"},	//landmark (10) 9.1 distance from green river
+						{"place" : "Soda Springs",					'distance' : 162, 	'filePath' : "images/soda_springs_background.jpg"},	//landmark (11) 9.2 distance from fort bridge
 
 						//road comes back together
-						{"place" : "Ft. Hall",						'distance' : 57, 	'filePath' : "images/"},	//landmark 12 
-						{"place" : "Snake River",					'distance' : 182, 	'filePath' : "images/"},	//landmark 13 
-						{"place" : "Ft. Boise",						'distance' : 114, 	'filePath' : "images/"},	//landmark 14 
-						{"place" : "Blue Mountain",					'distance' : 160, 	'filePath' : "images/"},	//landmark 15 
+						{"place" : "Ft. Hall",						'distance' : 57, 	'filePath' : "images/Fort_hall_background.jpg"},	//landmark 12 
+						{"place" : "Snake River",					'distance' : 182, 	'filePath' : "images/snake_river_crossing.jpg"},	//landmark 13 
+						{"place" : "Ft. Boise",						'distance' : 114, 	'filePath' : "images/Fort_boise.jpg"},	//landmark 14 
+						{"place" : "Blue Mountain",					'distance' : 160, 	'filePath' : "images/blue_mountains.jpg"},	//landmark 15 
 
 						//road splits here
-						{"place" : "Ft. Walla Walla",				'distance' : 55, 	'filePath' : "images/"},	//landmark (16) 16.1
-						{"place" : "The Dalles",					'distance' : 125, 	'filePath' : "images/"},	//landmark (18) 17.1 distance from blue mountain
-						{"place" : "The Dalles",					'distance' : 120, 	'filePath' : "images/"},	//landmark (17) 17.2 distance from ft walla
+						{"place" : "Ft. Walla Walla",				'distance' : 55, 	'filePath' : "images/fort_walla_walla.jpg"},	//landmark (16) 16.1
+						{"place" : "The Dalles",					'distance' : 125, 	'filePath' : "images/the_dalles.jpg"},	//landmark (18) 17.1 distance from blue mountain
+						{"place" : "The Dalles",					'distance' : 120, 	'filePath' : "images/the_dalles.jpg"},	//landmark (17) 17.2 distance from ft walla
 
 						//road comes back together
 						{"place" : "Barlow Toll Road",				'distance' : 100, 	'filePath' : "images/"}	//landmark 19
