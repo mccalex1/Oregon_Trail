@@ -230,6 +230,7 @@ function buyStuff(){
 		money -= totalPrice;
 		setTravelValues();
 
+		//reset the values within the boxes
 		document.getElementById("numFood").value = 0;
 		document.getElementById("numOxen").value = 0;
 		document.getElementById("numClothing").value = 0;
@@ -237,6 +238,13 @@ function buyStuff(){
 		document.getElementById("numAxles").value = 0;
 		document.getElementById("numWheels").value = 0;
 
+		//reset the sub totals
+		document.getElementById("oxenSub").innerHTML = 0;
+		document.getElementById("foodSub").innerHTML = 0;
+		document.getElementById("clothingSub").innerHTML = 0;
+		document.getElementById("tongueSub").innerHTML = 0;
+		document.getElementById("wheelSub").innerHTML = 0;
+		document.getElementById("axelSub").innerHTML = 0; 
 	}
 
 }
@@ -475,7 +483,7 @@ function updateDistance(){
 //https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_animate_3
 function animateLandmark(milesToAdd){
 
-	var distanceToMove = parseInt(window.innerWidth * (milesToAdd / placesMiles[currentLandmark].distance) * .75);
+	var distanceToMove = parseInt(window.innerWidth * (milesToAdd / placesMiles[currentLandmark].distance) * .5);
 
 	var elem = document.getElementById("animateLandmark");
 

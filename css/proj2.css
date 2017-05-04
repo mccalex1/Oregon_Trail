@@ -44,6 +44,11 @@ button, input{
 	width: 300px;
 }
 
+#imagesTable{
+	background: linear-gradient(to bottom left, yellow, blue);
+	height: 300px;
+}
+
 table, tr{
 	color:white;
 	width: 100%;
@@ -138,10 +143,12 @@ p{
 #imageMove{
 	width: 15%;
 	text-align: right;
+	vertical-align: bottom;
 }
 #landmarkMove{
 	width: 85%;
 	text-align: left;
+	vertical-align: bottom;
 }
 
 #animateLandmark{
