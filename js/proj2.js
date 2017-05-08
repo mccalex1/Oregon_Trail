@@ -327,10 +327,7 @@ function continuePressed(){
 
 }
 
-
-//this function is called whenever continue is pressed while user is traveling
-function continueTrail(){
-
+function doDay(){
 	//increment date before getting weather because weather is based off of month
 	theDate.setDate(theDate.getDate() + 1);
 
@@ -341,6 +338,16 @@ function continueTrail(){
 	//takes current food and updates it based on how much they are eating
 	//this function should also update the health
 	updateFood();
+
+	setTravelValues();
+}
+
+
+
+//this function is called whenever continue is pressed while user is traveling
+function continueTrail(){
+
+	doDay();
 
 	//takes current distance and updates it based on ox and speed up to an amount
 	//function should also update the health
@@ -412,6 +419,7 @@ function continueTrail(){
 
 	console.log("Health Bars: " + theHealth);
 }
+
 
 
 //called whenever the user picks to ford, caulk, ferry, or wait
