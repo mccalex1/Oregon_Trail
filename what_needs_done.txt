@@ -1,0 +1,38 @@
+
+MENU
+	- Stop to rest menu
+
+	- Attempt to trade menu
+
+	- Talk to people menu
+
+	- End of game screen -- calculate points
+
+Trail
+	- Allow user to choose path rather than auto selecting for them
+
+
+River
+	- probability for making it across river safely
+	- Allowing user to wait to see if conditions improve
+	- RIVER GAME ------- BIG PART OF PROJECT THAT NEEDS FINISHING
+
+Items
+	- Clothing has not been implemented to make any difference in game
+	- Axle parts make no difference whether they exist or not YET
+	- Fishing
+		- Add in worms to store
+		- Add fishing as option to all menus
+		- Make random chance of fish
+		- Choose image based on whether fish is caught or not
+		- Increase food / decrease number of worms
+
+Random events
+	- Random sickness
+	- Random find something
+
+
+Bugs
+	- Distance landmark moves across page when continue is pressed
+	- Landmark doesn't move back to (left: 1) until user clicks continue again
+	- setNames() conditional for valid name
