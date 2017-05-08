@@ -588,10 +588,9 @@
 									</table>
 								</div>
 								<div id="groundDiv">
-
+									<img id="groundImg" src="images/river_for_bottom.gif"/>
 								</div>
 							</div>
-
 
 
 
@@ -713,6 +712,52 @@
 								<br>
 								<BUTTON onclick="openNextMenu('imageMenu', shopOrNotShopMenu)">Continue</BUTTON>
 								<br>
+							</div>
+
+							<!-- shows the river image -->
+							<div id="riverMenu">
+								<img id="riverPic"/>
+								<br>
+								<BUTTON onclick="openNextMenu('riverMenu', 'riverOptionsMenu')">Continue</BUTTON>
+								<br>
+							</div>
+
+
+							<!-- menu of river options -->
+							<div id="riverOptionsMenu">
+								
+								<h1 id="whatRiverAmIAt"></h1>
+
+								<div id="riverWidth">
+									River width:
+								</div>
+								<div id="riverDepth">
+									River depth:
+								</div>
+
+								<BUTTON onclick="river('ford')">Attempt to ford the river</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="river('caulk')">Caulk the wagon and float it across</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="river('ferry')">Take a ferry across</BUTTON>
+								<br>
+								<br>
+								<BUTTON onclick="river('wait')">Wait to see if conditions improve</BUTTON>
+								<br>
+
+							</div>
+
+
+							<!-- River crossing sucess or fail -->
+							<div id="riverCrossing">
+							
+								<img id="riverCrossingImg"/>
+								<p id="youLostFromRiver">You Lost : </p>
+
+								<BUTTON onclick="openNextMenu('riverCrossing','theTrail')">Continue</BUTTON>
+
 							</div>
 
 

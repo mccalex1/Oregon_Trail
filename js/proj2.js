@@ -346,6 +346,7 @@ function continueTrail(){
 	//function should also update the health
 	updateDistance();
 
+	var atRiver = false;
 
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
@@ -362,14 +363,28 @@ function continueTrail(){
 
 		}
 		else{
+
 			alert("You made it to the " + placesMiles[currentLandmark].place);
+
+			//if the place is a river
+			if(placesMiles[currentLandmark].isRiver == true){
+				atRiver = true;
+			}
+
 		}
 	
 		document.getElementById("landmarkPic").src = placesMiles[currentLandmark].filePath;
 		document.getElementById("noShopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
 		document.getElementById("shopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
-		openNextMenu("theTrail","imageMenu");
 
+		//if i am at the river go to the river menu
+		if(atRiver == true){
+			document.getElementById("whatRiverAmIAt").innerHTML = placesMiles[currentLandmark].place;
+			document.getElementById("riverPic").src = placesMiles[currentLandmark].filePath;
+			openNextMenu("theTrail","riverMenu");
+		}else{
+			openNextMenu("theTrail","imageMenu");
+		}
 
 
 
@@ -397,7 +412,66 @@ function continueTrail(){
 
 
 
+function river(option){
 
+	var randomNum = Math.floor(Math.random() * 5) + 1;
+	var UNSUCESSFUL = 5;
+	var picSrc = "";
+
+	//if they randomly dont make it
+	if(randomNum == UNSUCESSFUL){
+		var ranOxen = Math.floor(Math.random() * theOxen);
+		var ranFood = Math.floor(Math.random() * theFood);
+		var ranClothes = Math.floor(Math.random() * theClothes);
+		var ranWheels = Math.floor(Math.random() * theWheels);
+		var ranAxels = Math.floor(Math.random() * theAxels);
+		var ranTongues = Math.floor(Math.random() * theTongues);
+
+
+		document.getElementById("youLostFromRiver").innerHTML = "You Lost:"
+																	+ "<br>Oxen: " + ranOxen
+																	+ " Food: " + ranFood
+																	+ "<br>Clothes: " + ranClothes
+																	+ " Wheels: " + ranWheels
+																	+ " <br>Axles: " + ranAxels
+																	+ " Tongues: " + ranTongues;
+
+		theOxen -= ranOxen;
+		theFood -= ranFood;
+		theClothes -= ranClothes;
+		theWheels -= ranWheels;
+		theAxels -= ranAxels;
+		theTongues -= ranTongues; 
+
+
+		if(option == 'ford' || option == 'caulk' || option == 'wait'){
+			picSrc = "images/unsafe_river_crssoing.gif";
+		}
+
+		if(option == 'ferry'){
+			picSrc = "images/unsafe_ferry_river_crossing.gif";
+		}
+
+	}
+
+	//was successful
+	else{
+		document.getElementById("youLostFromRiver").innerHTML = "";
+	
+		if(option == 'ford' || option == 'caulk' || option == 'wait'){
+			picSrc = "images/safe_river_crossing.gif";
+		}
+
+		if(option == 'ferry'){
+			picSrc = "images/safe_ferry_river_crossing.gif";
+		}
+
+	}
+
+	document.getElementById("riverCrossingImg").src = picSrc;
+
+	openNextMenu("riverOptionsMenu", "riverCrossing");
+}
 
 
 //this function takes the current values and updates them with whatever values are pesent

@@ -46,7 +46,7 @@ button, input{
 
 #imagesTable{
 	background: linear-gradient(to bottom left, yellow, blue);
-	height: 300px;
+	height: 250px;
 }
 
 table, tr{
@@ -84,7 +84,7 @@ p{
 }
 #mainDiv{
 	width: 90%;
-	height: 600;
+	height: 650;
 	background-color: black;
 	text-align: center;
 	margin: 0 auto;
@@ -104,7 +104,7 @@ p{
 #chooseNames, #startMonth, #monthAdvice, #goToStore, #helloMatt,
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
-#imageMenu
+#imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu
 
 {
 	display: none;
@@ -127,14 +127,13 @@ p{
 	background: transparent;
 }
 
-#groundDiv{
-	background-color: green;
-	height: 20px;
-	width: 100%;
+#groundImg{
+	width:100%;
+	height: 150px;
 }
 
 
-#landmarkPic{
+#landmarkPic, #riverPic, #riverCrossingImg{
 	height:500px;
 	width:700px;
 }
@@ -156,4 +155,8 @@ p{
 	width: 100px;
 	height: 33px;
 	left: 1px;
+}
+
+#youLostFromRiver{
+	color: red;
 }
