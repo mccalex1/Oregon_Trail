@@ -372,7 +372,9 @@ function continueTrail(){
 			}
 
 		}
-	
+		
+		setTravelValues();
+
 		document.getElementById("landmarkPic").src = placesMiles[currentLandmark].filePath;
 		document.getElementById("noShopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
 		document.getElementById("shopMenuLandmarkName").innerHTML = placesMiles[currentLandmark].place;
@@ -403,6 +405,7 @@ function continueTrail(){
 		}
 	}
 
+	document.getElementById("landmarkIcon").src = placesMiles[currentLandmark].icon;
 
 	getHealth();
 	setTravelValues();
@@ -411,7 +414,7 @@ function continueTrail(){
 }
 
 
-
+//called whenever the user picks to ford, caulk, ferry, or wait
 function river(option){
 
 	var randomNum = Math.floor(Math.random() * 5) + 1;
@@ -468,6 +471,7 @@ function river(option){
 
 	}
 
+	document.getElementById("riverCrossingImg").src = "";
 	document.getElementById("riverCrossingImg").src = picSrc;
 
 	openNextMenu("riverOptionsMenu", "riverCrossing");
@@ -489,7 +493,7 @@ function setTravelValues(){
 
 	//update with next landmark
 	var thisJson = placesMiles[currentLandmark];
-	document.getElementById("nextLandmarkGoesHere").innerHTML = nextLandmark;
+	document.getElementById("nextLandmarkGoesHere").innerHTML = nextLandmark + "(" + (placesMiles[currentLandmark].distance - milesWithThisLandmark) + " miles to go)";
 
 	document.getElementById("milesTraveledGoesHere").innerHTML = "Miles traveled: " + milesTraveled;
 }
