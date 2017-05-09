@@ -86,6 +86,7 @@ function goToStore(currentDiv){
 	document.getElementById("wheelPrice").innerHTML = "$" + prices[currentStore].parts + " per wheel (MAX " + MAXPART + ")";
 	document.getElementById("axelPrice").innerHTML = "$" + prices[currentStore].parts + " per axle (MAX " + MAXPART + ")";
 	document.getElementById("tonguePrice").innerHTML = "$" + prices[currentStore].parts + " per tongue (MAX " + MAXPART + ")";
+	document.getElementById("wormsPrice").innerHTML = "$" + prices[currentStore].worms + " per 100 worms (MAX " + MAXWORMS + ")";
 	
 	openNextMenu(currentDiv, 'theStore');
 }
@@ -168,6 +169,11 @@ function setMonth(theMonth){
 //gets subTotals of stuff
 function updateSubTotal(numDiv, subDiv, item){
 
+	//checks if value is empty
+	if(document.getElementById(numDiv).value == ""){
+		document.getElementById(numDiv).value = 0;
+	}
+
 	var number = document.getElementById(numDiv).value;
 	var sub = document.getElementById(subDiv);
 	var total = document.getElementById("total");
@@ -182,6 +188,7 @@ function updateSubTotal(numDiv, subDiv, item){
 	theTotal += parseFloat(document.getElementById("tongueSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("axelSub").innerHTML); 
+	theTotal += parseFloat(document.getElementById("wormsSub").innerHTML); 
 	
 	total.innerHTML = theTotal;
 
@@ -201,12 +208,13 @@ function buyStuff(){
 	var tongueSub = parseFloat(document.getElementById("tongueSub").innerHTML);
 	var wheelSub = parseFloat(document.getElementById("wheelSub").innerHTML)
 	var axelSub = parseFloat(document.getElementById("axelSub").innerHTML); 
+	var wormsSub = parseFloat(document.getElementById("wormsSub").innerHTML); 
 
-	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axelSub;
+	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axelSub + wormsSub;
 
 
 
-	var canBuyThisStuff = canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice);
+	var canBuyThisStuff = canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, wormsSub, totalPrice);
 
 	if(canBuyThisStuff == true){
 
@@ -227,6 +235,7 @@ function buyStuff(){
 		theTongues += parseInt(document.getElementById("numTongues").value);
 		theAxels += parseInt(document.getElementById("numAxles").value);
 		theWheels += parseInt(document.getElementById("numWheels").value);
+		theWorms += parseInt(document.getElementById("numWorms").value) * WORMSINABOX;
 		money -= totalPrice;
 		setTravelValues();
 
@@ -237,6 +246,7 @@ function buyStuff(){
 		document.getElementById("numTongues").value = 0;
 		document.getElementById("numAxles").value = 0;
 		document.getElementById("numWheels").value = 0;
+		document.getElementById("numWorms").value = 0;
 
 		//reset the sub totals
 		document.getElementById("oxenSub").innerHTML = 0;
@@ -245,6 +255,7 @@ function buyStuff(){
 		document.getElementById("tongueSub").innerHTML = 0;
 		document.getElementById("wheelSub").innerHTML = 0;
 		document.getElementById("axelSub").innerHTML = 0; 
+		document.getElementById("wormsSub").innerHTML = 0; 
 	}
 
 }
@@ -252,7 +263,7 @@ function buyStuff(){
 
 
 //function that returns whether or not you can buy this stuff
-function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice){
+function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, wormsSub, totalPrice){
 	var can = true;
 
 	//invalid amount of money
@@ -300,6 +311,13 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, totalPrice){
 	//too many wheels
 	else if(parseInt(document.getElementById("numWheels").value) + theWheels > MAXPART){
 		alert("You can only have " + MAXPART + " wheels. You currently have " + theWheels);
+		can = false;
+	}
+
+
+	//too many worms
+	else if((parseInt(document.getElementById("numWorms").value) * WORMSINABOX) + theWorms > MAXWORMS){
+		alert("You can only have " + MAXWORMS + " worms. You currently have " + theWorms);
 		can = false;
 	}
 
@@ -437,6 +455,7 @@ function river(option){
 		var ranWheels = Math.floor(Math.random() * theWheels);
 		var ranAxels = Math.floor(Math.random() * theAxels);
 		var ranTongues = Math.floor(Math.random() * theTongues);
+		var ranWorms = Math.floor(Math.random() * theWorms);
 
 
 		document.getElementById("youLostFromRiver").innerHTML = "You Lost:"
@@ -445,7 +464,8 @@ function river(option){
 																	+ "<br>Clothes: " + ranClothes
 																	+ " Wheels: " + ranWheels
 																	+ " <br>Axles: " + ranAxels
-																	+ " Tongues: " + ranTongues;
+																	+ " Tongues: " + ranTongues
+																	+ " Worms: " + ranWorms;
 
 		theOxen -= ranOxen;
 		theFood -= ranFood;
@@ -453,6 +473,7 @@ function river(option){
 		theWheels -= ranWheels;
 		theAxels -= ranAxels;
 		theTongues -= ranTongues; 
+		theWorms -= ranWorms; 
 
 
 		if(option == 'ford' || option == 'caulk' || option == 'wait'){
@@ -498,6 +519,8 @@ function setTravelValues(){
 	document.getElementById("weatherGoesHere").innerHTML = "Weather: " + theWeather;
 	document.getElementById("healthGoesHere").innerHTML = "Health: " + getHealth();
 	document.getElementById("foodGoesHere").innerHTML = "Food: " + theFood;
+
+	document.getElementById("lostAWorm").innerHTML = "Number of worms: " + theWorms;
 
 	//update with next landmark
 	var thisJson = placesMiles[currentLandmark];
@@ -755,11 +778,59 @@ function checkSupplies(divId){
 	document.getElementById("numberOfTongues").innerHTML = theTongues;
 	document.getElementById("numberOfFood").innerHTML = theFood;
 	document.getElementById("numberOfMoney").innerHTML = "$" + money;
+	document.getElementById("numberOfWorms").innerHTML = theWorms;
 	openNextMenu(divId, "suppliesMenu");
 }
 
 
+function fishAttempt(){
+	
+	var gotFishPath = "images/Fishing_gif_fish.gif";
+	var notFishPath = "images/Fishing_gif_no_fish.gif";
 
+	document.getElementById("fishingImg").src = "";
+
+
+
+	//makes sure user has worms
+	if(theWorms > 0){
+		
+		theWorms -= 1;
+		document.getElementById("lostAWorm").innerHTML = "Number of worms: " + theWorms;
+
+		//caught fish
+		//give random weight of fish
+		//update image src and food
+		if(Math.floor(Math.random() * 3) + 1 == 3){
+
+			document.getElementById("fishingImg").src = gotFishPath;
+
+			var fishWeight = Math.floor(Math.random() * 30) + 1;
+
+			document.getElementById("fishCatch").innerHTML = "You caught a fish that was " + fishWeight + " pounds!";
+			if(theFood + fishWeight > MAXFOOD){
+				theFood = MAXFOOD;
+			}
+			else{
+				theFood += fishWeight;
+			}
+
+		}
+
+		//didnt catch fish :(
+		//update image src
+		else{
+			document.getElementById("fishingImg").src = notFishPath;
+			document.getElementById("fishCatch").innerHTML = "You did not catch any fish";
+		}
+	}
+	else{
+		alert("You have no worms to fish with!");
+	}
+
+	setTravelValues();
+
+}
 
 //changes pace based on button selected
 //PROBABLY SHOULD GO BACK A MENU AFTER

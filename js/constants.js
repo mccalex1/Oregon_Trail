@@ -110,6 +110,8 @@ var MAXOXEN = 9;
 var MAXFOOD = 2000;
 var MAXCLOTHES = 99;
 var MAXPART = 3;
+var MAXWORMS = 2000;
+var WORMSINABOX = 100;
 
 
 //prices based on place
@@ -119,6 +121,7 @@ var theClothes = 0;
 var theWheels = 0;
 var theAxels = 0;
 var theTongues = 0;
+var theWorms = 0;
 
 
 var shopOrNotShopMenu = "landmarkWithShopMenu";
@@ -126,14 +129,14 @@ currentStore = "";
 currentStoreNum = 0;
 listOfStores = ["Matts", "Independence", "Ft. Kearney", "Ft. Laramie", "Ft. Bridger", "Ft. Hall", "Ft. Boise", "Ft. Walla Walla"];
 var prices = { 
-				"Matts" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2'},	
-				"Independence" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},		
-				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25'},	
-				"Ft. Laramie" : 	{'oxen': '30', 'clothes': '15', 	'parts': '15', 		'food': '.3'},
-				"Ft. Bridger" : 	{'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35'},	
-				"Ft. Hall" : 		{'oxen': '40', 'clothes': '20', 	'parts': '20', 		'food': '.4'},	
-				"Ft. Boise" : 		{'oxen': '45', 'clothes': '22.5', 	'parts': '22.5',	'food': '.45'},	
-				"Ft. Walla Walla" : {'oxen': '50', 'clothes': '25', 	'parts': '25', 		'food': '.5'}	
+				"Matts" : 			{'oxen': '20', 'clothes': '10', 	'parts': '10', 		'food': '.2',  'worms': '2'},	
+				"Independence" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25', 'worms': '2.5'},		
+				"Ft. Kearney" : 	{'oxen': '25', 'clothes': '12.5', 	'parts': '12.5', 	'food': '.25', 'worms': '3'},	
+				"Ft. Laramie" : 	{'oxen': '30', 'clothes': '15', 	'parts': '15', 		'food': '.3',  'worms': '3.5'},
+				"Ft. Bridger" : 	{'oxen': '35', 'clothes': '17.5',	'parts': '17.5', 	'food': '.35', 'worms': '4'},	
+				"Ft. Hall" : 		{'oxen': '40', 'clothes': '20', 	'parts': '20', 		'food': '.4',  'worms': '4.5'},	
+				"Ft. Boise" : 		{'oxen': '45', 'clothes': '22.5', 	'parts': '22.5',	'food': '.45', 'worms': '5'},	
+				"Ft. Walla Walla" : {'oxen': '50', 'clothes': '25', 	'parts': '25', 		'food': '.5',  'worms': '5.5'}	
 			};
 
 

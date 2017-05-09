@@ -104,7 +104,7 @@ p{
 #chooseNames, #startMonth, #monthAdvice, #goToStore, #helloMatt,
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
-#imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu
+#imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu
 
 {
 	display: none;
@@ -133,7 +133,7 @@ p{
 }
 
 
-#landmarkPic, #riverPic, #riverCrossingImg{
+#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg{
 	height:500px;
 	width:700px;
 }

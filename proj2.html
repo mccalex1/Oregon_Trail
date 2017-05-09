@@ -434,6 +434,22 @@
 									</tr>
 									<tr>
 										<td>
+										6. Worms
+										</td>
+
+										<td id="wormsPrice">
+											$X.XX
+										</td>
+
+										<td>
+											<input onchange="updateSubTotal('numWorms', 'wormsSub', 'worms')" id="numWorms" value='0' type="number" name="quantity" min="1" max="20">	
+										</td>
+										<td id="wormsSub">
+											0
+										</td>
+									</tr>
+									<tr>
+										<td>
 										</td>
 
 										<td>
@@ -444,6 +460,7 @@
 										<td id="total">
 
 										</td>
+									</tr>
 								</table>
 
 								<br>
@@ -480,6 +497,9 @@
 								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','restMenu')"> Stop to rest </BUTTON>
 								<br>
 								<br>
+								<BUTTON onclick="openNextMenu('landmarkWithShopMenu', 'fishingMenu')">Go Fishing</BUTTON>
+								<br>
+								<br>
 								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','tradeMenu')"> Attempt to trade </BUTTON>
 								<br>
 								<br>
@@ -514,6 +534,9 @@
 								<BUTTON onclick="openNextMenu('noShopMenu','restMenu')"> Stop to rest </BUTTON>
 								<br>
 								<br>
+								<BUTTON onclick="openNextMenu('noShopMenu', 'fishingMenu')">Go Fishing</BUTTON>
+								<br>
+								<br>
 								<BUTTON onclick="openNextMenu('noShopMenu','tradeMenu')"> Attempt to trade </BUTTON>
 								<br>
 								<br>
@@ -524,6 +547,29 @@
 							</div>
 
 
+							<!-- menu for fish catching -->
+							<div id="fishingMenu">
+								<table>
+									<tr>
+										<td>
+											<img id="fishingImg"/>
+										</td>
+										<td>
+											<h1 id="lostAWorm">Number of worms: </h1>
+											<br>
+											
+											<BUTTON onclick="fishAttempt()">Throw line in water</BUTTON>
+											<br>
+
+											<p id="fishCatch"> Throw a line in the water to catch a fish! </p>
+
+										</td>
+									</tr>
+								</table>
+
+								<BUTTON onclick="openNextMenu('fishingMenu', shopOrNotShopMenu)">Done Fishing</BUTTON>
+								<br>
+							</div>
 
 
 
@@ -652,6 +698,14 @@
 											Money Left
 										</td>
 										<td id="numberOfMoney">
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Worms
+										</td>
+										<td id="numberOfWorms">
 
 										</td>
 									</tr>

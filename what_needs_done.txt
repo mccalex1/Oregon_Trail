@@ -20,12 +20,6 @@ River
 Items
 	- Clothing has not been implemented to make any difference in game
 	- Axle parts make no difference whether they exist or not YET
-	- Fishing
-		- Add in worms to store
-		- Add fishing as option to all menus
-		- Make random chance of fish
-		- Choose image based on whether fish is caught or not
-		- Increase food / decrease number of worms
 
 Random events
 	- Random sickness
