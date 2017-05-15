@@ -378,7 +378,7 @@
 										</td>
 
 										<td>
-											<input onchange="updateSubTotal('numClothing', 'clothingSub', 'clothes')" id="numClothing" value='0' type="number" name="quantity" min="1" max="99">	
+											<input onchange="updateSubTotal('numClothing', 'clothingSub', 'clothes')" id="numClothing" value='0' type="number" name="quantity" min="1" max="20">	
 										</td>
 										<td id="clothingSub">
 											0
@@ -405,14 +405,14 @@
 										5. Wagon Axle
 										</td>
 
-										<td id="axelPrice">
+										<td id="axlePrice">
 											$X.XX
 										</td>
 
 										<td>
-											<input onchange="updateSubTotal('numAxles', 'axelSub', 'parts')" id="numAxles" value='0' type="number" name="quantity" min="1" max="3">	
+											<input onchange="updateSubTotal('numAxles', 'axleSub', 'parts')" id="numAxles" value='0' type="number" name="quantity" min="1" max="3">	
 										</td>
-										<td id="axelSub">
+										<td id="axleSub">
 											0
 										</td>
 									</tr>
@@ -801,6 +801,10 @@
 								
 								<h1 id="whatRiverAmIAt"></h1>
 
+								<div id="riverDate">
+									Date: 
+								</div>
+
 								<div id="riverWidth">
 									River width:
 								</div>
@@ -834,6 +838,14 @@
 							</div>
 
 
+							<!-- For random events that happen -->
+							<div id="eventHappening">
+
+								<img id="eventImage"/>
+								<p id="eventMessage"></p>
+								<BUTTON onclick="openNextMenu('eventHappening','theTrail')">Continue</BUTTON>
+
+							</div>
 
 							<!-- allows user to rest -->
 							<div id="restMenu">
