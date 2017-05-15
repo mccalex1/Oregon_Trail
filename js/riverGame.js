@@ -14,15 +14,15 @@
  *
  *******************************************************************************/
 
-var GAME_LENGTH = 100;
+var GAME_LENGTH = 3000;
 var PLAYER_SIZE = 40;
 var ROCK_SIZE = 70;
 var PLAYER_ACCELERATION_Y = 0.08;
 var PLAYER_ACCELERATION_X = 0.05;
 var PLAYER_DRIFT_SPEED = 0;
 var PLAYER_MAX_SPEED_Y = 1.5;
-var PLAYER_MAX_FORWARD_SPEED = 2.2;
-var PLAYER_MAX_BACKWARD_SPEED = 1.8;
+var PLAYER_MAX_FORWARD_SPEED = 0.5;
+var PLAYER_MAX_BACKWARD_SPEED = 4.8;
 var SHORE_SIZE = 25;
 var RIVER_SPEED = 1.8;
 var CRASH_RECOVER_DISTANCE = 10;
@@ -43,8 +43,13 @@ function startRiverGame() {
 function finishRiverGame(passed) {
     window.clearInterval(gameArea.interval);
     document.getElementById("riverGameDone").setAttribute("style", "display: block");
-    document.getElementById("riverGamePenalty").innerHTML = gamePenalty;
-    document.getElementById("riverGameDone").innerHTML = passed;
+    document.getElementById("riverGamePenalty").innerHTML = "Penalty: " + gamePenalty;
+    if (passed == true) {
+        document.getElementById("riverGameDone").innerHTML = "You made it!";
+    }
+    else {
+        document.getElementById("riverGameDone").innerHTML = "You died!";
+    }
 }
 
 
@@ -87,6 +92,7 @@ function component(type, x, y) {
         this.speedY = 0;
         this.image = new Image();
         this.image.src = "images/wagon_for_river_icon.gif";
+        this.recoveredShore = true;
         this.recovered = true;
         this.collision = "";
         this.dead = false;
@@ -141,16 +147,16 @@ function component(type, x, y) {
             this.y += this.speedY;
             this.y = Math.min(Math.max(this.y, SHORE_SIZE), gameArea.canvas.height - this.height - SHORE_SIZE);
 
-            if (this.recovered == false &&
+            if (this.recoveredShore == false &&
                 (this.y > SHORE_SIZE + CRASH_RECOVER_DISTANCE) &&
                 (this.y < gameArea.canvas.height - this.height - SHORE_SIZE - CRASH_RECOVER_DISTANCE)) {
-                this.recovered = true;
+                this.recoveredShore = true;
             }
 
             else if (((this.y <= SHORE_SIZE+1) || (this.y >= gameArea.canvas.height - this.height - SHORE_SIZE - 1)) &&
-                     this.recovered == true) {
+                     this.recoveredShore == true) {
                     gamePenalty += 0.25;
-                    this.recovered = false;
+                    this.recoveredShore = false;
             }
 
             this.x = Math.min(Math.max(this.x, 0), gameArea.canvas.width - this.width);
@@ -172,11 +178,11 @@ function component(type, x, y) {
         rockBottom = rock.y + rock.height;
         rockLeft = rock.x;
 
-        if (this.recovered == false && rock.collided == true) {
+        if (rock.collided == true) {
             if (this.collision == "top" && (
-                (playerBottom < rockTop - CRASH_RECOVER_DISTANCE ||
-                 playerRight < rockLeft - CRASH_RECOVER_DISTANCE ||
-                 playerLeft > rockRight + CRASH_RECOVER_DISTANCE))) {
+                    (playerBottom < rockTop - CRASH_RECOVER_DISTANCE ||
+                    playerRight < rockLeft - CRASH_RECOVER_DISTANCE ||
+                    playerLeft > rockRight + CRASH_RECOVER_DISTANCE))) {
                 this.recovered = true;
                 this.collision = "";
                 rock.collided = false;
@@ -214,8 +220,8 @@ function component(type, x, y) {
             }
         }
 
-        else if (this.recovered == true) {
-            if (playerBottom >= rockTop && playerTop < rockTop &&
+        else {
+            if (playerBottom > rockTop && playerTop < rockTop &&
                 ( (playerRight > rockLeft && playerRight < rockRight) ||
                 (playerLeft > rockLeft && playerLeft < rockRight))) {
                 this.collision = "top";
@@ -223,10 +229,10 @@ function component(type, x, y) {
                 this.speedY = 0;
                 this.curMaxDown = 0;
                 rock.collided = true;
-                this.y = rockTop - PLAYER_SIZE;
+                this.y = rockTop - PLAYER_SIZE - 1;
                 gamePenalty += 1;
             }
-            else if (playerTop <= rockBottom && playerBottom > rockBottom &&
+            else if (playerTop < rockBottom && playerBottom > rockBottom &&
                 ((playerRight > rockLeft && playerRight < rockRight) ||
                 (playerLeft > rockLeft && playerLeft < rockRight)))  {
                 this.collision = "bottom";
@@ -234,27 +240,27 @@ function component(type, x, y) {
                 this.speedY = 0;
                 this.curMaxUp = 0;
                 rock.collided = true;
-                this.y = rockBottom;
+                this.y = rockBottom + 1;
                 gamePenalty += 1;
             }
-            else if (playerRight >= rockLeft && playerLeft < rockLeft &&
+            else if (playerRight > rockLeft && playerLeft < rockLeft &&
                 ((playerTop > rockBottom && playerTop < rockTop) ||
                 (playerBottom < rockBottom && playerBottom > rockTop)))  {
                 this.collision = "left";
                 this.recovered = false;
-                this.speedX = 0;
-                this.curMaxRight = 0;
+                this.speedX = -RIVER_SPEED;
+                this.curMaxRight = -RIVER_SPEED;
                 rock.collided = true;
-                this.x = rockLeft - PLAYER_SIZE;
+                this.x = rockLeft - PLAYER_SIZE - 1;
                 gamePenalty += 1;
             }
-            else if (playerLeft <= rockRight && playerRight > rockRight &&
+            else if (playerLeft < rockRight && playerRight > rockRight &&
                 ((playerTop > rockBottom && playerTop < rockTop) ||
                 (playerBottom < rockBottom && playerBottom> rockTop)))  {
                 this.collision = "right";
                 this.recovered = false;
-                this.speedX = 0;
-                this.curMaxLeft = 0;
+                this.speedX = -RIVER_SPEED;
+                this.curMaxLeft = -RIVER_SPEED;
                 rock.collided = true;
                 this.x = rockRight;
                 gamePenalty += 1;
@@ -269,10 +275,10 @@ function updateGame() {
         playerPiece.crashTest(obstacles[i]);
     }
     if (playerPiece.dead == true) {
-        finishRiverGame(true);
+        finishRiverGame(false);
     }
     else if (gameArea.frameNum >= GAME_LENGTH) {
-        finishRiverGame(false);
+        finishRiverGame(true);
     }
 
     gameArea.clear();
@@ -285,12 +291,15 @@ function updateGame() {
 
     if (gameArea.keys && gameArea.keys[37]) {speedX = Math.max(-playerPiece.curMaxLeft, speedX - PLAYER_ACCELERATION_X); }
     if (gameArea.keys && gameArea.keys[39]) {speedX = Math.min(playerPiece.curMaxRight, speedX + PLAYER_ACCELERATION_X); }
-    if (gameArea.keys && gameArea.keys[38]) {speedY = Math.max(-playerPiece.curMaxDown, speedY - PLAYER_ACCELERATION_Y); }
-    if (gameArea.keys && gameArea.keys[40]) {speedY = Math.min(playerPiece.curMaxUp, speedY + PLAYER_ACCELERATION_Y); }
+    if (gameArea.keys && gameArea.keys[38]) {speedY = Math.max(-playerPiece.curMaxUp, speedY - PLAYER_ACCELERATION_Y); }
+    if (gameArea.keys && gameArea.keys[40]) {speedY = Math.min(playerPiece.curMaxDown, speedY + PLAYER_ACCELERATION_Y); }
 
     if ((gameArea.keys && gameArea.keys[37] && gameArea.keys[39]) ||
         (gameArea.keys && !gameArea.keys[37] && !gameArea.keys[39])) {
-        if (speedX > -PLAYER_DRIFT_SPEED) {
+        if (playerPiece.collision == "left") {
+            speedX = -RIVER_SPEED;
+        }
+        else if (speedX > -PLAYER_DRIFT_SPEED) {
             speedX = Math.max(-PLAYER_DRIFT_SPEED, speedX - PLAYER_ACCELERATION_X);
         }
         else if (speedX < -PLAYER_DRIFT_SPEED) {
