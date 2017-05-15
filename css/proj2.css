@@ -45,7 +45,7 @@ button, input{
 }
 
 #imagesTable{
-	background: linear-gradient(to bottom left, yellow, blue);
+	background: linear-gradient(to bottom, #163C52 0%, #525248 30%, #c7772d 60%,#B7490F 80%, #2F1107 100%);
 	height: 250px;
 }
 

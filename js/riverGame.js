@@ -15,17 +15,19 @@
  *******************************************************************************/
 
 var GAME_LENGTH = 3000;
-var PLAYER_SIZE = 40;
+var PLAYER_SIZE = 50;
 var ROCK_SIZE = 70;
 var PLAYER_ACCELERATION_Y = 0.08;
-var PLAYER_ACCELERATION_X = 0.05;
+var PLAYER_ACCELERATION_X = 0.0;
 var PLAYER_DRIFT_SPEED = 0;
 var PLAYER_MAX_SPEED_Y = 1.5;
-var PLAYER_MAX_FORWARD_SPEED = 0.5;
-var PLAYER_MAX_BACKWARD_SPEED = 4.8;
+var PLAYER_MAX_FORWARD_SPEED = 0.7;
+var PLAYER_MAX_BACKWARD_SPEED = 1.5;
 var SHORE_SIZE = 25;
-var RIVER_SPEED = 1.8;
+var RIVER_SPEED = 2.5;
 var CRASH_RECOVER_DISTANCE = 10;
+var ROCK_DIST_1 = 100;
+var ROCK_DIST_2 = 50;
 
 
 var playerPiece;
@@ -338,8 +340,8 @@ function updateGame() {
 
 function createRocks() {
     var range = gameArea.canvas.height - 2*SHORE_SIZE - ROCK_SIZE;
-    if (((gameArea.frameNum < 1200) && ((gameArea.frameNum/200) % 1== 0)) ||
-        ((gameArea.frameNum >= 1000) && (gameArea.frameNum <= GAME_LENGTH) && ((gameArea.frameNum/150) % 1 == 0))) {
+    if (((gameArea.frameNum < 1000) && ((gameArea.frameNum/ROCK_DIST_1) % 1== 0)) ||
+        ((gameArea.frameNum >= 1000) && (gameArea.frameNum <= GAME_LENGTH) && ((gameArea.frameNum/ROCK_DIST_2) % 1 == 0))) {
         rockPos = Math.floor(Math.random()*range + (SHORE_SIZE + ROCK_SIZE/2));
         obstacles.push(new component("rock", gameArea.canvas.width, rockPos));
     }
