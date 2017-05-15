@@ -84,7 +84,7 @@ p{
 }
 #mainDiv{
 	width: 90%;
-	height: 650;
+	height: 650px;
 	background-color: black;
 	text-align: center;
 	margin: 0 auto;
@@ -105,7 +105,7 @@ p{
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
 #imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
-#trailDivides
+#trailDivides, #riverGameDone
 
 {
 	display: none;
@@ -160,4 +160,19 @@ p{
 
 #youLostFromRiver{
 	color: red;
+}
+
+#riverGameIntro, #riverGameDone {
+	text-align: center;
+	padding-top: 150px;
+	margin: auto;
+	height: 450px;
+	width: 800px;
+	background: rgba(0,0,0,.5);
+	position: relative;
+	top: -600px;
+}
+
+#riverGameCanvas {
+	background-image: url(../images/riverGameTemp.png);
 }
