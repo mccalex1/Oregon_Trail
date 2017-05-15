@@ -26,11 +26,40 @@ function openNextMenu(currentDiv, nextDivId){
 
 
 
+function continueFromRiver(){
+
+	//update landmark counter by 1
+	//only if we dont already jump 2
+	//if it is after a split it needs to jump by two the way the data structure is set up
+	if(jumpTwo.indexOf(currentLandmark) != -1){
+		currentLandmark += 2;
+	}
+	else{
+		currentLandmark += 1;
+	}
+	
+	//update with next landmark
+	updateLandmark();
+
+	//updates the travel values with updated stuff
+	setTravelValues();
+
+	openNextMenu("riverCrossing", 'theTrail');
+}
+
 
 //when the user is in a landmark menu and hits continue on trail
 function continueFromLandmark(){
-	//update landmark counter
-	currentLandmark += 1;
+
+	//update landmark counter by 1
+	//only if we dont already jump 2
+	//if it is after a split it needs to jump by two the way the data structure is set up
+	if(jumpTwo.indexOf(currentLandmark) != -1){
+		currentLandmark += 2;
+	}
+	else{
+		currentLandmark += 1;
+	}
 
 	//update with next landmark
 	updateLandmark();
@@ -375,7 +404,7 @@ function continueTrail(){
 
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
-
+		console.log("made it to " + placesMiles[currentLandmark].place);
 		updateLandmarkPixel();
 
 		//if this landmark is in the list of stores open ask for store menu
@@ -383,13 +412,13 @@ function continueTrail(){
 			
 			shopOrNotShopMenu = "landmarkWithShopMenu";
 
-			alert("You made it to the " + placesMiles[currentLandmark].place + "and it has a store!!!");
+			//alert("You made it to the " + placesMiles[currentLandmark].place + " and it has a store!!!");
 			currentStoreNum += 1;
 
 		}
 		else{
 
-			alert("You made it to the " + placesMiles[currentLandmark].place);
+			//alert("You made it to the " + placesMiles[currentLandmark].place);
 
 			//if the place is a river
 			if(placesMiles[currentLandmark].isRiver == true){
@@ -409,25 +438,42 @@ function continueTrail(){
 			document.getElementById("whatRiverAmIAt").innerHTML = placesMiles[currentLandmark].place;
 			document.getElementById("riverPic").src = placesMiles[currentLandmark].filePath;
 			openNextMenu("theTrail","riverMenu");
-		}else{
-			openNextMenu("theTrail","imageMenu");
 		}
-
 
 
 		//if green river or fort walla walla we need to increase by 2
 		//THIS IS BY DEFAULT FOR NOW THE USER WILL HAVE CHOICE
-		if(currentLandmark == 8 || currentLandmark == 10 || currentLandmark == 16){
+		if(splitBegins.indexOf(currentLandmark) != -1){
+
+			document.getElementById("trailLeft").innerHTML = "To " + placesMiles[currentLandmark + 1].place;
+			document.getElementById("trailRight").innerHTML = "To " + placesMiles[currentLandmark + 2].place;
+
+			openNextMenu("theTrail", "trailDivides");
+
+
+		}
+		else if(!atRiver){
+			openNextMenu("theTrail","imageMenu");
+		}
+		/*
+		//if it is after a split it needs to jump by two the way the data structure is set up
+		else if(jumpTwo.indexOf(currentLandmark) != -1){
+			console.log("442: adding 2");
 			currentLandmark += 2;
+			if(!atRiver){
+				openNextMenu("theTrail","imageMenu");
+			}
 		}
+
 		else{
-			currentLandmark += 1;
+			if(!atRiver){
+				//if its at river the open river menu was already called
+				openNextMenu("theTrail","imageMenu");
+			}
 		}
+		*/
 		milesWithThisLandmark = 0;
 
-		if(currentLandmark == 8 || currentLandmark == 10 || currentLandmark == 16){
-			alert("Taking " + placesMiles[currentLandmark].place + " path by default");
-		}
 	}
 
 	document.getElementById("landmarkIcon").src = placesMiles[currentLandmark].icon;
@@ -587,6 +633,30 @@ function updateDistance(){
 }
 
 
+//when a split in the road is reached
+//this functio is called with parameter left or right
+function trailClick(direction){
+
+	if(direction == "left"){
+		console.log("622: adding 1");
+		currentLandmark += 1;
+	}
+
+	//right
+	else{
+		console.log("628: adding 2");
+		currentLandmark += 2;
+	}
+
+	//update with next landmark
+	updateLandmark();
+
+	//updates the travel values with updated stuff
+	setTravelValues()
+
+	openNextMenu("trailDivides", "theTrail");
+}
+
 
 //moves the landmark image over with each click of continue
 //https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_animate_3
@@ -601,9 +671,10 @@ function animateLandmark(milesToAdd){
 
 	var pos = 0;
 
-	document.getElementById("pressToContinue").disabled = true;
-	document.getElementById("pressToContinue").className = "disabledButton";
+	//document.getElementById("pressToContinue").disabled = true;
+	//document.getElementById("pressToContinue").className = "disabledButton";
 
+	/*
 	var id = setInterval(frame, 5);
 	function frame(){
 
@@ -618,6 +689,7 @@ function animateLandmark(milesToAdd){
 			elem.style.left = pos + start;
 		}
 	}
+	*/
 }
 
 

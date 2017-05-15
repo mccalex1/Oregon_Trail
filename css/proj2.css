@@ -104,7 +104,8 @@ p{
 #chooseNames, #startMonth, #monthAdvice, #goToStore, #helloMatt,
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
-#imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu
+#imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
+#trailDivides
 
 {
 	display: none;
@@ -122,8 +123,8 @@ p{
 	background: transparent;
 }
 #landmarkIcon{
-	width: 100px;
-	height:33px;
+	width: 200px;
+	height: 66px;
 	background: transparent;
 }
 
@@ -133,7 +134,7 @@ p{
 }
 
 
-#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg{
+#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg, #imageTrailSplit{
 	height:500px;
 	width:700px;
 }

@@ -1,30 +1,34 @@
 
-MENU
-	- Stop to rest menu
-
-	- Attempt to trade menu
-
-	- Talk to people menu
-
-	- End of game screen -- calculate points
-
-Trail
-	- Allow user to choose path rather than auto selecting for them
 
 
-River
-	- probability for making it across river safely
-	- Allowing user to wait to see if conditions improve
-	- RIVER GAME ------- BIG PART OF PROJECT THAT NEEDS FINISHING
+Alex:
+	Trail
+		- Allow user to choose path rather than auto selecting for them
+Alex: 
+	Items
+		- Clothing has not been implemented to make any difference in game
+		- Axle parts make no difference whether they exist or not YET
 
-Items
-	- Clothing has not been implemented to make any difference in game
-	- Axle parts make no difference whether they exist or not YET
 
-Random events
-	- Random sickness
-	- Random find something
+Brendan 
+	River
+		- probability for making it across river safely
+		- Allowing user to wait to see if conditions improve
 
+BRENDAN
+	MENU
+		- Stop to rest menu
+		- Attempt to trade menu
+		- Talk to people menu
+		- End of game screen -- calculate points
+
+Brendan:
+	Random events
+		- Random sickness
+		- Random find something
+
+Eric:
+	RIVER GAME ------- BIG PART OF PROJECT THAT NEEDS FINISHING
 
 Bugs
 	- Distance landmark moves across page when continue is pressed
