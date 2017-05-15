@@ -1,9 +1,5 @@
 
 
-
-Alex:
-	Trail
-		- Allow user to choose path rather than auto selecting for them
 Alex: 
 	Items
 		- Clothing has not been implemented to make any difference in game
