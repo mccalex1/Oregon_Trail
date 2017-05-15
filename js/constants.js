@@ -98,17 +98,11 @@ var paceChoices = 	{
 //						"Resting" 	: {ratio : 0, health: 1},		//per person
 					};
 
-//random event list
-var randomEvents = ["Find Wild Fruit", "Stolen Waggon", "Wagon Part Broken", 
-					"Rain Washes out Path", "Bad Track", "Thunderstorm",
-					"Develops Cholera", "Develops Exhaustion", "Breaks Arm", "Breaks Leg",
-					"Contracts Measels", "Gets Typhoid?", "Gets Dysentery?"];
-
 
 //Max number of extra stuff
 var MAXOXEN = 9;
 var MAXFOOD = 2000;
-var MAXCLOTHES = 99;
+var MAXCLOTHES = 20;
 var MAXPART = 3;
 var MAXWORMS = 2000;
 var WORMSINABOX = 100;
@@ -119,7 +113,7 @@ var WORMSINABOX = 100;
 var theOxen = 0;
 var theClothes = 0;
 var theWheels = 0;
-var theAxels = 0;
+var theAxles = 0;
 var theTongues = 0;
 var theWorms = 0;
 
@@ -149,32 +143,53 @@ var splitBegins = [7, 15];
 var jumpTwo = [8, 9, 10, 16, 17];
 var placesMiles = [
 
-					{"place" : "Independence, MO",			'isRiver': false, 'distance' : 0, 		'icon': "", 						'filePath' : "images/independence_background_from_game.jpg"},	//landmark 0
-					{"place" : "Kansas River Crossing",		'isRiver': true, 'distance' : 102, 		'icon': "images/river_icon.gif", 	'filePath' : "images/kansas_river_crossing_background.jpg"},	//landmark 1
-					{"place" : "Big Blue River Crossing",	'isRiver': true, 'distance' : 83, 		'icon': "images/river_icon.gif", 	'filePath' : "images/big_blue_river_crosssing.jpg"},			//landmark 2
-					{"place" : "Ft. Kearney",				'isRiver': false, 'distance' : 119, 	'icon': "images/fort_icon_1.gif", 	'filePath' : "images/fort_kearney_background.jpg"},				//landmark 3
-					{"place" : "Chimney Rock", 				'isRiver': false, 'distance' : 250, 	'icon': "images/rock_icon_1.gif", 	'filePath' : "images/Chimney_rock_background.jpg"},				//landmark 4
-					{"place" : "Ft. Laramie", 				'isRiver': false, 'distance' : 86, 		'icon': "images/fort_icon_2.gif", 	'filePath' : "images/fort_laramie_background.jpg"},				//landmark 5
-					{"place" : "Independence Rock", 		'isRiver': false, 'distance' : 190, 	'icon': "images/mountains_icon.gif",'filePath' : "images/indepence_rock_background.jpg"},		//landmark 6
-					{"place" : "South Pass",				'isRiver': false, 'distance' : 102, 	'icon': "images/rock_icon_1.gif", 	'filePath' : "images/south_pass_background.jpg"},				//landmark 7
+					{"place" : "Independence, MO",			'isRiver': false, 'distance' : 0, 									'icon': "", 						'filePath' : "images/independence_background_from_game.jpg"},	//landmark 0
+					{"place" : "Kansas River Crossing",		'isRiver': true, 'distance' : 102, 		'width': 620, 'depth': 4, 	'icon': "images/river_icon.gif", 	'filePath' : "images/kansas_river_crossing_background.jpg"},	//landmark 1
+					{"place" : "Big Blue River Crossing",	'isRiver': true, 'distance' : 83, 		'width': 242, 'depth': 8,	'icon': "images/river_icon.gif", 	'filePath' : "images/big_blue_river_crosssing.jpg"},			//landmark 2
+					{"place" : "Ft. Kearney",				'isRiver': false, 'distance' : 119, 								'icon': "images/fort_icon_1.gif", 	'filePath' : "images/fort_kearney_background.jpg"},				//landmark 3
+					{"place" : "Chimney Rock", 				'isRiver': false, 'distance' : 250, 								'icon': "images/rock_icon_1.gif", 	'filePath' : "images/Chimney_rock_background.jpg"},				//landmark 4
+					{"place" : "Ft. Laramie", 				'isRiver': false, 'distance' : 86, 									'icon': "images/fort_icon_2.gif", 	'filePath' : "images/fort_laramie_background.jpg"},				//landmark 5
+					{"place" : "Independence Rock", 		'isRiver': false, 'distance' : 190, 								'icon': "images/mountains_icon.gif",'filePath' : "images/indepence_rock_background.jpg"},			//landmark 6
+					{"place" : "South Pass",				'isRiver': false, 'distance' : 102, 								'icon': "images/rock_icon_1.gif", 	'filePath' : "images/south_pass_background.jpg"},				//landmark 7
 
 					//road splits here
-					{"place" : "Green River",				'isRiver': true, 'distance' : 57, 		'icon': "images/river_icon.gif", 	'filePath' : "images/green_river_crossing_background.jpg"},	//landmark (8) 8.1 (left)
-					{"place" : "Fort Bridger",				'isRiver': false, 'distance' : 125, 	'icon': "images/fort_icon_1.gif", 	'filePath' : "images/fort_bridger.jpg"},						//landmark (9) 8.2 (right)
-					{"place" : "Soda Springs",				'isRiver': false, 'distance' : 144, 	'icon': "images/springs_icon.gif", 	'filePath' : "images/soda_springs_background.jpg"},				//landmark (10) 9.1 distance from green river (left)
-					{"place" : "Soda Springs",				'isRiver': false, 'distance' : 162, 	'icon': "images/springs_icon.gif", 	'filePath' : "images/soda_springs_background.jpg"},				//landmark (11) 9.2 distance from fort bridge (right)
+					{"place" : "Green River",				'isRiver': true, 'distance' : 57, 		'width': 413, 'depth': 21,	'icon': "images/river_icon.gif", 	'filePath' : "images/green_river_crossing_background.jpg"},		//landmark (8) 8.1 (left)
+					{"place" : "Fort Bridger",				'isRiver': false, 'distance' : 125, 								'icon': "images/fort_icon_1.gif", 	'filePath' : "images/fort_bridger.jpg"},						//landmark (9) 8.2 (right)
+					{"place" : "Soda Springs",				'isRiver': false, 'distance' : 144, 								'icon': "images/springs_icon.gif", 	'filePath' : "images/soda_springs_background.jpg"},				//landmark (10) 9.1 distance from green river (left)
+					{"place" : "Soda Springs",				'isRiver': false, 'distance' : 162, 								'icon': "images/springs_icon.gif", 	'filePath' : "images/soda_springs_background.jpg"},				//landmark (11) 9.2 distance from fort bridge (right)
 
 					//road comes back together
-					{"place" : "Ft. Hall",					'isRiver': false, 'distance' : 57, 		'icon': "images/fort_icon_1.gif", 	'filePath' : "images/Fort_hall_background.jpg"},				//landmark 12 
-					{"place" : "Snake River",				'isRiver': true, 'distance' : 182, 		'icon': "images/river_icon.gif", 	'filePath' : "images/snake_river_crossing.jpg"},				//landmark 13 
-					{"place" : "Ft. Boise",					'isRiver': false, 'distance' : 114, 	'icon': "images/fort_icon_2.gif", 	'filePath' : "images/Fort_boise.jpg"},							//landmark 14 
-					{"place" : "Blue Mountain",				'isRiver': false, 'distance' : 160, 	'icon': "images/mountains_icon.gif",'filePath' : "images/blue_mountains.jpg"},						//landmark 15 
+					{"place" : "Ft. Hall",					'isRiver': false, 'distance' : 57, 									'icon': "images/fort_icon_1.gif", 	'filePath' : "images/Fort_hall_background.jpg"},				//landmark 12 
+					{"place" : "Snake River",				'isRiver': true, 'distance' : 182, 		'width': 1000, 'depth': 6, 	'icon': "images/river_icon.gif", 	'filePath' : "images/snake_river_crossing.jpg"},				//landmark 13 
+					{"place" : "Ft. Boise",					'isRiver': false, 'distance' : 114, 								'icon': "images/fort_icon_2.gif", 	'filePath' : "images/Fort_boise.jpg"},							//landmark 14 
+					{"place" : "Blue Mountain",				'isRiver': false, 'distance' : 160, 								'icon': "images/mountains_icon.gif",'filePath' : "images/blue_mountains.jpg"},						//landmark 15 
 
 					//road splits here
-					{"place" : "Ft. Walla Walla",			'isRiver': false, 'distance' : 55, 		'icon': "images/fort_icon_1.gif", 	'filePath' : "images/fort_walla_walla.jpg"},					//landmark (16) 16.1(Left)
-					{"place" : "The Dalles",				'isRiver': true, 'distance' : 125, 		'icon': "images/river_icon.gif", 	'filePath' : "images/the_dalles.jpg"},							//landmark (17) 17.1 distance from blue mountain (Right)
-					{"place" : "The Dalles",				'isRiver': true, 'distance' : 120, 		'icon': "images/river_icon.gif", 	'filePath' : "images/the_dalles.jpg"},							//landmark (18) 17.2 distance from ft walla(left)
+					{"place" : "Ft. Walla Walla",			'isRiver': false, 'distance' : 55, 									'icon': "images/fort_icon_1.gif", 	'filePath' : "images/fort_walla_walla.jpg"},					//landmark (16) 16.1(Left)
+					{"place" : "The Dalles",				'isRiver': true, 'distance' : 125, 		'width': 1512, 'depth': 32,	'icon': "images/river_icon.gif", 	'filePath' : "images/the_dalles.jpg"},							//landmark (17) 17.1 distance from blue mountain (Right)
+					{"place" : "The Dalles",				'isRiver': true, 'distance' : 120, 		'width': 1512, 'depth': 32,	'icon': "images/river_icon.gif", 	'filePath' : "images/the_dalles.jpg"},							//landmark (18) 17.2 distance from ft walla(left)
 
 					//road comes back together
-					{"place" : "Barlow Toll Road",			'isRiver': false, 'distance' : 100, 	'icon': "images/rock_icon_1.gif", 	'filePath' : "images/"}											//landmark 19
+					{"place" : "Barlow Toll Road",			'isRiver': false, 'distance' : 100, 								'icon': "images/rock_icon_1.gif", 	'filePath' : "images/"}											//landmark 19
 				];
+
+
+//chances for random events
+var FIND_FRUIT = 0.03;
+var WAGON_FIRE = 0.005;
+var WAGON_PART = 0.02;
+var ALIEN_ABDUCTION = 0.005;
+var LOST_PATH = 0.02;
+var STORM = 0.02;
+var STOLEN_CLOTHING = 0.01
+var SICKNESS = 0.03;
+var OX_WANDERED = 0.01;
+var EVENTS_TOTAL = 0.15;
+
+var sicknesses =   [{'name':'cholera', 'detriment':25},
+				 	{'name':'exhaustion', 'detriment':5},
+				 	{'name':'a broken arm', 'detriment':15},
+				 	{'name':'a broken leg', 'detriment':15}, 
+				 	{'name':'the measles', 'detriment':10},
+				 	{'name':'typhoid', 'detriment':20},
+				 	{'name':'dysentery', 'detriment':25}];

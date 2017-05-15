@@ -6,11 +6,6 @@ Alex:
 		- Axle parts make no difference whether they exist or not YET
 
 
-Brendan 
-	River
-		- probability for making it across river safely
-		- Allowing user to wait to see if conditions improve
-
 BRENDAN
 	MENU
 		- Stop to rest menu
@@ -30,3 +25,6 @@ Bugs
 	- Distance landmark moves across page when continue is pressed
 	- Landmark doesn't move back to (left: 1) until user clicks continue again
 	- setNames() conditional for valid name
+    - Ferry .gif (and maybe others) doesn't reset if it is chosen twice in a row (even with setting picSrc to "" first)
+    - check supplies then go back to trail div issue
+    - check before each continue if anyone has died?

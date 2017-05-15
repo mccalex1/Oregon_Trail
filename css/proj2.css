@@ -105,7 +105,7 @@ p{
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
 #imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
-#trailDivides
+#trailDivides, #eventHappening
 
 {
 	display: none;
@@ -134,7 +134,7 @@ p{
 }
 
 
-#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg, #imageTrailSplit{
+#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg, #imageTrailSplit, #eventImage{
 	height:500px;
 	width:700px;
 }
