@@ -142,8 +142,32 @@ function setNames(){
 	var name4 = document.getElementById("name4").value;
 	var name5 = document.getElementById("name5").value;
 
+	var names = [name1, name2, name3, name4, name5];
+	var validNames = true;
+
+
+	//loops through both sets of lists seeing if there are any null or same names
+	for(var i = 0; i < names.length; i++){
+		for(var j = 0; j < names.length; j++){
+
+			//if any of the names are null then the names are not valid
+			if(names[i] == ""|| names[j] == ""){
+				validNames = false;
+			}
+
+			//if we are not looking at the same spot in the list
+			//and then if the names are the same they cannot be
+			if(i != j){
+				if(names[i] == names[j]){
+					validNames = false;
+				}
+			}
+
+		}
+	}
+
 	//makes sure all the names are not the same and null
-	if((name1 != name2) && (name2 != name3) && (name3 != name4) && (name4 != name5) && (name1 != "")){
+	if(validNames){
 		
 		team.push(name1);
 		team.push(name2);
