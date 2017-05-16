@@ -136,7 +136,7 @@ var prices = {
 
 
 //miles from start
-var currentLandmark = 15;
+var currentLandmark = 0;
 var milesWithThisLandmark = 0;
 var landmarkPixel = 0;
 var splitBegins = [7, 15, 17, 18];
