@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	File: constants.js
 *	Date created: 4/1/17
-*	Last Modified: 4/30/17
+*	Last Modified: 5/15/17
 *	Authors: Alex McCaslin, Brendan Waters, Eric Gottlieb, Taylor Brzuchalski
 *
 *	Email:
@@ -186,6 +186,7 @@ var SICKNESS = 0.03;
 var OX_WANDERED = 0.01;
 var EVENTS_TOTAL = 0.15;
 
+var HEALTHPERRESTDAY = 3;
 var sicknesses =   [{'name':'cholera', 'detriment':25},
 				 	{'name':'exhaustion', 'detriment':5},
 				 	{'name':'a broken arm', 'detriment':15},

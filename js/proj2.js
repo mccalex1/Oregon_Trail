@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	File: proj2.js
 *	Date created: 4/1/17
-*	Last Modified: 4/30/17
+*	Last Modified: 5/15/17
 *	Authors: Alex McCaslin, Brendan Waters, Eric Gottlieb, Taylor Brzuchalski
 *
 *	Email:
@@ -714,7 +714,7 @@ function trailClick(direction){
 	updateLandmark();
 
 	//updates the travel values with updated stuff
-	setTravelValues()
+	setTravelValues();
 
 	openNextMenu("trailDivides", "theTrail");
 }
@@ -990,13 +990,26 @@ function getRandomDepthChange(){
 //does more than just advance days
 //similar to continue trail
 function stopToRest(){
+	var days = parseInt(document.getElementById("resting").value);
+	var MAXDAYS = 7;
 
+	if(days > MAXDAYS){
+		alert("Can only wait up to " + MAXDAYS + " days");
+	}
+	else{
+		for(var i = 0; i < days; i++){
+			doDay();
+		}
+
+		updateHealth(days * HEALTHPERRESTDAY);
+
+		openNextMenu('restMenu', shopOrNotShopMenu);
+	}
 }
 
 
-function attemptToTrade(){
 
-}
+
 
 function talkToPeople(){
 

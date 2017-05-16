@@ -8,16 +8,9 @@ Alex:
 
 BRENDAN
 	MENU
-		- Stop to rest menu
-		- Attempt to trade menu
 		- Talk to people menu
 		- End of game screen -- calculate points
 
-Brendan:
-	Random events
-		- Random sickness
-		- Random find something
-	    - Alien?
 
 Eric:
 	- Dead game-over condition
@@ -28,9 +21,9 @@ Bugs
 	- Landmark doesn't move back to (left: 1) until user clicks continue again
 	- setNames() conditional for valid name
     - Ferry .gif (and maybe others) doesn't reset if it is chosen twice in a row (even with setting picSrc to "" first)
-    - check supplies then go back to trail div issue
     - check before each continue if anyone has died?
 	- Action menu gets duplicated after south pass (may be fixed?)
+	- check supplies menu off-center
 
 
 Miscellaneous
