@@ -1,14 +1,11 @@
 
 		
 
-MENU
-	- Win game screen -- calculate points
-Items
-	- Clothing has not been implemented to make any difference in game
-
-
-- Dead game-over condition
-- Rock collision
+Tombstones
+	- use/make them
+River Game
+	- Dead game-over condition
+	- Rock collision
 
 Bugs
 	- Distance landmark moves across page when continue is pressed

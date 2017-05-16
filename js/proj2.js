@@ -394,6 +394,8 @@ function doDay(){
 	//this function should also update the health
 	updateFood();
 
+	checkClothes();
+
 	setTravelValues();
 }
 
@@ -413,7 +415,8 @@ function continueTrail(){
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
 		if(placesMiles[currentLandmark].place == "Barlow Toll Road (Pay Toll)"){
-			//TODO: GAME ENDS THEY MADE IT TO THE END
+			winGame("theTrail");
+			return;
 		}
 
 		updateLandmarkPixel();
@@ -530,6 +533,7 @@ function river(option){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
 			updateFood();
+			checkClothes();
 		}
 
 	}else if(option == "wait"){
@@ -538,6 +542,7 @@ function river(option){
 		theDate.setDate(theDate.getDate() + 1);
 		updateWeather();
 		updateFood();
+		checkClothes();
 		document.getElementById("riverDate").innerHTML = "Date: " + monthNames[theDate.getMonth()] + " " + theDate.getDate() + " " + theDate.getFullYear();
 		document.getElementById("riverWidth").innerHTML = "River Width: " + placesMiles[currentLandmark].width;
 		document.getElementById("riverDepth").innerHTML = "River Depth: " + (placesMiles[currentLandmark].depth + getRandomDepthChange());
@@ -694,6 +699,16 @@ function updateDistance(){
 	animateLandmark(milesToAdd);
 }
 
+
+//update health based on clothing situation
+function checkClothes(){
+
+	//less than 2 pieces of clothing per person
+	if(theClothes < 2 * getNumAlive()){
+		updateHealth(CLOTHES_PENALTY);
+	}
+
+}
 
 //when a split in the road is reached
 //this functio is called with parameter left or right
@@ -1023,7 +1038,7 @@ function stopToRest(){
 	}
 }
 
-
+//makes events happen sometimes
 function randomEvent(){
 
 	chance = Math.random();
@@ -1116,6 +1131,7 @@ function randomEvent(){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
 			updateFood();
+			checkClothes();
 		}
 
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM){
@@ -1140,6 +1156,7 @@ function randomEvent(){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
 			updateFood();
+			checkClothes();
 		}
 
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM + STOLEN_CLOTHING){
@@ -1202,6 +1219,7 @@ function randomEvent(){
 
 }
 
+//helper function doing a check if the event caused a loss
 function continueFromEvent(){
 
 	loss = checkLoss();
@@ -1213,6 +1231,7 @@ function continueFromEvent(){
 
 }
 
+//checks the main two lose conditions
 function checkLoss(currentDiv){
 
 	lossString = "";
@@ -1228,6 +1247,7 @@ function checkLoss(currentDiv){
 
 }
 
+//pulls up the lose game screen
 function loseGame(currentDiv, reason){
 
 	document.getElementById("reason").innerHTML = reason;
@@ -1236,7 +1256,8 @@ function loseGame(currentDiv, reason){
 
 }
 
-function continueFromLoss(){
+//restarts the game from the begining
+function restartGame(currentDiv){
 
 	//reset EVERYTHING
 	careerChosen = "";
@@ -1276,6 +1297,53 @@ function continueFromLoss(){
 
 	document.getElementById("total").innerHTML = 0;
 
-	openNextMenu("loseGame", "oregonTrail");
+	openNextMenu(currentDiv, "oregonTrail");
+
+}
+
+//end of game screen on win
+function winGame(currentDiv){
+
+	//calculate the score
+	score = 0;
+	score += wagonPoints;
+    score += oxPoints * theOxen;
+	score += wagonPart * theAxles;
+	score += wagonPart * theTongues;
+	score += wagonPart * theWheels;
+	score += clothPoint * theClothes;
+	score += foodPointPer25 * theFood / 25;
+	score += cashPointPer5 * money / 5;
+	score = Math.floor(score);
+
+	health = getHealth();
+	if(health == "Good"){
+		score += getNumAlive() * 500;
+	}else if(health == "Fair"){
+		score += getNumAlive() * 400;
+	}else{
+		score += getNumAlive() * 300;
+	}
+
+	if(careerChosen == CAREER3){
+		score *= 3;
+	}else if(careerChosen == CAREER2){
+		score *= 2;
+	}
+
+	//update the div
+	document.getElementById("distanceTraveled").innerHTML = "You traveled " + milesTraveled + " miles to Oregon.";
+	document.getElementById("endScore").innerHTML = "And you scored " + score + " points while doing it!";
+
+	//set up the button to add the new score to the database
+	document.getElementById("winButton").onclick = function(){
+		var name = document.getElementById("username").value;
+		//make them enter a name
+		if(name != null && name != ""){
+			addHighScore(name, score);
+		}
+	};
+
+	openNextMenu(currentDiv,'winGame');
 
 }
