@@ -3,14 +3,11 @@ ALEX
 		- Talk to people menu
 		
 
-<<<<<<< HEAD
 BRENDAN
 	MENU
 		- Win game screen -- calculate points
 	Items
 		- Clothing has not been implemented to make any difference in game
-=======
->>>>>>> refs/remotes/origin/master
 
 Eric:
 	- Dead game-over condition
@@ -21,11 +18,8 @@ Bugs
 	- Landmark doesn't move back to (left: 1) until user clicks continue again
 	- setNames() conditional for valid name
     - Ferry .gif (and maybe others) doesn't reset if it is chosen twice in a row (even with setting picSrc to "" first)
-<<<<<<< HEAD
     - check supplies then go back to trail div issue
-=======
     - check before each continue if anyone has died?
->>>>>>> refs/remotes/origin/master
 	- Action menu gets duplicated after south pass (may be fixed?)
 	- check supplies menu off-center
 
