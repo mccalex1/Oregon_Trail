@@ -26,7 +26,8 @@ var PLAYER_MAX_FORWARD_SPEED = 0.7;
 var PLAYER_MAX_BACKWARD_SPEED = 1.5;
 var SHORE_SIZE = 25;
 var RIVER_SPEED = 2.5;
-var CRASH_RECOVER_DISTANCE = 10;
+var CRASH_RECOVER_DISTANCE = 7;
+var ROCK_HITBOX_BUFFER = 5;
 var ROCK_DIST_1 = 120;
 var ROCK_DIST_2 = 60;
 
@@ -50,10 +51,10 @@ function finishRiverGame(passed) {
     document.getElementById("riverGameDone").setAttribute("style", "display: block");
     document.getElementById("riverGamePenalty").innerHTML = "Penalty: " + gamePenalty;
     if (passed == true) {
-        document.getElementById("riverGameDone").innerHTML = "You made it!";
+        document.getElementById("riverGamePassed").innerHTML = "You made it!";
     }
     else {
-        document.getElementById("riverGameDone").innerHTML = "You died!";
+        document.getElementById("riverGamePassed").innerHTML = "You died!";
     }
 }
 
@@ -178,43 +179,48 @@ function component(type, x, y) {
         playerRight = this.x + this.width;
         playerBottom = this.y + this.height;
         playerLeft = this.x;
-        rockTop = rock.y;
-        rockRight = rock.x + rock.width;
-        rockBottom = rock.y + rock.height;
-        rockLeft = rock.x;
+
+        rockTop = rock.y + ROCK_HITBOX_BUFFER;
+        rockRight = rock.x + rock.width - ROCK_HITBOX_BUFFER;
+        rockBottom = rock.y + rock.height - ROCK_HITBOX_BUFFER;
+        rockLeft = rock.x + ROCK_HITBOX_BUFFER;
 
         if (rock.collided == true) {
             if (this.collision == "bottom" && (
-                    (playerTop > rockBottom + CRASH_RECOVER_DISTANCE ||
-                    playerRight < rockLeft - CRASH_RECOVER_DISTANCE ||
-                    playerLeft > rockRight + CRASH_RECOVER_DISTANCE))) {
+                    (playerTop > (rockBottom + CRASH_RECOVER_DISTANCE) ||
+                    playerRight < (rockLeft - CRASH_RECOVER_DISTANCE) ||
+                    playerLeft > (rockRight + CRASH_RECOVER_DISTANCE)))) {
+                console.log("Recovered bottom");
                 this.recovered = true;
                 this.collision = "";
                 rock.collided = false;
                 this.curMaxUp = PLAYER_MAX_SPEED_Y;
             }
             else if (this.collision == "top" && (
-                    (playerBottom < rockTop - CRASH_RECOVER_DISTANCE ||
-                    playerRight < rockLeft - CRASH_RECOVER_DISTANCE ||
-                    playerLeft > rockRight + CRASH_RECOVER_DISTANCE))) {
+                    (playerBottom < (rockTop - CRASH_RECOVER_DISTANCE) ||
+                    playerRight < (rockLeft - CRASH_RECOVER_DISTANCE) ||
+                    playerLeft > (rockRight + CRASH_RECOVER_DISTANCE)))) {
+                console.log("Recovered top");
                 this.recovered = true;
                 this.collision = "";
                 rock.collided = false;
                 this.curMaxDown = PLAYER_MAX_SPEED_Y;
             }
             else if (this.collision == "right" && (
-                    (playerTop > rockBottom + CRASH_RECOVER_DISTANCE ||
-                    playerBottom < rockTop - CRASH_RECOVER_DISTANCE ||
-                    playerLeft > rockRight + CRASH_RECOVER_DISTANCE))) {
+                    (playerTop > (rockBottom + CRASH_RECOVER_DISTANCE) ||
+                    playerBottom < (rockTop - CRASH_RECOVER_DISTANCE) ||
+                    playerLeft > (rockRight + CRASH_RECOVER_DISTANCE)))) {
+                console.log("Recovered right");
                 this.recovered = true;
                 this.collision = "";
                 rock.collided = false;
                 this.curMaxLeft = PLAYER_MAX_BACKWARD_SPEED;
             }
             else if (this.collision == "left" && (
-                    (playerTop > rockBottom + CRASH_RECOVER_DISTANCE ||
-                    playerRight < rockLeft - CRASH_RECOVER_DISTANCE ||
-                    playerBottom < rockTop - CRASH_RECOVER_DISTANCE))) {
+                    (playerTop > (rockBottom + CRASH_RECOVER_DISTANCE) ||
+                    playerRight < (rockLeft - CRASH_RECOVER_DISTANCE) ||
+                    playerBottom < (rockTop - CRASH_RECOVER_DISTANCE)))) {
+                console.log("Recovered left");
                 this.recovered = true;
                 this.collision = "";
                 rock.collided = false;
@@ -226,17 +232,29 @@ function component(type, x, y) {
         }
 
         else {
-            if (playerLeft < rockRight && playerRight > rockRight &&
+            if (playerLeft < rockRight && playerRight > rockRight && playerLeft > (rockRight - ROCK_HITBOX_BUFFER) &&
                 ((playerTop > rockBottom && playerTop < rockTop) ||
-                (playerBottom < rockBottom && playerBottom> rockTop)))  {
+                (playerBottom < rockBottom && playerBottom > rockTop)))  {
                 this.collision = "right";
                 this.recovered = false;
                 this.speedX = -RIVER_SPEED;
                 this.curMaxLeft = -RIVER_SPEED;
                 rock.collided = true;
-                this.x = rockRight;
+                gamePenalty += 1;
+                //this.x = rockRight;
             }
-            else if (playerBottom > rockTop && playerTop < rockTop &&
+            else if (playerRight > rockLeft && playerLeft < rockLeft && playerRight < (rockLeft + ROCK_HITBOX_BUFFER) &&
+                ((playerTop < rockBottom && playerTop > rockTop) ||
+                (playerBottom < rockBottom && playerBottom > rockTop)))  {
+                this.collision = "left";
+                this.recovered = false;
+                this.speedX = -RIVER_SPEED;
+                this.curMaxRight = -RIVER_SPEED;
+                rock.collided = true;
+                gamePenalty += 1;
+                //this.x = rockLeft - PLAYER_SIZE - 1;
+            }
+            else if (playerBottom > rockTop && playerTop < rockTop && playerBottom < (rockTop + ROCK_HITBOX_BUFFER) &&
                 ( (playerRight > rockLeft && playerRight < rockRight) ||
                 (playerLeft > rockLeft && playerLeft < rockRight))) {
                 this.collision = "top";
@@ -244,9 +262,10 @@ function component(type, x, y) {
                 this.speedY = 0;
                 this.curMaxDown = 0;
                 rock.collided = true;
-                this.y = rockTop - PLAYER_SIZE - 1;
+                gamePenalty += 1;
+                //this.y = rockTop - PLAYER_SIZE - 1;
             }
-            else if (playerTop < rockBottom && playerBottom > rockBottom &&
+            else if (playerTop < rockBottom && playerBottom > rockBottom && playerTop > (rockBottom - ROCK_HITBOX_BUFFER) &&
                 ((playerRight > rockLeft && playerRight < rockRight) ||
                 (playerLeft > rockLeft && playerLeft < rockRight)))  {
                 this.collision = "bottom";
@@ -254,17 +273,8 @@ function component(type, x, y) {
                 this.speedY = 0;
                 this.curMaxUp = 0;
                 rock.collided = true;
-                this.y = rockBottom + 1;
-            }
-            else if (playerRight > rockLeft && playerLeft < rockLeft &&
-                ((playerTop > rockBottom && playerTop < rockTop) ||
-                (playerBottom < rockBottom && playerBottom > rockTop)))  {
-                this.collision = "left";
-                this.recovered = false;
-                this.speedX = -RIVER_SPEED;
-                this.curMaxRight = -RIVER_SPEED;
-                rock.collided = true;
-                this.x = rockLeft - PLAYER_SIZE - 1;
+                gamePenalty += 1;
+                //this.y = rockBottom + 1;
             }
         }
         return rock.collided;
@@ -274,9 +284,7 @@ function component(type, x, y) {
 
 function updateGame() {
     for (var i = 0; i < obstacles.length; i++) {
-        if (playerPiece.crashTest(obstacles[i])) {
-            gamePenalty += 1;
-        }
+        playerPiece.crashTest(obstacles[i])
     }
 
     if (playerPiece.dead == true) {
@@ -366,7 +374,7 @@ function createRocks() {
     var range = gameArea.canvas.height - 2*SHORE_SIZE - ROCK_SIZE;
     if (((gameArea.frameNum < GAME_LENGTH/3) && ((gameArea.frameNum/ROCK_DIST_1) % 1== 0)) ||
         ((gameArea.frameNum >= GAME_LENGTH/3) && (gameArea.frameNum <= GAME_LENGTH) && ((gameArea.frameNum/ROCK_DIST_2) % 1 == 0))) {
-        rockPos = Math.floor(Math.random()*range + (SHORE_SIZE + ROCK_SIZE/2));
+        rockPos = Math.floor(Math.random()*range) + SHORE_SIZE;
         obstacles.push(new component("rock", gameArea.canvas.width, rockPos));
     }
 }
