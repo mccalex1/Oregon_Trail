@@ -1,11 +1,4 @@
 
-		
-
-Tombstones
-	- use/make them
-River Game
-	- Dead game-over condition
-	- Rock collision
 
 Bugs
 	- Distance landmark moves across page when continue is pressed
@@ -17,4 +10,4 @@ Bugs
 	- Action menu gets duplicated after south pass (may be fixed?)
 	- check supplies menu off-center
 	- Talk to people menu only has 1 think to talk about (not a big deal?)
-
+	- maybe some tombstone bugs?

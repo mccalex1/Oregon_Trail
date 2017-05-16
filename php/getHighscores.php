@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 } 
 $sql = "SELECT * from highscores ORDER BY score DESC LIMIT 10";
 $result = $conn->query($sql);
-#rows = array();
+$rows = array();
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {

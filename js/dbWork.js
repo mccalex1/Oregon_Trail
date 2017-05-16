@@ -147,7 +147,7 @@ function getTimestamp(){
 
 
 //gets all tombstones from the database in between two given points
-function getTombtones(lowerBound, upperBound){
+function getTombstones(lowerBound, upperBound){
 
     var tombstones = [];
     var url = wampURL + "php/getTombstones.php"; 
@@ -161,9 +161,32 @@ function getTombtones(lowerBound, upperBound){
     }
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            tombstones = JSON.parse(this.responseText);
+            
+            try{
 
-            //tombstones[i] .timestamp .DOD .name .mile .message
+                tombstones = JSON.parse(this.responseText);
+                console.log(tombstones);
+
+                if(tombstones != "0 results"){
+
+                    theDiv = document.getElementById("tombstoneDiv");
+
+                    theDiv.innerHTML = "";
+
+                    //tombstones[i] .timestamp .DOD .name .mile .message
+                    for(var i=0; i<tombstones.length; i++){
+
+                        theDiv.innerHTML += "Here lies " + tombstones[i].name + ".<br>" + tombstones[i].DOD + "<br>" + tombstones[i].message + "<br><br>";
+
+                    }
+
+                    openNextMenu("theTrail", "tombstoneDisplayDiv");
+
+                }
+
+            }catch(e){
+                console.log(e);
+            }
 
         }
     };

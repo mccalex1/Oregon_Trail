@@ -24,6 +24,7 @@ var team = [];
 var theDate;
 var theWeather;
 var theHealth = [100, 100, 100, 100, 100];
+var theDead = [false, false, false, false, false];
 var theFood = 0;
 var nextLandmark = "";
 var milesTraveled = 0;
@@ -136,7 +137,7 @@ var prices = {
 
 
 //miles from start
-var currentLandmark = 15;
+var currentLandmark = 0;
 var milesWithThisLandmark = 0;
 var landmarkPixel = 0;
 var splitBegins = [7, 15, 17, 18];

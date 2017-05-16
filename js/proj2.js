@@ -380,6 +380,8 @@ function continuePressed(){
 		continueTrail();
 	}
 
+	checkDead();
+
 }
 
 function doDay(){
@@ -688,6 +690,8 @@ function updateDistance(){
 	}
 
 
+	showTombstones(milesTraveled, milesTraveled + milesToAdd);
+
 	//add total miles
 	milesWithThisLandmark += milesToAdd;
 	milesTraveled += milesToAdd;
@@ -697,6 +701,7 @@ function updateDistance(){
 	updateHealth(paceChoices[currentPace].health);
 
 	animateLandmark(milesToAdd);
+
 }
 
 
@@ -1268,6 +1273,7 @@ function restartGame(currentDiv){
 	theDate = null;
 	theWeather = "";
 	theHealth = [100, 100, 100, 100, 100];
+	theDead = [false, false, false, false, false];
 	theFood = 0;
 	nextLandmark = "";
 	milesTraveled = 0;
@@ -1345,5 +1351,40 @@ function winGame(currentDiv){
 	};
 
 	openNextMenu(currentDiv,'winGame');
+
+}
+
+//lets user see tombstones that they pass
+function showTombstones(loc1, loc2){
+
+	console.log("From " + loc1 + " to " + loc2);
+
+	getTombstones(loc1, loc2);
+
+}
+
+//checks if anyone just died
+function checkDead(){
+
+	for(var i=0; i<theDead.length; i++){
+
+		//only do stuff if they just died
+		if(!theDead[i]){
+
+			if(theHealth[i] == 0){
+
+				//this member just died
+				theDead[i] = true;
+
+				//ask for tombstone info
+				message = prompt(team[i] + " has died!\nPlease enter a message for the tombstone: ", "Message");
+
+				addTombstone(team[i], theDate.getFullYear() + "-" + theDate.getMonth() + "-" + theDate.getDate(), milesTraveled, message);
+
+			}
+
+		}
+
+	}
 
 }

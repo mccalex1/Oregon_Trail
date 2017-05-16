@@ -106,7 +106,7 @@ p{
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
 #imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
 #trailDivides, #riverGameDone, #eventHappening, #loseGame, #riverGameDiv,
-#winGame
+#winGame, #tombstoneDisplayDiv
 {
 	display: none;
 }
@@ -134,7 +134,7 @@ p{
 }
 
 
-#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg, #imageTrailSplit, #eventImage{
+#landmarkPic, #riverPic, #riverCrossingImg, #fishingImg, #imageTrailSplit, #eventImage {
 	height:500px;
 	width:700px;
 }
@@ -175,4 +175,18 @@ p{
 
 #riverGameCanvas {
 	background-image: url(../images/riverGameTemp.png);
+}
+
+#tombstoneDiv {
+	width:700px;
+  	height:450px;
+  	text-align:center;
+  	display: table-cell;
+	margin:0 auto;
+    vertical-align: middle;
+	color: #000000;
+  	background-image: url(../images/gravesite.gif);
+  	background-repeat: no-repeat;
+  	background-position: top left;
+  	background-size: 700px 450px;
 }
