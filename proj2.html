@@ -846,7 +846,7 @@
 
 								<img id="eventImage"/>
 								<p id="eventMessage"></p>
-								<BUTTON onclick="openNextMenu('eventHappening','theTrail')">Continue</BUTTON>
+								<BUTTON id="eventButton" onclick="continueFromEvent()">Continue</BUTTON>
 
 							</div>
 
@@ -913,7 +913,15 @@
 								<br>
 							</div>
 
+							<!-- End game screen if player lost -->
+							<div id="loseGame">
 
+								<h1>You Lost!</h1>
+								<p id="reason"></p>
+								<p id="stats"></p>
+								<BUTTON id="loseButton" onclick="continueFromLoss()">Continue</BUTTON>
+
+							</div>
 
 
 						</td>

@@ -105,7 +105,11 @@ p{
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
 #imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
+<<<<<<< HEAD
+#trailDivides, #riverGameDone, #eventHappening, #loseGame
+=======
 #trailDivides, #eventHappening, #riverGameDone
+>>>>>>> refs/remotes/origin/master
 {
 	display: none;
 }
