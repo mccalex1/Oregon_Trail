@@ -139,7 +139,7 @@ var prices = {
 var currentLandmark = 0;
 var milesWithThisLandmark = 0;
 var landmarkPixel = 0;
-var splitBegins = [7, 15];
+var splitBegins = [7, 15, 17, 18];
 var jumpTwo = [8, 9, 10, 16, 17];
 var placesMiles = [
 
@@ -170,7 +170,8 @@ var placesMiles = [
 					{"place" : "The Dalles",				'isRiver': true, 'distance' : 120, 		'width': 1512, 'depth': 32,	'icon': "images/river_icon.gif", 	'filePath' : "images/the_dalles.jpg"},							//landmark (18) 17.2 distance from ft walla(left)
 
 					//road comes back together
-					{"place" : "Barlow Toll Road",			'isRiver': false, 'distance' : 100, 								'icon': "images/rock_icon_1.gif", 	'filePath' : "images/"}											//landmark 19
+					{"place" : "Barlow Toll Road (Pay Toll)",	'isRiver': false, 'distance' : 100, 							'icon': "images/rock_icon_1.gif", 	'filePath' : "images/"},										//landmark 19
+					{"place" : "Glide down the Columbia River"}
 				];
 
 

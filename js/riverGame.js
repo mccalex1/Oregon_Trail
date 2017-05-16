@@ -52,9 +52,11 @@ function finishRiverGame(passed) {
     document.getElementById("riverGamePenalty").innerHTML = "Penalty: " + gamePenalty;
     if (passed == true) {
         document.getElementById("riverGamePassed").innerHTML = "You made it!";
+        //TODO call function to say you won
     }
     else {
         document.getElementById("riverGamePassed").innerHTML = "You died!";
+        //TODO call function to say you lost
     }
 }
 

@@ -105,7 +105,7 @@ p{
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
 #imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
-#trailDivides, #riverGameDone, #eventHappening, #loseGame, #riverGameDone
+#trailDivides, #riverGameDone, #eventHappening, #loseGame, #riverGameDiv
 {
 	display: none;
 }

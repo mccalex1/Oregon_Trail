@@ -27,23 +27,35 @@ function openNextMenu(currentDiv, nextDivId){
 
 function continueFromRiver(){
 
-	//update landmark counter by 1
-	//only if we dont already jump 2
-	//if it is after a split it needs to jump by two the way the data structure is set up
-	if(jumpTwo.indexOf(currentLandmark) != -1){
-		currentLandmark += 2;
+	var splitHere = false;
+	if(splitBegins.indexOf(currentLandmark) != -1){
+		splitHere = true;
+		openNextMenu("riverCrossing", 'trailDivides');
 	}
-	else{
-		currentLandmark += 1;
+
+
+	if(!splitHere){
+		//update landmark counter by 1
+		//only if we dont already jump 2
+		//if it is after a split it needs to jump by two the way the data structure is set up
+		if(jumpTwo.indexOf(currentLandmark) != -1){
+			currentLandmark += 2;
+		}
+		else{
+			currentLandmark += 1;
+		}
+		
+		//update with next landmark
+		updateLandmark();
+
+		//updates the travel values with updated stuff
+		setTravelValues();
+
+		//if theres a split dont go to the trail right away
+		console.log(currentLandmark);
+
+		openNextMenu("riverCrossing", 'theTrail');
 	}
-	
-	//update with next landmark
-	updateLandmark();
-
-	//updates the travel values with updated stuff
-	setTravelValues();
-
-	openNextMenu("riverCrossing", 'theTrail');
 }
 
 
@@ -400,7 +412,10 @@ function continueTrail(){
 
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
-		console.log("made it to " + placesMiles[currentLandmark].place);
+		if(placesMiles[currentLandmark].place == "Barlow Toll Road (Pay Toll)"){
+			//TODO: GAME ENDS THEY MADE IT TO THE END
+		}
+
 		updateLandmarkPixel();
 
 		//if this landmark is in the list of stores open ask for store menu
@@ -446,11 +461,13 @@ function continueTrail(){
 
 			document.getElementById("trailLeft").innerHTML = "To " + placesMiles[currentLandmark + 1].place;
 			document.getElementById("trailRight").innerHTML = "To " + placesMiles[currentLandmark + 2].place;
-
-			openNextMenu("theTrail", "trailDivides");
-
-
+			
+			//cant open this menu if at a river
+			if(!atRiver){
+				openNextMenu("theTrail", "trailDivides");
+			}
 		}
+
 		else if(!atRiver){
 			openNextMenu("theTrail","imageMenu");
 		}
@@ -681,14 +698,33 @@ function updateDistance(){
 //when a split in the road is reached
 //this functio is called with parameter left or right
 function trailClick(direction){
+	
+	///IF WE ARE AT THE SPLIT TO THE FINAL DESTINATION
+	if(placesMiles[currentLandmark].place == "The Dalles"){
+		if(direction == "left"){
+			currentLandmark = 19;
+			money = Math.floor(money * .8);
+		}
 
-	if(direction == "left"){
-		currentLandmark += 1;
+		//right
+		else{
+			currentLandmark = 20;
+			openNextMenu("trailDivides", "riverGameDiv");
+			return;
+		}
 	}
 
-	//right
+	//if we are not at the final split
 	else{
-		currentLandmark += 2;
+
+		if(direction == "left"){
+			currentLandmark += 1;
+		}
+
+		//right
+		else{
+			currentLandmark += 2;
+		}
 	}
 
 	//update with next landmark
