@@ -113,7 +113,7 @@ function goToStore(currentDiv){
 	document.getElementById("foodPrice").innerHTML = "$" + prices[currentStore].food + " per 25lbs (MAX " + MAXFOOD + ")";
 	document.getElementById("clothingPrice").innerHTML = "$" + prices[currentStore].clothes + " per pair (MAX " + MAXCLOTHES + ")";
 	document.getElementById("wheelPrice").innerHTML = "$" + prices[currentStore].parts + " per wheel (MAX " + MAXPART + ")";
-	document.getElementById("axelPrice").innerHTML = "$" + prices[currentStore].parts + " per axle (MAX " + MAXPART + ")";
+	document.getElementById("axlePrice").innerHTML = "$" + prices[currentStore].parts + " per axle (MAX " + MAXPART + ")";
 	document.getElementById("tonguePrice").innerHTML = "$" + prices[currentStore].parts + " per tongue (MAX " + MAXPART + ")";
 	document.getElementById("wormsPrice").innerHTML = "$" + prices[currentStore].worms + " per 100 worms (MAX " + MAXWORMS + ")";
 	
@@ -216,7 +216,7 @@ function updateSubTotal(numDiv, subDiv, item){
 	theTotal += parseFloat(document.getElementById("clothingSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("tongueSub").innerHTML);
 	theTotal += parseFloat(document.getElementById("wheelSub").innerHTML);
-	theTotal += parseFloat(document.getElementById("axelSub").innerHTML); 
+	theTotal += parseFloat(document.getElementById("axleSub").innerHTML); 
 	theTotal += parseFloat(document.getElementById("wormsSub").innerHTML); 
 	
 	total.innerHTML = theTotal;
@@ -236,14 +236,14 @@ function buyStuff(){
 	var clothingSub = parseFloat(document.getElementById("clothingSub").innerHTML);
 	var tongueSub = parseFloat(document.getElementById("tongueSub").innerHTML);
 	var wheelSub = parseFloat(document.getElementById("wheelSub").innerHTML)
-	var axelSub = parseFloat(document.getElementById("axelSub").innerHTML); 
+	var axleSub = parseFloat(document.getElementById("axleSub").innerHTML); 
 	var wormsSub = parseFloat(document.getElementById("wormsSub").innerHTML); 
 
-	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axelSub + wormsSub;
+	totalPrice = oxenSub + foodSub + clothingSub + tongueSub + wheelSub + axleSub + wormsSub;
 
 
 
-	var canBuyThisStuff = canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, wormsSub, totalPrice);
+	var canBuyThisStuff = canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, totalPrice);
 
 	if(canBuyThisStuff == true){
 
@@ -262,7 +262,7 @@ function buyStuff(){
 		theOxen += parseInt(document.getElementById("numOxen").value);
 		theClothes += parseInt(document.getElementById("numClothing").value);
 		theTongues += parseInt(document.getElementById("numTongues").value);
-		theAxels += parseInt(document.getElementById("numAxles").value);
+		theAxles += parseInt(document.getElementById("numAxles").value);
 		theWheels += parseInt(document.getElementById("numWheels").value);
 		theWorms += parseInt(document.getElementById("numWorms").value) * WORMSINABOX;
 		money -= totalPrice;
@@ -283,7 +283,7 @@ function buyStuff(){
 		document.getElementById("clothingSub").innerHTML = 0;
 		document.getElementById("tongueSub").innerHTML = 0;
 		document.getElementById("wheelSub").innerHTML = 0;
-		document.getElementById("axelSub").innerHTML = 0; 
+		document.getElementById("axleSub").innerHTML = 0; 
 		document.getElementById("wormsSub").innerHTML = 0; 
 	}
 
@@ -292,7 +292,7 @@ function buyStuff(){
 
 
 //function that returns whether or not you can buy this stuff
-function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, wormsSub, totalPrice){
+function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, totalPrice){
 	var can = true;
 
 	//invalid amount of money
@@ -331,9 +331,9 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axelSub, wormsSub, to
 		can = false;
 	}
 
-	//too many axels
-	else if(parseInt(document.getElementById("numAxles").value) + theAxels > MAXPART){
-		alert("You can only have " + MAXPART + " axels. You currently have " + theAxels);
+	//too many axles
+	else if(parseInt(document.getElementById("numAxles").value) + theAxles > MAXPART){
+		alert("You can only have " + MAXPART + " axles. You currently have " + theAxles);
 		can = false;
 	}
 
@@ -369,7 +369,14 @@ function continuePressed(){
 		alert("You have no oxen, you cannot go anywhere");
 	}
 	else{
-		continueTrail();
+
+		//see if random event happens
+		eventHappened = randomEvent();
+
+		if(!eventHappened){
+			continueTrail();
+		}
+
 	}
 
 }
@@ -436,6 +443,9 @@ function continueTrail(){
 		//if i am at the river go to the river menu
 		if(atRiver == true){
 			document.getElementById("whatRiverAmIAt").innerHTML = placesMiles[currentLandmark].place;
+			document.getElementById("riverDate").innerHTML = "Date: " + monthNames[theDate.getMonth()] + " " + theDate.getDate() + " " + theDate.getFullYear();
+			document.getElementById("riverWidth").innerHTML = "River Width: " + placesMiles[currentLandmark].width;
+			document.getElementById("riverDepth").innerHTML = "River Depth: " + (placesMiles[currentLandmark].depth + getRandomDepthChange());
 			document.getElementById("riverPic").src = placesMiles[currentLandmark].filePath;
 			openNextMenu("theTrail","riverMenu");
 		}
@@ -489,17 +499,69 @@ function continueTrail(){
 //called whenever the user picks to ford, caulk, ferry, or wait
 function river(option){
 
-	var randomNum = Math.floor(Math.random() * 5) + 1;
-	var UNSUCESSFUL = 5;
+	//Decide if they made it based on option
+	var success = true;
+
+	width = parseFloat(document.getElementById("riverWidth").innerHTML.substring(13));
+	currentDepth = parseFloat(document.getElementById("riverDepth").innerHTML.substring(13));
+
+	if(option == "ford"){
+
+		if(currentDepth > 3.0){
+			//automatic fail
+			success = false;
+		}
+
+	}else if(option == "caulk"){
+
+		if(width > 650){
+			//automatic fail
+			success = false;
+		}else if(currentDepth > 3.0){
+
+			chance = Math.random();
+			if(chance < 0.2){
+				success = false;
+			}
+
+		}
+
+	}else if(option == "ferry"){
+
+		//wait on ferry
+		daysToWait = Math.floor(Math.random() * 7 + 1);
+		alert("Waiting " + daysToWait + " days for the ferry...");
+		//update stuff
+		for(var i = 0; i < daysToWait; i++){
+			theDate.setDate(theDate.getDate() + 1);
+			updateWeather();
+			updateFood();
+		}
+
+	}else if(option == "wait"){
+
+		//wait 1 day
+		theDate.setDate(theDate.getDate() + 1);
+		updateWeather();
+		updateFood();
+		document.getElementById("riverDate").innerHTML = "Date: " + monthNames[theDate.getMonth()] + " " + theDate.getDate() + " " + theDate.getFullYear();
+		document.getElementById("riverWidth").innerHTML = "River Width: " + placesMiles[currentLandmark].width;
+		document.getElementById("riverDepth").innerHTML = "River Depth: " + (placesMiles[currentLandmark].depth + getRandomDepthChange());
+
+		//lazy, cut it early
+		return
+
+	}
+
 	var picSrc = "";
 
-	//if they randomly dont make it
-	if(randomNum == UNSUCESSFUL){
+	//if they dont make it
+	if(!success){
 		var ranOxen = Math.floor(Math.random() * theOxen);
 		var ranFood = Math.floor(Math.random() * theFood);
 		var ranClothes = Math.floor(Math.random() * theClothes);
 		var ranWheels = Math.floor(Math.random() * theWheels);
-		var ranAxels = Math.floor(Math.random() * theAxels);
+		var ranAxles = Math.floor(Math.random() * theAxles);
 		var ranTongues = Math.floor(Math.random() * theTongues);
 		var ranWorms = Math.floor(Math.random() * theWorms);
 
@@ -509,7 +571,7 @@ function river(option){
 																	+ " Food: " + ranFood
 																	+ "<br>Clothes: " + ranClothes
 																	+ " Wheels: " + ranWheels
-																	+ " <br>Axles: " + ranAxels
+																	+ " <br>Axles: " + ranAxles
 																	+ " Tongues: " + ranTongues
 																	+ " Worms: " + ranWorms;
 
@@ -517,7 +579,7 @@ function river(option){
 		theFood -= ranFood;
 		theClothes -= ranClothes;
 		theWheels -= ranWheels;
-		theAxels -= ranAxels;
+		theAxles -= ranAxles;
 		theTongues -= ranTongues; 
 		theWorms -= ranWorms; 
 
@@ -846,7 +908,7 @@ function checkSupplies(divId){
 	document.getElementById("numberOfOxen").innerHTML = theOxen;
 	document.getElementById("numberOfClothes").innerHTML = theClothes;
 	document.getElementById("numberOfWheels").innerHTML = theWheels;
-	document.getElementById("numberOfAxles").innerHTML = theAxels;
+	document.getElementById("numberOfAxles").innerHTML = theAxles;
 	document.getElementById("numberOfTongues").innerHTML = theTongues;
 	document.getElementById("numberOfFood").innerHTML = theFood;
 	document.getElementById("numberOfMoney").innerHTML = "$" + money;
@@ -918,6 +980,12 @@ function changeFoodRations(rationsChosen){
 	openNextMenu('foodMenu', shopOrNotShopMenu);
 }
 
+function getRandomDepthChange(){
+	//between +/-3, with 1 decimal place
+	depthChange = Math.floor((Math.random() * 6 - 3) * 10) / 10;
+	return depthChange;
+}
+
 //complex function
 //does more than just advance days
 //similar to continue trail
@@ -931,5 +999,179 @@ function attemptToTrade(){
 }
 
 function talkToPeople(){
+
+}
+
+function randomEvent(){
+
+	chance = Math.random();
+
+	if(chance < FIND_FRUIT){
+		document.getElementById("eventImage").src = "";
+		document.getElementById("eventImage").src = "images/wild_fruit.gif";
+		document.getElementById("eventMessage").innerHTML = "You found wild fruit!";
+		openNextMenu('theTrail','eventHappening');
+		theFood += 50;
+	}else if(chance < FIND_FRUIT + WAGON_FIRE){
+		document.getElementById("eventImage").src = "";
+		document.getElementById("eventImage").src = "images/wagon_fire.gif";
+		document.getElementById("eventMessage").innerHTML = "Your wagon caught fire!";
+		openNextMenu('theTrail','eventHappening');
+		//TODO pull up lose screen
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART){
+
+		wagonPart = Math.random();
+
+		//which part of the wagon broke
+		if(wagonPart < 0.33){
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/wagon_broken_wheel.jpg";
+			if(theWheels > 0){
+				document.getElementById("eventMessage").innerHTML = "A wheel broke and had to be replaced.";
+				theWheels -= 1;
+				openNextMenu('theTrail','eventHappening');
+			}else{
+				document.getElementById("eventMessage").innerHTML = "A wheel broke and you have no replacements.";
+				//lose
+			}
+		}else if(wagonPart < .66){
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/wagon_axle.gif";
+			if(theAxles > 0){
+				document.getElementById("eventMessage").innerHTML = "An axle broke and had to be replaced.";
+				theAxles -= 1;
+				openNextMenu('theTrail','eventHappening');
+			}else{
+				document.getElementById("eventMessage").innerHTML = "An axle broke and you have no replacements.";
+				//lose
+			}
+		}else{
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/wagon_tongue.gif";
+			if(theTongues > 0){
+				document.getElementById("eventMessage").innerHTML = "A tongue broke and had to be replaced.";
+				theTongues -= 1;
+				openNextMenu('theTrail','eventHappening');
+			}else{
+				document.getElementById("eventMessage").innerHTML = "A tongue broke and you have no replacements.";
+				//lose
+			}
+		}
+
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION){
+		
+		document.getElementById("eventImage").src = "";
+		document.getElementById("eventImage").src = "images/alien_gif.gif";
+
+		//choose which member gets abducted
+		member = Math.floor(Math.random() * team.length);
+		while(theHealth[member] == 0){
+			//this member is already dead, choose new one
+			member = Math.floor(Math.random() * team.length);
+		}
+
+		document.getElementById("eventMessage").innerHTML = team[member] + " has been abducted!";
+
+		//this member "died"
+		theHealth[member] = 0;
+
+		openNextMenu('theTrail','eventHappening');
+
+		//TODO check for lose?
+
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH){
+
+		//lost for 1 to 4 days
+		daysLost = Math.floor(Math.random() * 4 + 1);
+		alert("Lost the path! Lose " + daysLost + " day(s).");
+		for(var i = 0; i < daysLost; i++){
+			theDate.setDate(theDate.getDate() + 1);
+			updateWeather();
+			updateFood();
+		}
+
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM){
+		
+		//lost for 1 to 4 days
+		daysLost = Math.floor(Math.random() * 4 + 1);
+
+		//decide what kind of storm based on month
+		if(theDate.getMonth() >= 3 && theDate.getMonth() <= 8){
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/storm_gif.gif";
+			document.getElementById("eventMessage").innerHTML = "Stuck in a storm! Lose " + daysLost + " day(s)."
+		}else{
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/blizzard_gif.gif";
+			document.getElementById("eventMessage").innerHTML = "Stuck in a blizzard! Lose " + daysLost + " day(s)."
+		}
+
+		openNextMenu('theTrail','eventHappening');
+
+		for(var i = 0; i < daysLost; i++){
+			theDate.setDate(theDate.getDate() + 1);
+			updateWeather();
+			updateFood();
+		}
+
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM + STOLEN_CLOTHING){
+
+		if(theClothes > 0){
+
+			//lost 1 to 3 clothing
+			clothesLost = Math.floor(Math.random() * 3 + 1);
+			while(clothesLost > theClothes){
+				//user can only lose as many clothes as they have, just pick again
+				clothesLost = Math.floor(Math.random() * 3 + 1);
+			}
+
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/theif.gif";
+			document.getElementById("eventMessage").innerHTML = "A thief has stolen " + clothesLost + " clothes!";
+			openNextMenu('theTrail','eventHappening');	
+			theClothes -= clothesLost;
+
+		}
+
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM + STOLEN_CLOTHING + SICKNESS){
+
+		//choose which member gets sick
+		member = Math.floor(Math.random() * team.length);
+		while(theHealth[member] == 0){
+			//this member is already dead, choose new one
+			member = Math.floor(Math.random() * team.length);
+		}
+
+		//choose the sickness
+		sickness = Math.floor(Math.random() * sicknesses.length);
+
+		alert(team[member] + " has gotten " + sicknesses[sickness].name + "!");
+
+		//update health, but don't go below zero
+		theHealth[member] -= sicknesses[sickness].detriment;
+		if(theHealth[member] < 0){
+			theHealth[member] = 0;
+		}
+
+
+
+	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM + STOLEN_CLOTHING + SICKNESS + OX_WANDERED){
+		
+		if(theOxen > 0){
+			document.getElementById("eventImage").src = "";
+			document.getElementById("eventImage").src = "images/ox_icon.gif";
+			document.getElementById("eventMessage").innerHTML = "An ox has wandered off!";
+			openNextMenu('theTrail','eventHappening');
+			theOxen -= 1;
+		}
+
+	}
+
+	//if an event happened, let continueTrail know
+	if(chance < EVENTS_TOTAL){
+		return true;
+	}else{
+		return false;
+	}
 
 }
