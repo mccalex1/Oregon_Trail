@@ -25,7 +25,6 @@ function openNextMenu(currentDiv, nextDivId){
 }
 
 
-
 function continueFromRiver(){
 
 	//update landmark counter by 1
@@ -362,21 +361,11 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, to
 //can only continue if there are people alive and have oxen
 function continuePressed(){
 
-	if(getNumAlive() == 0){
-		alert("All your people are dead");
-	}
-	else if(theOxen == 0){
-		alert("You have no oxen, you cannot go anywhere");
-	}
-	else{
+	//see if random event happens
+	eventHappened = randomEvent();
 
-		//see if random event happens
-		eventHappened = randomEvent();
-
-		if(!eventHappened){
-			continueTrail();
-		}
-
+	if(!eventHappened){
+		continueTrail();
 	}
 
 }
@@ -490,6 +479,11 @@ function continueTrail(){
 
 	getHealth();
 	setTravelValues();
+
+	loss = checkLoss();
+	if(loss != ""){
+		loseGame("theTrail", loss);
+	}
 
 	console.log("Health Bars: " + theHealth);
 }
@@ -611,7 +605,13 @@ function river(option){
 	document.getElementById("riverCrossingImg").src = "";
 	document.getElementById("riverCrossingImg").src = picSrc;
 
-	openNextMenu("riverOptionsMenu", "riverCrossing");
+	loss = checkLoss();
+	if(loss == ""){
+		openNextMenu("riverOptionsMenu", "riverCrossing");
+	}else{
+		loseGame("riverOptionsMenu", loss);
+	}
+
 }
 
 
@@ -890,7 +890,6 @@ function getHealth(){
 		return "Poor";
 	}
 	else{
-		alert("Everyone is dead");
 		return "Dead";
 	}
 }
@@ -1016,8 +1015,8 @@ function randomEvent(){
 		document.getElementById("eventImage").src = "";
 		document.getElementById("eventImage").src = "images/wagon_fire.gif";
 		document.getElementById("eventMessage").innerHTML = "Your wagon caught fire!";
+		document.getElementById("eventButton").onclick = function(){loseGame("eventHappening", "Your wagon caught fire, you got stuck.")};
 		openNextMenu('theTrail','eventHappening');
-		//TODO pull up lose screen
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART){
 
 		wagonPart = Math.random();
@@ -1032,7 +1031,8 @@ function randomEvent(){
 				openNextMenu('theTrail','eventHappening');
 			}else{
 				document.getElementById("eventMessage").innerHTML = "A wheel broke and you have no replacements.";
-				//lose
+				document.getElementById("eventButton").onclick = function(){loseGame("eventHappening", "Your wagon broke down, you are stuck.")};
+				openNextMenu('theTrail','eventHappening');
 			}
 		}else if(wagonPart < .66){
 			document.getElementById("eventImage").src = "";
@@ -1043,7 +1043,8 @@ function randomEvent(){
 				openNextMenu('theTrail','eventHappening');
 			}else{
 				document.getElementById("eventMessage").innerHTML = "An axle broke and you have no replacements.";
-				//lose
+				document.getElementById("eventButton").onclick = function(){loseGame("eventHappening", "Your wagon broke down, you are stuck.")};
+				openNextMenu('theTrail','eventHappening');
 			}
 		}else{
 			document.getElementById("eventImage").src = "";
@@ -1054,7 +1055,8 @@ function randomEvent(){
 				openNextMenu('theTrail','eventHappening');
 			}else{
 				document.getElementById("eventMessage").innerHTML = "A tongue broke and you have no replacements.";
-				//lose
+				document.getElementById("eventButton").onclick = function(){loseGame("eventHappening", "Your wagon broke down, you are stuck.")};
+				openNextMenu('theTrail','eventHappening');
 			}
 		}
 
@@ -1076,8 +1078,6 @@ function randomEvent(){
 		theHealth[member] = 0;
 
 		openNextMenu('theTrail','eventHappening');
-
-		//TODO check for lose?
 
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH){
 
@@ -1153,8 +1153,6 @@ function randomEvent(){
 			theHealth[member] = 0;
 		}
 
-
-
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM + STOLEN_CLOTHING + SICKNESS + OX_WANDERED){
 		
 		if(theOxen > 0){
@@ -1173,5 +1171,83 @@ function randomEvent(){
 	}else{
 		return false;
 	}
+
+}
+
+function continueFromEvent(){
+
+	loss = checkLoss();
+	if(loss == ""){
+		openNextMenu("eventHappening", "theTrail");
+	}else{
+		loseGame("eventHappening", loss);
+	}
+
+}
+
+function checkLoss(currentDiv){
+
+	lossString = "";
+
+	if(getNumAlive() == 0){
+		lossString = "Your entire party has died!";
+	}
+	else if(theOxen == 0){
+		lossString = "You have no oxen, you are stuck.";
+	}
+
+	return lossString;
+
+}
+
+function loseGame(currentDiv, reason){
+
+	document.getElementById("reason").innerHTML = reason;
+	document.getElementById("stats").innerHTML = "You made it " +  milesTraveled + " miles. Better luck next time!";
+	openNextMenu(currentDiv,'loseGame');
+
+}
+
+function continueFromLoss(){
+
+	//reset EVERYTHING
+	careerChosen = "";
+ 	money = 0;
+	mutilplyer = 0;
+	team = [];
+
+	theDate = null;
+	theWeather = "";
+	theHealth = [100, 100, 100, 100, 100];
+	theFood = 0;
+	nextLandmark = "";
+	milesTraveled = 0;
+
+	currentRationing = "Filling";
+	var currentPace = "Steady";
+	shopOrNotShopMenu = "landmarkWithShopMenu";
+	currentStore = "";
+	currentStoreNum = 0;
+
+	theOxen = 0;
+	theClothes = 0;
+	theWheels = 0;
+	theAxles = 0;
+	theTongues = 0;
+	theWorms = 0;
+
+	currentLandmark = 0;
+	milesWithThisLandmark = 0;
+	landmarkPixel = 0;
+
+	document.getElementById("name1").value = "";
+	document.getElementById("name2").value = "";
+	document.getElementById("name3").value = "";
+	document.getElementById("name4").value = "";
+	document.getElementById("name5").value = "";
+
+	document.getElementById("total").innerHTML = 0;
+
+	openNextMenu("loseGame", "oregonTrail");
 
 }
