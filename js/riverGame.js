@@ -14,38 +14,46 @@
  *
  *******************************************************************************/
 
-var GAME_LENGTH = 1000;
-var PLAYER_SIZE = 45;
-var ROCK_SIZE = 70;
-var DOCK_SIZE = 100;
-var PLAYER_ACCELERATION_Y = 0.1;
-var PLAYER_ACCELERATION_X = 0.1;
-var PLAYER_DRIFT_SPEED = 0;
-var PLAYER_MAX_SPEED_Y = 1.5;
-var PLAYER_MAX_FORWARD_SPEED = 0.7;
-var PLAYER_MAX_BACKWARD_SPEED = 1.5;
-var SHORE_SIZE = 25;
-var RIVER_SPEED = 2.5;
-var CRASH_RECOVER_DISTANCE = 7;
-var ROCK_HITBOX_BUFFER = 5;
-var ROCK_DIST_1 = 120;
-var ROCK_DIST_2 = 60;
+//Gameplay configuration variables, placed here for easy access and adjustment
+var GAME_LENGTH = 2000;                 //How long the game lasts
+var PLAYER_SIZE = 45;                   //size of the player icon in pixels
+var ROCK_SIZE = 70;                     //size of rocks in pixels
+var DOCK_SIZE = 100;                    //width of the dock in pixels (height is 2*width)
+var PLAYER_ACCELERATION_Y = 0.1;        //rate of vertical player acceleration
+var PLAYER_ACCELERATION_X = 0.1;        //rate of horizontal player acceleration
+var PLAYER_DRIFT_SPEED = 0;             //speed that the player drifts backwards with no horizontal input
+var PLAYER_MAX_SPEED_Y = 1.5;           //maximum vertical speed
+var PLAYER_MAX_FORWARD_SPEED = 0.7;     //maximum forward speed
+var PLAYER_MAX_BACKWARD_SPEED = 1.5;    //maximum backward speed
+var SHORE_SIZE = 25;                    //size of the shoreline on the top and bottom of the canvas
+var RIVER_SPEED = 2.5;                  //speed of the river/rocks
+var CRASH_RECOVER_DISTANCE = 7;         //distance the player must move away from a rock to recover from a crash, in pixels
+var ROCK_HITBOX_BUFFER = 5;             //distance inside the border of a rock object that a player must move to crash into it
+var GAME_STAGE_RATIO = 3;               //fraction of the game that is easier; e.g. 3 = difficulty increases after first 1/3
+var ROCK_DIST_1 = 120;                  //distance between rocks in the first stage of the game
+var ROCK_DIST_2 = 60;                   //distance between rocks in the more difficult stage
 
-
+//game objects
 var playerPiece;
 var obstacles = [];
-var gamePenalty = 0;
 var rockImage = new Image();
 rockImage.src = "images/riverGameTemp.png";
 
+//penalty counter for crashing
+var gamePenalty = 0;
+
+//Begins the game
 function startRiverGame() {
+    //hide intro overlay
     document.getElementById("riverGameIntro").setAttribute("style", "display: none");
+    //setup game and canvas elements
     gameArea.start();
     playerPiece = new component("player", gameArea.canvas.width/4, gameArea.canvas.height/2);
     background = new component("background", 0, 0);
     gameArea.play();
 }
 
+//stops the game and displays the results
 function finishRiverGame(passed) {
     window.clearInterval(gameArea.interval);
     document.getElementById("riverGameDone").setAttribute("style", "display: block");
@@ -60,9 +68,10 @@ function finishRiverGame(passed) {
     }
 }
 
-
+//game object
 var gameArea = {
     canvas : document.getElementById("riverGameCanvas"),
+    //sets up canvas
     start : function() {
         this.canvas = document.getElementById("riverGameCanvas");
         this.canvas.width = 800;
@@ -70,6 +79,7 @@ var gameArea = {
         this.context = this.canvas.getContext("2d");
         this.frameNum = 0;
     },
+    //starts game loop and listens for user input
     play : function() {
         this.interval = setInterval(updateGame, 20);
         window.addEventListener('keydown', function (e) {
@@ -81,18 +91,20 @@ var gameArea = {
         });
 
     },
+    //clears canvas
     clear : function() {
         this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
     }
 };
 
 
-
+//game object
 function component(type, x, y) {
     ctx = gameArea.context;
     this.type = type;
     this.x = x;
     this.y = y;
+    //initialize variables based on component type
     if (type == "player") {
         this.height = PLAYER_SIZE;
         this.width = PLAYER_SIZE;
@@ -141,34 +153,41 @@ function component(type, x, y) {
 
     }
 
+    //draw the compenent on the canvas
     this.draw = function () {
         ctx = gameArea.context;
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        //draw the background twice for looping
         if (this.type == "background") {
             ctx.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
         }
     };
 
+    //update the component's position based on its speed
     this.update = function () {
         this.x += this.speedX;
         if (this.type == "player") {
             this.y += this.speedY;
             this.y = Math.min(Math.max(this.y, SHORE_SIZE), gameArea.canvas.height - this.height - SHORE_SIZE);
 
+            //if the player has carshed into the shore and moved far enough away, they recover
             if (this.recoveredShore == false &&
                 (this.y > SHORE_SIZE + CRASH_RECOVER_DISTANCE) &&
                 (this.y < gameArea.canvas.height - this.height - SHORE_SIZE - CRASH_RECOVER_DISTANCE)) {
                 this.recoveredShore = true;
             }
 
+            //if they hit the shore, they've crashed
             else if (((this.y <= SHORE_SIZE+1) || (this.y >= gameArea.canvas.height - this.height - SHORE_SIZE - 1)) &&
                      this.recoveredShore == true) {
                     gamePenalty += 0.25;
                     this.recoveredShore = false;
             }
 
+            //keep the player on the left half of the canvas
             this.x = Math.min(Math.max(this.x, 0), gameArea.canvas.width/2 - this.width);
         }
+        //if the background reaches the end of the canvas, move it back to the other side
         else if (this.type == "background") {
             if (this.x <= -this.width) {
                 this.x = 0;
@@ -176,6 +195,7 @@ function component(type, x, y) {
         }
     };
 
+    //check for collisions
     this.crashTest = function (rock) {
         playerTop = this.y;
         playerRight = this.x + this.width;
@@ -187,7 +207,9 @@ function component(type, x, y) {
         rockBottom = rock.y + rock.height - ROCK_HITBOX_BUFFER;
         rockLeft = rock.x + ROCK_HITBOX_BUFFER;
 
+        //if the player is currently colliding with this obstacle
         if (rock.collided == true) {
+            //check which direction, and if they've recovered yet
             if (this.collision == "bottom" && (
                     (playerTop > (rockBottom + CRASH_RECOVER_DISTANCE) ||
                     playerRight < (rockLeft - CRASH_RECOVER_DISTANCE) ||
@@ -228,20 +250,25 @@ function component(type, x, y) {
                 rock.collided = false;
                 this.curMaxRight = PLAYER_MAX_FORWARD_SPEED;
             }
+            //if they get pushed off the canvas, they die
             else if (this.collision == "left" && this.x <= 0) {
                 this.dead = true;
             }
         }
 
+        //if they aren't colliding with this obstacle
         else {
+            //check for collisions in each direction
             if (playerLeft < rockRight && playerRight > rockRight && playerLeft > (rockRight - ROCK_HITBOX_BUFFER) &&
                 ((playerTop > rockBottom && playerTop < rockTop) ||
                 (playerBottom < rockBottom && playerBottom > rockTop)))  {
+                //if they collide, record it and change their speed so they can't move through the obstacle
                 this.collision = "right";
                 this.recovered = false;
                 this.speedX = -RIVER_SPEED;
                 this.curMaxLeft = -RIVER_SPEED;
                 rock.collided = true;
+                //add to the penalty
                 gamePenalty += 1;
                 //this.x = rockRight;
             }
@@ -279,25 +306,30 @@ function component(type, x, y) {
                 //this.y = rockBottom + 1;
             }
         }
+        //return whether they are colliding with the current obstacle
         return rock.collided;
     };
 
 }
 
+//main game loop function
 function updateGame() {
+    //check for rock collisions
     for (var i = 0; i < obstacles.length; i++) {
         playerPiece.crashTest(obstacles[i])
     }
 
+    //if they're dead, return false
     if (playerPiece.dead == true) {
         finishRiverGame(false);
     }
 
+    //if they've reached the end create the dock
     else if (gameArea.frameNum == GAME_LENGTH) {
         dock = new component("dock", gameArea.canvas.width, SHORE_SIZE);
     }
 
-
+    //clear the canvas and draw the background
     gameArea.clear();
     background.update();
     background.draw();
@@ -306,25 +338,32 @@ function updateGame() {
     var speedX = playerPiece.speedX;
     var speedY = playerPiece.speedY;
 
+    //check for user input and calculate new speed
     if (gameArea.keys && gameArea.keys[37]) {speedX = Math.max(-playerPiece.curMaxLeft, speedX - PLAYER_ACCELERATION_X); }
     if (gameArea.keys && gameArea.keys[39]) {speedX = Math.min(playerPiece.curMaxRight, speedX + PLAYER_ACCELERATION_X); }
     if (gameArea.keys && gameArea.keys[38]) {speedY = Math.max(-playerPiece.curMaxUp, speedY - PLAYER_ACCELERATION_Y); }
     if (gameArea.keys && gameArea.keys[40]) {speedY = Math.min(playerPiece.curMaxDown, speedY + PLAYER_ACCELERATION_Y); }
 
+    //if both or neither left and/nor right are pressed
     if ((gameArea.keys && gameArea.keys[37] && gameArea.keys[39]) ||
         (gameArea.keys && !gameArea.keys[37] && !gameArea.keys[39])) {
+        //if they are colliding from the left, set their speed to the river/rock speed
         if (playerPiece.collision == "left") {
             speedX = -RIVER_SPEED;
         }
+        //if they are moving faster than the drift speed, gradually decrease it to the drift speed
         else if (speedX > -PLAYER_DRIFT_SPEED) {
             speedX = Math.max(-PLAYER_DRIFT_SPEED, speedX - PLAYER_ACCELERATION_X);
         }
+        //if they are moving slower than the drift speed, gradually increase it to the drift speed
         else if (speedX < -PLAYER_DRIFT_SPEED) {
             speedX = Math.min(-PLAYER_DRIFT_SPEED, speedX + PLAYER_ACCELERATION_X)
         }
     }
+    //if both or neither up and/nor down are pressed
     if ((gameArea.keys && gameArea.keys[38] && gameArea.keys[40]) ||
         (gameArea.keys && !gameArea.keys[38] && !gameArea.keys[40])) {
+        //if the speed is less than or greater than 0, gradually increment it towards 0
         if (speedY > 0) {
             speedY = Math.max(0, speedY - PLAYER_ACCELERATION_Y);
         }
@@ -333,17 +372,21 @@ function updateGame() {
         }
     }
 
+    //set the new speeds
     playerPiece.speedX = speedX;
     playerPiece.speedY = speedY;
 
+    //if the game has ended, slow down river movement speed
     if (gameArea.frameNum > GAME_LENGTH + 130) {
         if (gameArea.frameNum > GAME_LENGTH + 210) {
             background.speedX = Math.min(0, background.speedX + 0.0125);
             dock.speedX = background.speedX;
         }
+        //update/draw the dock
         dock.update();
         dock.draw();
 
+        //adjust the rock speeds and update/draw them
         for (i = 0; i < obstacles.length; i++) {
             if (obstacles[i].x > -ROCK_SIZE) {
                 obstacles[i].speedX = background.speedX;
@@ -351,10 +394,12 @@ function updateGame() {
                 obstacles[i].draw();
             }
         }
+        //end the game when the player docks
         if (playerPiece.crashTest(dock)) {
             finishRiverGame(true);
         }
     }
+    //if the game hasn't ended, draw rocks
     else {
         createRocks();
         for (i = 0; i < obstacles.length; i++) {
@@ -365,17 +410,22 @@ function updateGame() {
         }
     }
 
+    //update/draw the player
     playerPiece.update();
     playerPiece.draw();
 
+    //increment the frame counter
     gameArea.frameNum++;
 }
 
-
+//creates rocks at specified intervals
 function createRocks() {
+    //calculate the area in which the rocks can be placed
     var range = gameArea.canvas.height - 2*SHORE_SIZE - ROCK_SIZE;
-    if (((gameArea.frameNum < GAME_LENGTH/3) && ((gameArea.frameNum/ROCK_DIST_1) % 1== 0)) ||
-        ((gameArea.frameNum >= GAME_LENGTH/3) && (gameArea.frameNum <= GAME_LENGTH) && ((gameArea.frameNum/ROCK_DIST_2) % 1 == 0))) {
+    //place a rock depending on game progression and time since the previous rock
+    if (((gameArea.frameNum < GAME_LENGTH/GAME_STAGE_RATIO) && ((gameArea.frameNum/ROCK_DIST_1) % 1== 0)) ||
+        ((gameArea.frameNum >= GAME_LENGTH/GAME_STAGE_RATIO) && (gameArea.frameNum <= GAME_LENGTH) && ((gameArea.frameNum/ROCK_DIST_2) % 1 == 0))) {
+        //pick a random position and add the rock to the list of rocks
         rockPos = Math.floor(Math.random()*range) + SHORE_SIZE;
         obstacles.push(new component("rock", gameArea.canvas.width, rockPos));
     }
