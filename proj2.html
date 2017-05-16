@@ -1,7 +1,7 @@
 <!--*******************************************************************************
 *	File: proj2.html
 *	Date created: 4/1/17
-*	Last Modified: 4/30/17
+*	Last Modified: 5/15/17
 *	Authors: Alex McCaslin, Brendan Waters, Eric Gottlieb, Taylor Brzuchalski
 *
 *	Email:
@@ -20,6 +20,8 @@
 	<script src="js/constants.js"></script>
 	<script src="js/dbWork.js"></script>
 	<script src="js/proj2.js"></script>
+	<script src="js/trade.js"></script>
+	<title> Oregon Trail </title>
 	<link rel="stylesheet" type="text/css" href="css/proj2.css">
 
 	</head>
@@ -500,7 +502,7 @@
 								<BUTTON onclick="openNextMenu('landmarkWithShopMenu', 'fishingMenu')">Go Fishing</BUTTON>
 								<br>
 								<br>
-								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','tradeMenu')"> Attempt to trade </BUTTON>
+								<BUTTON onclick="goToTradeMenu('landmarkWithShopMenu')"> Attempt to trade </BUTTON>
 								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('landmarkWithShopMenu','talkMenu')">Talk to people </BUTTON>
@@ -537,7 +539,7 @@
 								<BUTTON onclick="openNextMenu('noShopMenu', 'fishingMenu')">Go Fishing</BUTTON>
 								<br>
 								<br>
-								<BUTTON onclick="openNextMenu('noShopMenu','tradeMenu')"> Attempt to trade </BUTTON>
+								<BUTTON onclick="goToTradeMenu('noShopMenu')"> Attempt to trade </BUTTON>
 								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('noShopMenu','talkMenu')">Talk to people </BUTTON>
@@ -663,6 +665,7 @@
 
 							<!-- menu that shows all the supplies left -->
 							<div id="suppliesMenu">
+								<h1> Your supplies </h1>
 								<table>
 									<tr>
 										<td>
@@ -729,7 +732,7 @@
 										</td>
 									</tr>
 								</table>
-								<BUTTON onclick="openNextMenu('suppliesMenu' ,'landmarkWithShopMenu')">Back</BUTTON>
+								<BUTTON onclick="openNextMenu('suppliesMenu', shopOrNotShopMenu)">Back</BUTTON>
 								<br>
 							</div>
 							
@@ -739,7 +742,7 @@
 								<img src="images/oregonTrailMap.gif"/>
 								<br>
 								<br>
-								<BUTTON onclick="openNextMenu('mapMenu', 'landmarkWithShopMenu')">Back</BUTTON>
+								<BUTTON onclick="openNextMenu('mapMenu', shopOrNotShopMenu">Back</BUTTON>
 								<br>
 							</div>
 
@@ -849,7 +852,15 @@
 
 							<!-- allows user to rest -->
 							<div id="restMenu">
-								rest
+								<h1> Looks like you need a rest...</h1>
+								<p>
+									How many days would you like to rest (1-7 days)... remember, resting with larger food portions may be more helpful.
+								</p>
+
+								<input id="resting" value='0' type="number" name="quantity" min="1" max="7">	
+
+								<BUTTON onclick="stopToRest()">Rest</BUTTON>
+								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('restMenu', shopOrNotShopMenu)">Back</BUTTON>
 								<br>
@@ -858,7 +869,30 @@
 
 							<!-- attempts to trade with people -->
 							<div id="tradeMenu">
-								trade
+								<h1> Looks like you want to trade</h1>
+								<p>
+									Someone passing by tries to trade with you...
+									They want to trade
+								</p>
+
+
+								<table>
+									<tr>
+										<td> They have </td>
+										<td id="theirItemNum">0 </td>
+										<td id="theirItemName">stuff </td>
+									</tr>
+
+									<tr>
+										<td> They want </td>
+										<td id="yourItemNum"> 1</td>
+										<td id="yourItemName"> not</td>
+									</tr>
+								</table>
+								
+								<br>
+								<BUTTON onclick="attemptToTrade()">Trade</BUTTON>
+								<br>
 								<br>
 								<BUTTON onclick="openNextMenu('tradeMenu', shopOrNotShopMenu)">Back</BUTTON>
 								<br>
@@ -867,7 +901,13 @@
 
 							<!-- talks with people -->
 							<div id="talkMenu">
-								talk
+								<h1> Conversation is fun, you listen to a conversation nearby </h1>
+
+								<p>
+									Some folks seem to think that two oxen are enough to get them to Oregon!
+									Two oxen can barely move a fully loaded wagon, and if one of them gets sick or dies, you won't be going anywhere.
+									I wouldn't go overland with less than six.
+								</p>
 								<br>
 								<BUTTON onclick="openNextMenu('talkMenu', shopOrNotShopMenu)">Back</BUTTON>
 								<br>

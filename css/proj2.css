@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	File: proj2.css
 *	Date created: 4/1/17
-*	Last Modified: 4/30/17
+*	Last Modified: 5/15/17
 *	Authors: Alex McCaslin, Brendan Waters, Eric Gottlieb, Taylor Brzuchalski
 *
 *	Email:
@@ -105,7 +105,11 @@ p{
 #theStore, #landmarkWithShopMenu, #theTrail, #suppliesMenu, #mapMenu,
 #paceMenu, #foodMenu, #restMenu, #tradeMenu, #talkMenu, #noShopMenu,
 #imageMenu, #riverMenu, #riverCrossing, #riverOptionsMenu, #fishingMenu,
+<<<<<<< HEAD
 #trailDivides, #riverGameDone, #eventHappening, #loseGame
+=======
+#trailDivides, #eventHappening, #riverGameDone
+>>>>>>> refs/remotes/origin/master
 {
 	display: none;
 }
