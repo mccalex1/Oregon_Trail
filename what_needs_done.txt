@@ -1,17 +1,14 @@
-ALEX
-	MENU
-		- Talk to people menu
+
 		
 
-BRENDAN
-	MENU
-		- Win game screen -- calculate points
-	Items
-		- Clothing has not been implemented to make any difference in game
+MENU
+	- Win game screen -- calculate points
+Items
+	- Clothing has not been implemented to make any difference in game
 
-Eric:
-	- Dead game-over condition
-	- Rock collision
+
+- Dead game-over condition
+- Rock collision
 
 Bugs
 	- Distance landmark moves across page when continue is pressed
@@ -22,7 +19,5 @@ Bugs
     - check before each continue if anyone has died?
 	- Action menu gets duplicated after south pass (may be fixed?)
 	- check supplies menu off-center
+	- Talk to people menu only has 1 think to talk about (not a big deal?)
 
-
-Miscellaneous
-    - Page title
