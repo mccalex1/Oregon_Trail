@@ -454,23 +454,6 @@ function continueTrail(){
 		else if(!atRiver){
 			openNextMenu("theTrail","imageMenu");
 		}
-		/*
-		//if it is after a split it needs to jump by two the way the data structure is set up
-		else if(jumpTwo.indexOf(currentLandmark) != -1){
-			console.log("442: adding 2");
-			currentLandmark += 2;
-			if(!atRiver){
-				openNextMenu("theTrail","imageMenu");
-			}
-		}
-
-		else{
-			if(!atRiver){
-				//if its at river the open river menu was already called
-				openNextMenu("theTrail","imageMenu");
-			}
-		}
-		*/
 		milesWithThisLandmark = 0;
 
 	}
@@ -700,13 +683,11 @@ function updateDistance(){
 function trailClick(direction){
 
 	if(direction == "left"){
-		console.log("622: adding 1");
 		currentLandmark += 1;
 	}
 
 	//right
 	else{
-		console.log("628: adding 2");
 		currentLandmark += 2;
 	}
 
