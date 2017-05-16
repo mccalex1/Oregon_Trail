@@ -328,7 +328,16 @@ function buyStuff(){
 
 //function that returns whether or not you can buy this stuff
 function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, totalPrice){
+
 	var can = true;
+
+	var numbOxen = parseInt(document.getElementById("numOxen").value);
+	var numbFood = parseInt(document.getElementById("numFood").value);
+	var numbClothes = parseInt(document.getElementById("numClothing").value);
+	var numbAxles = parseInt(document.getElementById("numAxles").value);
+	var numbTongues = parseInt(document.getElementById("numTongues").value);
+	var numbWheels = parseInt(document.getElementById("numWheels").value);
+	var numbWorms = parseInt(document.getElementById("numWorms").value);
 
 	//invalid amount of money
 	if(totalPrice > money){
@@ -342,49 +351,48 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, to
 		can = false;
 	}
 
-	//too many oxen
-	else if(parseInt(document.getElementById("numOxen").value) + theOxen > MAXOXEN){
+	//too many oxen or less than 0
+	else if(numbOxen < 0 || numbOxen + theOxen > MAXOXEN){
 		alert("You can only have " + MAXOXEN + " oxen. You currently have " + theOxen);
 		can = false;
 	}
 
-	//too much food
-	else if(parseInt(document.getElementById("numFood").value) + theFood > MAXFOOD){
+	//too much food or less than 0
+	else if(numbFood < 0 || numbFood + theFood > MAXFOOD){
 		alert("You can only have " + MAXFOOD + " pounds of food. You currently have " + theFood);
 		can = false;
 	}
 
-	//too much clothes
-	else if(parseInt(document.getElementById("numClothing").value) + theClothes > MAXCLOTHES){
+	//too much clothes or less than 0
+	else if(numbClothes < 0 || numbClothes + theClothes > MAXCLOTHES){
 		alert("You can only have " + MAXCLOTHES + " pairs of clothes. You currently have " + theClothes);
 		can = false;
 	}
 
-	//too many tongues
-	else if(parseInt(document.getElementById("numTongues").value) + theTongues > MAXPART){
+	//too many tongues or less than 0
+	else if(numbTongues < 0 || numbTongues + theTongues > MAXPART){
 		alert("You can only have " + MAXPART + " wagon tongues. You currently have " + theTongues);
 		can = false;
 	}
 
-	//too many axles
-	else if(parseInt(document.getElementById("numAxles").value) + theAxles > MAXPART){
+	//too many axles or less than 0
+	else if(numbAxles < 0 || numbAxles + theAxles > MAXPART){
 		alert("You can only have " + MAXPART + " axles. You currently have " + theAxles);
 		can = false;
 	}
 
-	//too many wheels
-	else if(parseInt(document.getElementById("numWheels").value) + theWheels > MAXPART){
+	//too many wheels or less than 0
+	else if(numbWheels < 0 || numbWheels + theWheels > MAXPART){
 		alert("You can only have " + MAXPART + " wheels. You currently have " + theWheels);
 		can = false;
 	}
 
 
-	//too many worms
-	else if((parseInt(document.getElementById("numWorms").value) * WORMSINABOX) + theWorms > MAXWORMS){
+	//too many worms or less than 0
+	else if(numbWorms < 0 || (numbWorms * WORMSINABOX) + theWorms > MAXWORMS){
 		alert("You can only have " + MAXWORMS + " worms. You currently have " + theWorms);
 		can = false;
 	}
-
 
 
 	return can
@@ -789,10 +797,10 @@ function animateLandmark(milesToAdd){
 
 	var pos = 0;
 
-	//document.getElementById("pressToContinue").disabled = true;
-	//document.getElementById("pressToContinue").className = "disabledButton";
+	document.getElementById("pressToContinue").disabled = true;
+	document.getElementById("pressToContinue").className = "disabledButton";
 
-	/*
+	
 	var id = setInterval(frame, 5);
 	function frame(){
 
@@ -807,7 +815,7 @@ function animateLandmark(milesToAdd){
 			elem.style.left = pos + start;
 		}
 	}
-	*/
+	
 }
 
 
@@ -1050,6 +1058,9 @@ function stopToRest(){
 
 	if(days > MAXDAYS){
 		alert("Can only wait up to " + MAXDAYS + " days");
+	}
+	else if(days < 0){
+		alert("Cannot wait for negative days.. nice try");
 	}
 	else{
 		for(var i = 0; i < days; i++){
