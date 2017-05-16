@@ -1106,7 +1106,12 @@ function randomEvent(){
 
 		//lost for 1 to 4 days
 		daysLost = Math.floor(Math.random() * 4 + 1);
-		alert("Lost the path! Lose " + daysLost + " day(s).");
+		
+		document.getElementById("eventImage").src = "";
+		document.getElementById("eventImage").src = "images/lose_path.gif";
+		document.getElementById("eventMessage").innerHTML = "Lost the path! Lose " + daysLost + " days.";
+		openNextMenu('theTrail','eventHappening');
+
 		for(var i = 0; i < daysLost; i++){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
