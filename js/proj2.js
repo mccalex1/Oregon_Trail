@@ -1007,13 +1007,6 @@ function stopToRest(){
 }
 
 
-
-
-
-function talkToPeople(){
-
-}
-
 function randomEvent(){
 
 	chance = Math.random();
