@@ -142,8 +142,32 @@ function setNames(){
 	var name4 = document.getElementById("name4").value;
 	var name5 = document.getElementById("name5").value;
 
+	var names = [name1, name2, name3, name4, name5];
+	var validNames = true;
+
+
+	//loops through both sets of lists seeing if there are any null or same names
+	for(var i = 0; i < names.length; i++){
+		for(var j = 0; j < names.length; j++){
+
+			//if any of the names are null then the names are not valid
+			if(names[i] == ""|| names[j] == ""){
+				validNames = false;
+			}
+
+			//if we are not looking at the same spot in the list
+			//and then if the names are the same they cannot be
+			if(i != j){
+				if(names[i] == names[j]){
+					validNames = false;
+				}
+			}
+
+		}
+	}
+
 	//makes sure all the names are not the same and null
-	if((name1 != name2) && (name2 != name3) && (name3 != name4) && (name4 != name5) && (name1 != "")){
+	if(validNames){
 		
 		team.push(name1);
 		team.push(name2);
@@ -304,7 +328,16 @@ function buyStuff(){
 
 //function that returns whether or not you can buy this stuff
 function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, totalPrice){
+
 	var can = true;
+
+	var numbOxen = parseInt(document.getElementById("numOxen").value);
+	var numbFood = parseInt(document.getElementById("numFood").value);
+	var numbClothes = parseInt(document.getElementById("numClothing").value);
+	var numbAxles = parseInt(document.getElementById("numAxles").value);
+	var numbTongues = parseInt(document.getElementById("numTongues").value);
+	var numbWheels = parseInt(document.getElementById("numWheels").value);
+	var numbWorms = parseInt(document.getElementById("numWorms").value);
 
 	//invalid amount of money
 	if(totalPrice > money){
@@ -318,49 +351,48 @@ function canIBuy(oxenSub, foodSub, clothingSub, tongueSub, axleSub, wormsSub, to
 		can = false;
 	}
 
-	//too many oxen
-	else if(parseInt(document.getElementById("numOxen").value) + theOxen > MAXOXEN){
+	//too many oxen or less than 0
+	else if(numbOxen < 0 || numbOxen + theOxen > MAXOXEN){
 		alert("You can only have " + MAXOXEN + " oxen. You currently have " + theOxen);
 		can = false;
 	}
 
-	//too much food
-	else if(parseInt(document.getElementById("numFood").value) + theFood > MAXFOOD){
+	//too much food or less than 0
+	else if(numbFood < 0 || numbFood + theFood > MAXFOOD){
 		alert("You can only have " + MAXFOOD + " pounds of food. You currently have " + theFood);
 		can = false;
 	}
 
-	//too much clothes
-	else if(parseInt(document.getElementById("numClothing").value) + theClothes > MAXCLOTHES){
+	//too much clothes or less than 0
+	else if(numbClothes < 0 || numbClothes + theClothes > MAXCLOTHES){
 		alert("You can only have " + MAXCLOTHES + " pairs of clothes. You currently have " + theClothes);
 		can = false;
 	}
 
-	//too many tongues
-	else if(parseInt(document.getElementById("numTongues").value) + theTongues > MAXPART){
+	//too many tongues or less than 0
+	else if(numbTongues < 0 || numbTongues + theTongues > MAXPART){
 		alert("You can only have " + MAXPART + " wagon tongues. You currently have " + theTongues);
 		can = false;
 	}
 
-	//too many axles
-	else if(parseInt(document.getElementById("numAxles").value) + theAxles > MAXPART){
+	//too many axles or less than 0
+	else if(numbAxles < 0 || numbAxles + theAxles > MAXPART){
 		alert("You can only have " + MAXPART + " axles. You currently have " + theAxles);
 		can = false;
 	}
 
-	//too many wheels
-	else if(parseInt(document.getElementById("numWheels").value) + theWheels > MAXPART){
+	//too many wheels or less than 0
+	else if(numbWheels < 0 || numbWheels + theWheels > MAXPART){
 		alert("You can only have " + MAXPART + " wheels. You currently have " + theWheels);
 		can = false;
 	}
 
 
-	//too many worms
-	else if((parseInt(document.getElementById("numWorms").value) * WORMSINABOX) + theWorms > MAXWORMS){
+	//too many worms or less than 0
+	else if(numbWorms < 0 || (numbWorms * WORMSINABOX) + theWorms > MAXWORMS){
 		alert("You can only have " + MAXWORMS + " worms. You currently have " + theWorms);
 		can = false;
 	}
-
 
 
 	return can
@@ -394,6 +426,8 @@ function doDay(){
 	//this function should also update the health
 	updateFood();
 
+	checkClothes();
+
 	setTravelValues();
 }
 
@@ -413,7 +447,8 @@ function continueTrail(){
 	//updates next landmark with distance and changes name of landmark if it goes over
 	if(placesMiles[currentLandmark].distance == milesWithThisLandmark){
 		if(placesMiles[currentLandmark].place == "Barlow Toll Road (Pay Toll)"){
-			//TODO: GAME ENDS THEY MADE IT TO THE END
+			winGame("theTrail");
+			return;
 		}
 
 		updateLandmarkPixel();
@@ -530,6 +565,7 @@ function river(option){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
 			updateFood();
+			checkClothes();
 		}
 
 	}else if(option == "wait"){
@@ -538,6 +574,7 @@ function river(option){
 		theDate.setDate(theDate.getDate() + 1);
 		updateWeather();
 		updateFood();
+		checkClothes();
 		document.getElementById("riverDate").innerHTML = "Date: " + monthNames[theDate.getMonth()] + " " + theDate.getDate() + " " + theDate.getFullYear();
 		document.getElementById("riverWidth").innerHTML = "River Width: " + placesMiles[currentLandmark].width;
 		document.getElementById("riverDepth").innerHTML = "River Depth: " + (placesMiles[currentLandmark].depth + getRandomDepthChange());
@@ -695,6 +732,16 @@ function updateDistance(){
 }
 
 
+//update health based on clothing situation
+function checkClothes(){
+
+	//less than 2 pieces of clothing per person
+	if(theClothes < 2 * getNumAlive()){
+		updateHealth(CLOTHES_PENALTY);
+	}
+
+}
+
 //when a split in the road is reached
 //this functio is called with parameter left or right
 function trailClick(direction){
@@ -750,10 +797,10 @@ function animateLandmark(milesToAdd){
 
 	var pos = 0;
 
-	//document.getElementById("pressToContinue").disabled = true;
-	//document.getElementById("pressToContinue").className = "disabledButton";
+	document.getElementById("pressToContinue").disabled = true;
+	document.getElementById("pressToContinue").className = "disabledButton";
 
-	/*
+	
 	var id = setInterval(frame, 5);
 	function frame(){
 
@@ -768,7 +815,7 @@ function animateLandmark(milesToAdd){
 			elem.style.left = pos + start;
 		}
 	}
-	*/
+	
 }
 
 
@@ -1012,6 +1059,9 @@ function stopToRest(){
 	if(days > MAXDAYS){
 		alert("Can only wait up to " + MAXDAYS + " days");
 	}
+	else if(days < 0){
+		alert("Cannot wait for negative days.. nice try");
+	}
 	else{
 		for(var i = 0; i < days; i++){
 			doDay();
@@ -1023,7 +1073,7 @@ function stopToRest(){
 	}
 }
 
-
+//makes events happen sometimes
 function randomEvent(){
 
 	chance = Math.random();
@@ -1106,11 +1156,17 @@ function randomEvent(){
 
 		//lost for 1 to 4 days
 		daysLost = Math.floor(Math.random() * 4 + 1);
-		alert("Lost the path! Lose " + daysLost + " day(s).");
+		
+		document.getElementById("eventImage").src = "";
+		document.getElementById("eventImage").src = "images/lose_path.gif";
+		document.getElementById("eventMessage").innerHTML = "Lost the path! Lose " + daysLost + " days.";
+		openNextMenu('theTrail','eventHappening');
+
 		for(var i = 0; i < daysLost; i++){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
 			updateFood();
+			checkClothes();
 		}
 
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM){
@@ -1135,6 +1191,7 @@ function randomEvent(){
 			theDate.setDate(theDate.getDate() + 1);
 			updateWeather();
 			updateFood();
+			checkClothes();
 		}
 
 	}else if(chance < FIND_FRUIT + WAGON_FIRE + WAGON_PART + ALIEN_ABDUCTION + LOST_PATH + STORM + STOLEN_CLOTHING){
@@ -1197,6 +1254,7 @@ function randomEvent(){
 
 }
 
+//helper function doing a check if the event caused a loss
 function continueFromEvent(){
 
 	loss = checkLoss();
@@ -1208,6 +1266,7 @@ function continueFromEvent(){
 
 }
 
+//checks the main two lose conditions
 function checkLoss(currentDiv){
 
 	lossString = "";
@@ -1223,6 +1282,7 @@ function checkLoss(currentDiv){
 
 }
 
+//pulls up the lose game screen
 function loseGame(currentDiv, reason){
 
 	document.getElementById("reason").innerHTML = reason;
@@ -1231,7 +1291,8 @@ function loseGame(currentDiv, reason){
 
 }
 
-function continueFromLoss(){
+//restarts the game from the begining
+function restartGame(currentDiv){
 
 	//reset EVERYTHING
 	careerChosen = "";
@@ -1271,6 +1332,53 @@ function continueFromLoss(){
 
 	document.getElementById("total").innerHTML = 0;
 
-	openNextMenu("loseGame", "oregonTrail");
+	openNextMenu(currentDiv, "oregonTrail");
+
+}
+
+//end of game screen on win
+function winGame(currentDiv){
+
+	//calculate the score
+	score = 0;
+	score += wagonPoints;
+    score += oxPoints * theOxen;
+	score += wagonPart * theAxles;
+	score += wagonPart * theTongues;
+	score += wagonPart * theWheels;
+	score += clothPoint * theClothes;
+	score += foodPointPer25 * theFood / 25;
+	score += cashPointPer5 * money / 5;
+	score = Math.floor(score);
+
+	health = getHealth();
+	if(health == "Good"){
+		score += getNumAlive() * 500;
+	}else if(health == "Fair"){
+		score += getNumAlive() * 400;
+	}else{
+		score += getNumAlive() * 300;
+	}
+
+	if(careerChosen == CAREER3){
+		score *= 3;
+	}else if(careerChosen == CAREER2){
+		score *= 2;
+	}
+
+	//update the div
+	document.getElementById("distanceTraveled").innerHTML = "You traveled " + milesTraveled + " miles to Oregon.";
+	document.getElementById("endScore").innerHTML = "And you scored " + score + " points while doing it!";
+
+	//set up the button to add the new score to the database
+	document.getElementById("winButton").onclick = function(){
+		var name = document.getElementById("username").value;
+		//make them enter a name
+		if(name != null && name != ""){
+			addHighScore(name, score);
+		}
+	};
+
+	openNextMenu(currentDiv,'winGame');
 
 }

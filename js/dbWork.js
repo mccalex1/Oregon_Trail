@@ -90,6 +90,9 @@ function addHighScore(name, score){
     xmlhttp.open("GET", url + query, true);
     xmlhttp.send();
 
+    //they only add scores if they won, restart the game
+    restartGame('winGame');
+
 }
 
 

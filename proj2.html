@@ -743,7 +743,7 @@
 								<img src="images/oregonTrailMap.gif"/>
 								<br>
 								<br>
-								<BUTTON onclick="openNextMenu('mapMenu', shopOrNotShopMenu">Back</BUTTON>
+								<BUTTON onclick="openNextMenu('mapMenu', shopOrNotShopMenu)">Back</BUTTON>
 								<br>
 							</div>
 
@@ -920,7 +920,18 @@
 								<h1>You Lost!</h1>
 								<p id="reason"></p>
 								<p id="stats"></p>
-								<BUTTON id="loseButton" onclick="continueFromLoss()">Continue</BUTTON>
+								<BUTTON id="loseButton" onclick="restartGame('loseGame')">Continue</BUTTON>
+
+							</div>
+
+							<!-- End game screen if player won -->
+							<div id="winGame">
+
+								<h1>You Won!</h1>
+								<p id="distanceTraveled"></p>
+								<p id="endScore"></p>
+								<p><input id="username" type="text" placeholder=" Enter your name" /></p>
+								<BUTTON id="winButton">Continue</BUTTON>
 
 							</div>
 

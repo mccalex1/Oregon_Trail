@@ -187,7 +187,11 @@ var SICKNESS = 0.03;
 var OX_WANDERED = 0.01;
 var EVENTS_TOTAL = 0.15;
 
+//some health values
 var HEALTHPERRESTDAY = 3;
+var CLOTHES_PENALTY = -1;
+
+//the types of sicknesses and their health detriments
 var sicknesses =   [{'name':'cholera', 'detriment':25},
 				 	{'name':'exhaustion', 'detriment':5},
 				 	{'name':'a broken arm', 'detriment':15},
