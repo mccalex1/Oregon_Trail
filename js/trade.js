@@ -206,4 +206,7 @@ function updateOther(){
 
 	//updates the travel values with updated stuff
 	setTravelValues();
+
+
+	openNextMenu("tradeMenu", shopOrNotShopMenu);
 }
